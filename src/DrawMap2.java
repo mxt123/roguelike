@@ -2,14 +2,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 
 
@@ -21,13 +18,10 @@ import javax.swing.JTextArea;
 import model.Direction;
 import model.Message;
 import model.world.Map;
-import model.world.Player;
 import model.world.Thing;
 import model.world.Tile;
-
-import util.LevelCreator;
-import worldgen.MapGenWorld;
 import worldgen.MapGenDungeon;
+import worldgen.MapGenWorld;
 
 public class DrawMap2 extends JPanel  implements KeyListener{
 		static JFrame f;
@@ -36,7 +30,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		int mapWidth;
         float mapX;
         float mapY;
-        int displayWidth =1400; //Screen size width.
+        int displayWidth =1026; //Screen size width.
         int displayHeight = 768; //Screen size height.
         private Map yourMap;
         private boolean FOLLOW = false;
@@ -99,7 +93,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                 f.getContentPane().setBackground(Color.BLACK);
                 f.pack();
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                DrawMap2 map = new DrawMap2(50,100);
+                DrawMap2 map = new DrawMap2(50,50);
                 f.getContentPane().add(map);
                 JTextArea displayArea = new JTextArea();
                 displayArea.setEditable(false);
@@ -109,7 +103,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                 displayArea.setFont(new Font(Font.MONOSPACED,Font.PLAIN, 20));
                 displayArea.setText("[5] generate [1,2] zoom, [arrows] move [shift + arrows] [6] toggle follow scroll [space] center view, shift space to reset view");
                 f.setSize(1024, 768);
-                f.setPreferredSize(new Dimension(1400, 768));                           
+                f.setPreferredSize(new Dimension(1026, 768));                           
                 f.setVisible(true);
                 displayArea.addKeyListener(map);
         }
@@ -162,6 +156,10 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 
 			if (key.getKeyCode() == KeyEvent.VK_5) {
 				this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+	        }
+			
+			if (key.getKeyCode() == KeyEvent.VK_7) {
+				this.yourMap = MapGenWorld.newWorld("world",50,50,3);
 	        }
 			
 			if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_SPACE ) {

@@ -6,7 +6,7 @@ public enum Tile {
 	LAND(',',false,false,Color.GRAY, Color.GREEN,"land"),
 	WALL('#',false,false,Color.BLACK,Color.GRAY,"wall"),
 	SPACE('_',true,true,Color.GRAY,Color.ORANGE,"open space"),
-	SEA('~',false,false,Color.GRAY,Color.BLUE,"water"),
+	SEA('~',true,true,Color.GRAY,Color.BLUE,"water"),
 	TREE('T',false,true,Color.GRAY,Color.GREEN,"tree"),
 	PERSON('@',false,true,Color.YELLOW,Color.YELLOW,"A person"),
 	GOBLIN('g',false,true,Color.YELLOW,Color.green,"A goblin"),
