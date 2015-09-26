@@ -1,0 +1,11 @@
+TODO 
+
+blank off edges of generated caves/world
+
+change connected island to give whole island back in results
+
+place player on an island/cave
+
+movement for activated mobs
+
+stats for player / mobs and combat mechanics
