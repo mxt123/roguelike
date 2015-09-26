@@ -11,7 +11,21 @@ public class Thing {
 	private Color color;
 	private String name;
 	private String description;
+	private boolean active;
 	
+	public boolean isActive() {
+		return active;
+	}
+	
+	// proivide an override for tile message here later
+	public String getMessage() {
+		return this.getTile().getMessage();
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	public Thing(Map map, Point location,Tile tile,Color color, String name, String description) {
 		this.location = location;
 		this.tile = tile;

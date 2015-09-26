@@ -4,14 +4,15 @@ import java.awt.Color;
 
 public enum Tile {	
 	
-	LAND(',',false,true,Color.BLACK, Color.GREEN,"land"),
-	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall"),
-	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space"),
-	SEA('~',true,true,Color.BLACK,Color.BLUE,"water"),
-	TREE('T',false,true,Color.BLACK,Color.GREEN,"tree"),
-	PERSON('@',false,true,Color.YELLOW,Color.YELLOW,"A person"),
-	GOBLIN('g',false,true,Color.BLACK,Color.green,"A goblin"),
-	COIN('o',true,true,Color.BLACK,Color.YELLOW,"A coin");
+	LAND(',',false,true,Color.BLACK, Color.GREEN,"land",""),
+	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall",""),
+	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space",""),
+	SEA('~',true,true,Color.BLACK,Color.BLUE,"water",""),
+	TREE('T',false,true,Color.BLACK,Color.GREEN,"tree",""),
+	PERSON('@',false,true,Color.YELLOW,Color.YELLOW,"A person",""),
+	GOBLIN('g',false,true,Color.BLACK,Color.green,"A goblin","grrr!"),
+	OGRE('H',false,true,Color.BLACK,Color.green,"An ogre","RAAAR!"),
+	COIN('o',true,true,Color.BLACK,Color.YELLOW,"A coin","");
 	
 	//old wall #
 	//old space _
@@ -34,14 +35,24 @@ public enum Tile {
 	private Color colorDark;
 	private Color colorLight;
 	private String description;
+	private String message;
 	
-	Tile( char character, boolean passable, boolean transparent, Color colorDark, Color colorLight, String description) {
+	Tile( char character, boolean passable, boolean transparent, Color colorDark, Color colorLight, String description, String message) {
 		this.setCharacter(character);
 		this.setPassable(passable);
 		this.setTransparent(transparent);
 		this.setDescription(description);
 		this.setColorDark(colorDark);
 		this.setColorLight(colorLight);
+		this.setMessage(message);
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public char getCharacter() {

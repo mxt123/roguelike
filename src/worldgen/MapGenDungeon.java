@@ -12,6 +12,7 @@ import model.Rect;
 import model.world.Actor;
 import model.world.Map;
 import model.world.Player;
+import model.world.Thing;
 import model.world.Tile;
 
 
@@ -119,16 +120,27 @@ public class MapGenDungeon {
 					"goblin",
 					"this is a goblin"
 					));	
-			}
+			} else if( labelCount % 3== 0){
+				map.getThings().add(new Thing(
+						
+						map,
+						new Point(center.getX(),center.getY()),
+						Tile.COIN,
+						Color.YELLOW,
+						"coin",
+						"this is gold!"
+						));
+				}
 			else {
 				map.getThings().add(new Actor(
-					map,
-					new Point(center.getX(),center.getY()),
-					Tile.COIN,
-					Color.YELLOW,
-					"coin",
-					"this is gold!"
-					));
+						map,
+						new Point(center.getX(),center.getY()),
+						Tile.OGRE,
+						Color.RED,
+						"ogre",
+						"this is an ogre"
+						));	
+				
 		}
 			labelCount++;
 		}
