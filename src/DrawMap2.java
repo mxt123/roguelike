@@ -27,6 +27,7 @@ import model.world.Player;
 import model.world.Thing;
 import model.world.Tile;
 import util.Fov;
+import worldgen.MapGenCaves;
 import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
 
@@ -145,6 +146,11 @@ public class DrawMap2 extends JPanel  implements KeyListener{
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }
         yourMap.setMessages(new ArrayList<Message>()); // add a clearMessages
+        
+        for (Message m: yourMap.getPermanentMessages()) { 
+        	g2.setColor(Color.yellow); // messages should store a color
+    		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
+        }
     }
 
     public static void main(String[] args) throws IOException {
@@ -223,6 +229,18 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		
 		if (key.getKeyCode() == KeyEvent.VK_7) {
 			this.yourMap = MapGenWorld.newWorld("world",50,50,3);
+        }
+		
+		if (key.getKeyCode() == KeyEvent.VK_8) {
+			this.yourMap = MapGenCaves.newWorld("world",50,50,2);
+        }
+		
+		if (key.getKeyCode() == KeyEvent.VK_9) {
+			for (int i = 0 ; i < yourMap.getVisited().length; i ++ ) {
+				for (int j = 0; j <  yourMap.getVisited()[0].length; j++) {
+					yourMap.getVisited()[i][j] = true;
+				}
+			}
         }
 		
 		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_SPACE ) {

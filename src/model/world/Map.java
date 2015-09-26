@@ -13,6 +13,7 @@ public class Map {
 	private boolean[][] visited;
 	private List<Thing> things;
 	private List<Message> messages = new ArrayList<Message>();
+	private List<Message> permanentMessages = new ArrayList<Message>();
 	
 	public List<Thing> getThings(Point point) {
 		ArrayList<Thing> ts = new ArrayList<Thing>();
@@ -106,6 +107,14 @@ public class Map {
 
 	public void setVisited(boolean[][] visited) {
 		this.visited = visited;
+	}
+
+	public List<Message> getPermanentMessages() {
+		return permanentMessages;
+	}
+
+	public void setPermanentMessages(List<Message> permanentMessages) {
+		this.permanentMessages = permanentMessages;
 	}
 
 }
