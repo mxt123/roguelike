@@ -239,6 +239,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		        for (Thing t : yourMap.getThings()){
 		        	// fires burn water runs etc
 		        	if ( t instanceof Actor && t.isActive() &&!(t instanceof Player) ) {
+		        		// just get a message for now call get action later
 		        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
 		        	}
 		        }

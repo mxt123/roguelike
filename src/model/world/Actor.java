@@ -14,7 +14,6 @@ public class Actor extends Thing {
 	}
 	
 	public void move(Direction direction, int distance){
-		Point oldLocation = this.getLocation();
 		int x = this.getLocation().getX();
 		int y = this.getLocation().getY();
 		switch (direction) {
