@@ -4,20 +4,26 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.IOException;
+import java.io.InputStream;
 
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import model.Direction;
 import model.Message;
-import model.Point;
 import model.world.Map;
 import model.world.Thing;
 import model.world.Tile;
@@ -36,6 +42,22 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         int displayHeight = 768; //Screen size height.
         private Map yourMap;
         private boolean FOLLOW = false;
+        private Image ghost = getImage("Blinky8bit.png");
+        
+        private BufferedImage getImage(String filename) {
+        	// This time, you can use an InputStream to load
+        	try {
+        	        // Grab the InputStream for the image.                    
+        	        InputStream in = getClass().getResourceAsStream(filename);
+
+        	    // Then read it in.
+        	    return ImageIO.read(in);
+        	} catch (IOException e) {
+        	    System.out.println("The image was not loaded.");
+        	    //System.exit(1);
+        	}
+        	    return null;
+        	}
         
         private int getSpacing(){
         	return  fontSize;
@@ -95,10 +117,24 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                 // add the things
                 for (Thing thing : yourMap.getThings()) {
                 	// only draw if lit or player
-                	if (thing.getName().equals("Player") || lightMap[thing.getLocation().getX()][thing.getLocation().getY()] > 0) {
-                		g2.setColor(thing.getColor());
-                		g2.drawString(String.valueOf(thing.getTile().getCharacter()), (thing.getLocation().getX()*spacing)+mapX, (thing.getLocation().getY()*spacing)+mapY);
-                	}
+                	int x = thing.getLocation().getX();
+					int y = thing.getLocation().getY();
+					if (thing.getName().equals("Player") || lightMap[x][y] > 0) {
+                		
+                		if (thing.getName().equals("Player") ) {
+                			g2.drawImage(
+                					ghost,
+                					(int)((x*spacing)+mapX),
+                					(int) ( (y*spacing)+mapY) -spacing,
+                					spacing,
+                					spacing,
+                					null);
+                		}else {
+                			g2.setColor(thing.getColor());
+                			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
+                		}
+                		
+					}
                 }
                                 
                 g2.setColor(Color.yellow);
