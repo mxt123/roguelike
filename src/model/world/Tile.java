@@ -2,7 +2,8 @@ package model.world;
 
 import java.awt.Color;
 
-public enum Tile {
+public enum Tile {	
+	
 	LAND(',',false,true,Color.BLACK, Color.GREEN,"land"),
 	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall"),
 	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space"),

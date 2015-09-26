@@ -85,6 +85,14 @@ public class MapGenWorld {
 			MapGenWorld.evolveGrid(map);
 		} 
 		
+		boolean [][] visited = new boolean [map.getHeight()][map.getWidth()];
+		
+		for (int i =0;i < map.getHeight(); i++){
+    		for (int j =0; j < map.getWidth(); j ++) {
+    			visited[i][j] = false;
+    		}
+    	}
+		
 		map.getThings().add(new Player(
 				map,
 				new Point(0,0),
@@ -93,6 +101,8 @@ public class MapGenWorld {
 				"Player",
 				"this is you :)"
 				));
+		
+		map.setVisited(visited);
 		
 		return map;
 	}

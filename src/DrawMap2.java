@@ -71,10 +71,17 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                                 if ((x*spacing+mapX > -10) && (x*spacing+mapX < displayWidth+10) && (y*getSpacing()+mapY > -10) && (y*spacing+mapY < displayHeight+10)){
                             		final Tile t = yourMap.getLevel()[y][x]; 
                             		if (t!=null) {
-                            			if (lightMap[x][y] > 0  || yourMap.getVisited()[x][y]) {
-                            				g2.setColor(t.getColorLight());
-                            				yourMap.getVisited()[x][y] = true;
-                            			} else {
+                            			boolean visited = yourMap.getVisited()[x][y];
+                            			boolean isLit = lightMap[x][y] > 0;
+                            			if (visited || isLit) {
+	                            			if (yourMap.getVisited()[x][y]){
+	                            				g2.setColor(t.getColorLight().darker().darker());                      
+	                            			}
+	                            			if (lightMap[x][y] > 0) {
+	                            				g2.setColor(t.getColorLight());
+	                            				yourMap.getVisited()[x][y] = true;
+	                            			} 
+                            			}else {
                             				g2.setColor(t.getColorDark());
                             			}
                             			g2.drawString(String.valueOf(t.getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY); 
