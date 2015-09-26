@@ -3,14 +3,29 @@ package model.world;
 import java.awt.Color;
 
 public enum Tile {
-	LAND(',',false,false,Color.GRAY, Color.GREEN,"land"),
-	WALL('#',false,false,Color.BLACK,Color.GRAY,"wall"),
-	SPACE('_',true,true,Color.GRAY,Color.ORANGE,"open space"),
-	SEA('~',true,true,Color.GRAY,Color.BLUE,"water"),
-	TREE('T',false,true,Color.GRAY,Color.GREEN,"tree"),
+	LAND(',',false,true,Color.BLACK, Color.GREEN,"land"),
+	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall"),
+	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space"),
+	SEA('~',true,true,Color.BLACK,Color.BLUE,"water"),
+	TREE('T',false,true,Color.BLACK,Color.GREEN,"tree"),
 	PERSON('@',false,true,Color.YELLOW,Color.YELLOW,"A person"),
-	GOBLIN('g',false,true,Color.YELLOW,Color.green,"A goblin"),
-	COIN('o',true,true,Color.YELLOW,Color.YELLOW,"A coin");
+	GOBLIN('g',false,true,Color.BLACK,Color.green,"A goblin"),
+	COIN('o',true,true,Color.BLACK,Color.YELLOW,"A coin");
+	
+	//old wall #
+	//old space _
+	// http://www.alanwood.net/unicode/unicode_samples.html 
+	//:)
+	/*
+	∙
+	▨
+	□
+	⟰
+	ȣ
+	Ȣ
+	Ѧ
+	о҉
+	*/
 	
 	private char character;
 	private boolean passable;

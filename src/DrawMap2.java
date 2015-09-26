@@ -17,9 +17,11 @@ import javax.swing.JTextArea;
 
 import model.Direction;
 import model.Message;
+import model.Point;
 import model.world.Map;
 import model.world.Thing;
 import model.world.Tile;
+import util.Fov;
 import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
 
@@ -57,29 +59,39 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                                 RenderingHints.VALUE_ANTIALIAS_ON);
                 Font font = new Font(Font.MONOSPACED,Font.PLAIN,fontSize);
 				g2.setFont(font);            
-	                
-				
+	                				
                 final int spacing = getSpacing();
-
+                
+                // get lightmap this should be stored in map and persisted
+                int[][] lightMap = Fov.getFov(yourMap, yourMap.getPlayer().getLocation(), 5 );    
+                
                 // draw the map tiles
                 for (int x = 0; x < mapWidth; x++) {
                         for (int y = 0; y < mapHeight; y++) {
                                 if ((x*spacing+mapX > -10) && (x*spacing+mapX < displayWidth+10) && (y*getSpacing()+mapY > -10) && (y*spacing+mapY < displayHeight+10)){
                             		final Tile t = yourMap.getLevel()[y][x]; 
                             		if (t!=null) {
-                            			g2.setColor(t.getColorLight());
+                            			if (lightMap[x][y] > 0  || yourMap.getVisited()[x][y]) {
+                            				g2.setColor(t.getColorLight());
+                            				yourMap.getVisited()[x][y] = true;
+                            			} else {
+                            				g2.setColor(t.getColorDark());
+                            			}
                             			g2.drawString(String.valueOf(t.getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY); 
                             		} else {
                             			System.out.println("wtf");
                             		}
                                 }
                         }
-                }
+                }             
                 
                 // add the things
                 for (Thing thing : yourMap.getThings()) {
-                	g2.setColor(thing.getColor());
-        			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (thing.getLocation().getX()*spacing)+mapX, (thing.getLocation().getY()*spacing)+mapY);
+                	// only draw if lit or player
+                	if (thing.getName().equals("Player") || lightMap[thing.getLocation().getX()][thing.getLocation().getY()] > 0) {
+                		g2.setColor(thing.getColor());
+                		g2.drawString(String.valueOf(thing.getTile().getCharacter()), (thing.getLocation().getX()*spacing)+mapX, (thing.getLocation().getY()*spacing)+mapY);
+                	}
                 }
                                 
                 g2.setColor(Color.yellow);

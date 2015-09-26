@@ -45,9 +45,13 @@ public class MapGenDungeon {
 	}
  
 	public static Map newFullMap(Map map) {
+		
+		boolean [][] visited = new boolean [map.getHeight()][map.getWidth()];
+		
 		for (int i =0;i < map.getHeight(); i++){
     		for (int j =0; j < map.getWidth(); j ++) {
     			map.getLevel()[i][j] = Tile.WALL;
+    			visited[i][j] = false;
     		}
     	}
 	
@@ -128,7 +132,8 @@ public class MapGenDungeon {
 		}
 			labelCount++;
 		}
-		
+	
+		map.setVisited(visited);
 				   
 		return map;
 	}

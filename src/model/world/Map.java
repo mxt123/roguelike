@@ -10,6 +10,7 @@ public class Map {
 	
 	private String name;
 	private Tile[][] level;
+	private boolean[][] visited;
 	private List<Thing> things;
 	private List<Message> messages = new ArrayList<Message>();
 	
@@ -97,6 +98,14 @@ public class Map {
 
 	public void setMessages(List<Message> messages) {
 		this.messages = messages;
+	}
+
+	public boolean[][] getVisited() {
+		return visited;
+	}
+
+	public void setVisited(boolean[][] visited) {
+		this.visited = visited;
 	}
 
 }
