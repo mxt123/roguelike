@@ -6,10 +6,13 @@ import model.Direction;
 import model.Point;
 
 public class Actor extends Thing {
+	
+	private Stats stats;
 
-	public Actor(Map map, Point location, Tile tile, Color color, String name,
+	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
 		super(map, location, tile, color, name, description);
+		this.setStats(stats);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -36,6 +39,14 @@ public class Actor extends Thing {
 		if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 		}
+	}
+
+	public Stats getStats() {
+		return stats;
+	}
+
+	public void setStats(Stats stats) {
+		this.stats = stats;
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import model.Point;
 import model.world.Map;
+import model.world.Monster;
 import model.world.Player;
 import model.world.Tile;
 
@@ -96,6 +97,7 @@ public class MapGenCaves {
 		//TODO carve tunnels linking any isolated caves	
 		
 		map.getThings().add(new Player(
+				Monster.PLAYER,
 				map,
 				new Point(0,0),
 				Tile.PERSON,

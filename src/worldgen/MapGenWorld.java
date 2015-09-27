@@ -8,6 +8,7 @@ import util.ConnectedIslands;
 import model.Message;
 import model.Point;
 import model.world.Map;
+import model.world.Monster;
 import model.world.Player;
 import model.world.Tile;
 
@@ -110,6 +111,7 @@ public class MapGenWorld {
 		// put them in the middle of an island
 		
 		map.getThings().add(new Player(
+				Monster.PLAYER,
 				map,
 				new Point(0,0),
 				Tile.PERSON,

@@ -11,6 +11,7 @@ import model.Point;
 import model.Rect;
 import model.world.Actor;
 import model.world.Map;
+import model.world.Monster;
 import model.world.Player;
 import model.world.Thing;
 import model.world.Tile;
@@ -104,6 +105,7 @@ public class MapGenDungeon {
 			Point center = room.center();
 			if (labelCount == 0) {
 				map.getThings().add(new Player(
+					Monster.PLAYER,
 					map,
 					new Point(center.getX(),center.getY()),
 					Tile.PERSON,
@@ -113,6 +115,7 @@ public class MapGenDungeon {
 					));
 			} else if( labelCount % 2== 1){
 				map.getThings().add(new Actor(
+					Monster.GOBLIN,
 					map,
 					new Point(center.getX(),center.getY()),
 					Tile.GOBLIN,
@@ -133,6 +136,7 @@ public class MapGenDungeon {
 				}
 			else {
 				map.getThings().add(new Actor(
+						Monster.GOBLIN,
 						map,
 						new Point(center.getX(),center.getY()),
 						Tile.OGRE,
