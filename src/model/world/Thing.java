@@ -13,6 +13,10 @@ public class Thing {
 	private String description;
 	private boolean active;
 	
+	public void act(){
+		// nothing for most things :)
+	}
+	
 	public boolean isActive() {
 		return active;
 	}

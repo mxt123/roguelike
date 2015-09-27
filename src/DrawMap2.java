@@ -30,8 +30,10 @@ import util.Fov;
 import worldgen.MapGenCaves;
 import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
+import worldgen.TestRoom;
 
 public class DrawMap2 extends JPanel  implements KeyListener{
+	private static final int LIGHT_RADIUS = 5;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
 	static int fontSize = 14;
@@ -87,7 +89,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         final int spacing = getSpacing();
         
         // get lightmap this should be stored in map and persisted
-        int[][] lightMap = Fov.getFov(yourMap, yourMap.getPlayer().getLocation(), 5 );    
+        int[][] lightMap = Fov.getFov(yourMap, yourMap.getPlayer().getLocation(), LIGHT_RADIUS );    
         
         // draw the map tiles
         for (int x = 0; x < mapWidth; x++) {
@@ -223,7 +225,9 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 			FOLLOW = !FOLLOW;
 		}
 
-		if (key.getKeyCode() == KeyEvent.VK_5) {
+		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_5 ) {
+			this.yourMap = TestRoom.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+		} else if (key.getKeyCode() == KeyEvent.VK_5) {
 			this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
         }
 		
@@ -255,10 +259,11 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 			// run all actors, timers and things here
 		    if (tookTurn) {
 		        for (Thing t : yourMap.getThings()){
-		        	// fires burn water runs etc
+		        	// fires burn water runs etc		        	
 		        	if ( t instanceof Actor && t.isActive() &&!(t instanceof Player) ) {
 		        		// just get a message for now call get action later
 		        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
+		        		t.act();
 		        	}
 		        }
 		    }

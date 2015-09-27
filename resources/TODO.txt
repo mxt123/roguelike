@@ -1,4 +1,8 @@
-TODO 
+TODO  
+
+if movement blocked dx try dy (mob check is passable like player does)
+
+seprate light radius from aggro radius
 
 blank off edges of generated caves/world
 
