@@ -25,7 +25,13 @@ public class Thing {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-
+	
+	public int getDistanceTo(Thing t) {
+		int dx = t.getLocation().getX() - this.getLocation().getX();
+		int dy = t.getLocation().getY() - this.getLocation().getY();
+		return (int) Math.sqrt(Math.pow(dx,2) + Math.pow(dy, 2));
+	}
+	
 	public Thing(Map map, Point location,Tile tile,Color color, String name, String description) {
 		this.location = location;
 		this.tile = tile;

@@ -16,6 +16,11 @@ public class Actor extends Thing {
 		// TODO Auto-generated constructor stub
 	}
 	
+	@Override
+	public String getMessage() {
+		return this.getTile().getMessage() +" you are " +  this.getDistanceTo(this.getMap().getPlayer()) + " tiles away";
+	}
+	
 	public void move(Direction direction, int distance){
 		int x = this.getLocation().getX();
 		int y = this.getLocation().getY();
@@ -49,4 +54,27 @@ public class Actor extends Thing {
 		this.stats = stats;
 	}
 	
+	/*
+	 def move_towards(self, target_x, target_y):
+	        #vector from this object to the target, and distance
+	        dx = target_x - self.x
+	        dy = target_y - self.y
+	        distance = math.sqrt(dx ** 2 + dy ** 2)
+	 
+	        #normalize it to length 1 (preserving direction), then round it and
+	        #convert to integer so the movement is restricted to the map grid
+	        dx = int(round(dx / distance))
+	        dy = int(round(dy / distance))
+	        self.move(dx, dy)
+	        
+	 
+	
+    #move towards player if far away
+            if monster.distance_to(player) >= 2:
+                monster.move_towards(player.x, player.y)
+ 
+            #close enough, attack! (if the player is still alive.)
+            elif player.fighter.hp > 0:
+                print 'The attack of the ' + monster.name + ' bounces off your shiny metal armor!'
+	*/
 }
