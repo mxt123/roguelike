@@ -1,8 +1,27 @@
 TODO  
 
-if movement blocked dx try dy (mob check is passable like player does)
+simple combat
 
-seprate light radius from aggro radius
+slightly crazy chasing movement to fix
+
+DONE if movement blocked dx try dy (mob check is passable like player does)
+
+move messages off tile onto actor object
+
+seperate light radius from aggro radius
+
+json for levels
+json mobs
+json items
+
+quests
+
+npcs
+
+door
+secret doors
+stairs/teleporters 
+traps
 
 blank off edges of generated caves/world
 

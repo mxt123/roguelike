@@ -24,6 +24,7 @@ import model.Message;
 import model.world.Actor;
 import model.world.Map;
 import model.world.Player;
+import model.world.Stats;
 import model.world.Thing;
 import model.world.Tile;
 import util.Fov;
@@ -116,6 +117,9 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                     		}
                         }
                 }
+                g2.setColor(Color.YELLOW);
+                Stats stats = yourMap.getPlayer().getStats();
+                g2.drawString(stats.getMaxHp() +"\\" + stats.getHp(),10,10);
         }             
             
         // add the things

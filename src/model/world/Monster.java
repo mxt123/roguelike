@@ -2,7 +2,7 @@ package model.world;
 
 public enum Monster implements Stats {
 	
-	PLAYER("Player",1,1,1,1),
+	PLAYER("Player",12,12,1,1),
 	GOBLIN("Goblin",1,1,1,1);
 	
 	private String profileName;
