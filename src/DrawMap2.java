@@ -77,13 +77,11 @@ public class DrawMap2 extends JPanel  implements KeyListener{
     		t.setActive(false);
     	}
 		
-    	
         int displayWidth = f.getWidth();
         int displayHeight = f.getHeight();
     	
         Graphics2D g2 = (Graphics2D)g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font(Font.MONOSPACED,Font.PLAIN,fontSize);
 		g2.setFont(font);            
             				
@@ -124,27 +122,23 @@ public class DrawMap2 extends JPanel  implements KeyListener{
             
         // add the things
         for (Thing thing : yourMap.getThings()) {
-        	// only draw if lit or player        	   
-        	
         	int x = thing.getLocation().getX();
 			int y = thing.getLocation().getY();
-			if (thing.getName().equals("Player") || lightMap[x][y] > 0) {
-        		
-        		if (thing instanceof Player ) {
-        			g2.drawImage(
-        					ghost,
-        					(int) ((x*spacing)+mapX),
-        					(int) ( (y*spacing)+mapY) -spacing,
-        					spacing,
-        					spacing,
-        					null);
-        		}else {
-        			thing.setActive(true);
-        			g2.setColor(thing.getColor());
-        			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
-        		}
-        		
-			}
+			if (!thing.getName().equals("Player") && lightMap[x][y] > 0)  {
+    			thing.setActive(true);
+    			g2.setColor(thing.getColor());
+    			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
+        }
+
+		// draw player last so appears on top of any passable things
+		Player p = yourMap.getPlayer();
+		g2.drawImage(
+				ghost,
+				(int) ((p.getLocation().getX()*spacing)+mapX),
+				(int) ( (p.getLocation().getY()*spacing)+mapY) -spacing,
+				spacing,
+				spacing,
+				null);
         }
                         
         for (Message m: yourMap.getMessages()) { 
