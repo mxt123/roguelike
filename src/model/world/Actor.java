@@ -11,6 +11,8 @@ public class Actor extends Thing {
 	
 	private Stats stats;
 
+	private String message = this.getTile().getMessage();
+	
 	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
 		super(map, location, tile, color, name, description);
@@ -18,9 +20,13 @@ public class Actor extends Thing {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
 	@Override
 	public String getMessage() {
-		return this.getTile().getMessage() +" you are " +  this.getDistanceTo(this.getMap().getPlayer()) + " tiles away";
+		return this.message ; 
 	}
 	
 	public boolean move(Direction direction, int distance){
@@ -63,9 +69,9 @@ public class Actor extends Thing {
 		Player p = this.getMap().getPlayer();
 	     if (this.getDistanceTo(p) >= 2) {
 	    	  this.moveTowards(p.getLocation());
-	    	  this.getTile().setMessage("Chase!");
+	    	  //this.setMessage("!");
 	     } else {
-	    	 this.getTile().setMessage("Attack!");
+	    	 //this.getTile().setMessage("X");
 	     }
 	}
 

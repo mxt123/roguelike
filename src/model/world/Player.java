@@ -34,12 +34,12 @@ public class Player extends Actor {
 			break;
 		}
 		Tile target = this.getMap().getLevel()[y][x];		
-		if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+	//	if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			return true;
-		} else {
-			return false;
-		}
+	//	} else {
+	//		return false;
+	//	}
 	}
 	
 	
