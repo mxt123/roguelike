@@ -29,6 +29,10 @@ public class Actor extends Thing {
 		return this.message ; 
 	}
 	
+	public void  clearMessages(){
+		this.message = null;
+	}
+	
 	public boolean move(Direction direction, int distance){
 		int x = this.getLocation().getX();
 		int y = this.getLocation().getY();

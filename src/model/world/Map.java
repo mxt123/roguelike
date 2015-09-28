@@ -15,6 +15,26 @@ public class Map {
 	private List<Message> messages = new ArrayList<Message>();
 	private List<Message> permanentMessages = new ArrayList<Message>();
 	
+	public List<Thing> getThingsAt(Point p){
+		List<Thing> things = new ArrayList<Thing>();
+		for (Thing t : this.things) {
+			if (t.getLocation().equals(p)){
+				things.add(t);
+			}
+		}
+		return things;
+	}
+	
+	public List<Actor> getActorsAt(Point p){
+		List<Actor> things = new ArrayList<Actor>();
+		for (Thing t : this.things) {
+			if (t instanceof Actor && t.getLocation().equals(p)){
+				things.add((Actor) t);
+			}
+		}
+		return things;
+	}
+	
 	public List<Thing> getThings(Point point) {
 		ArrayList<Thing> ts = new ArrayList<Thing>();
 		for (Thing t:this.things ){

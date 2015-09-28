@@ -132,10 +132,19 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 
 		// draw player last so appears on top of any passable things
 		Player p = yourMap.getPlayer();
+		int playerX = p.getLocation().getX();
+		int playerY = p.getLocation().getY();
+		if (p.getMessage() != null) {
+				g2.setColor(Color.BLUE); // messages should store a color
+				g2.drawString(p.getMessage(), (playerX * spacing )+mapX,((playerY -1)   *spacing)+mapY); 
+				p.clearMessages();
+				// TODO draw splat marks from attacking here
+		}
+
 		g2.drawImage(
 				ghost,
-				(int) ((p.getLocation().getX()*spacing)+mapX),
-				(int) ( (p.getLocation().getY()*spacing)+mapY) -spacing,
+				(int) ((playerX*spacing)+mapX),
+				(int) ( (playerY*spacing)+mapY) -spacing,
 				spacing,
 				spacing,
 				null);
@@ -154,6 +163,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         	g2.setColor(Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }
+       
     }
 
     public static void main(String[] args) throws IOException {

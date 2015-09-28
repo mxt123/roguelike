@@ -1,6 +1,7 @@
 package model.world;
 
 import java.awt.Color;
+import java.util.List;
 
 import model.Direction;
 import model.Point;
@@ -33,13 +34,17 @@ public class Player extends Actor {
 		default:
 			break;
 		}
-		Tile target = this.getMap().getLevel()[y][x];		
-	//	if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+		Tile target = this.getMap().getLevel()[y][x];	
+		List<Actor> actors = this.getMap().getActorsAt(new Point(x,y));
+		if (actors.size() > 0) {
+			this.setMessage("!"); // TODO do attack here
+			return false;
+		} else if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			return true;
-	//	} else {
-	//		return false;
-	//	}
+		} else {
+			return false;
+		}
 	}
 	
 	
