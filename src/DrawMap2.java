@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 
 import model.Direction;
 import model.Message;
+import model.Point;
 import model.world.Actor;
 import model.world.Map;
 import model.world.Player;
@@ -88,7 +89,9 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         final int spacing = getSpacing();
         
         // get lightmap this should be stored in map and persisted
-        int[][] lightMap = Fov.getFov(yourMap, yourMap.getPlayer().getLocation(), LIGHT_RADIUS );    
+        Player p = yourMap.getPlayer();
+		Point pLoc = p.getLocation();
+		int[][] lightMap = Fov.getFov(yourMap, pLoc, LIGHT_RADIUS );    
         
         // draw the map tiles
         for (int x = 0; x < mapWidth; x++) {
@@ -116,8 +119,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                         }
                 }
                 g2.setColor(Color.YELLOW);
-                Stats stats = yourMap.getPlayer().getStats();
-                g2.drawString(stats.getMaxHp() +"\\" + stats.getHp(),10,10);
+                g2.drawString(p.getMaxHp() +"\\" + p.getHp(),10,10);
         }             
             
         // add the things
@@ -131,7 +133,6 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         }
 
 		// draw player last so appears on top of any passable things
-		Player p = yourMap.getPlayer();
 		int playerX = p.getLocation().getX();
 		int playerY = p.getLocation().getY();
 		if (p.getMessage() != null) {

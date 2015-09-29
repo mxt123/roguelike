@@ -7,17 +7,43 @@ import util.Randoms;
 import model.Direction;
 import model.Point;
 
-public class Actor extends Thing {
-	
-	private Stats stats;
+public class Actor extends Thing implements Stats {
 
 	private String message = this.getTile().getMessage();
+	
+	private String profileName;
+	private int maxHp; 
+	private int hp;
+	private int defence;
+	private int attack;
+            
+    public void takeDamage(){
+    	/*
+    	def take_damage(self, damage):
+            #apply damage if possible
+            if damage > 0:
+                self.hp -= damage
+                */
+    }
 	
 	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
 		super(map, location, tile, color, name, description);
 		this.setStats(stats);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void setStats(Stats s) {
+		this.profileName = s.getProfileName();
+		this.maxHp = s.getMaxHp();
+		this.hp = s.getHp();
+		this.attack = s.getAttack();
+		this.defence = s.getDefence();
+	}
+	
+	public boolean takeDamage(int damage) {
+		this.hp -= damage;
+		return true;
 	}
 	
 	public void setMessage(String message) {
@@ -59,14 +85,6 @@ public class Actor extends Thing {
 		} else {
 			return false;
 		}
-	}
-
-	public Stats getStats() {
-		return stats;
-	}
-
-	public void setStats(Stats stats) {
-		this.stats = stats;
 	}
 
 	public void act() {
@@ -131,5 +149,51 @@ public class Actor extends Thing {
 		} else {
 			return this.move(Direction.WEST, 1 ); 
 		}
+	}
+
+	@Override
+	public String getProfileName() {
+		return this.profileName;
+	}
+
+	@Override
+	public int getMaxHp() {
+		return this.maxHp;
+	}
+
+	@Override
+	public int getHp() {
+		return this.hp;
+	}
+	
+
+	@Override
+	public int getDefence() {
+		return this.defence;
+	}
+
+	@Override
+	public int getAttack() {
+		return this.attack;
+	}
+
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+
+	public void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public void setDefence(int defence) {
+		this.defence = defence;
+	}
+
+	public void setAttack(int attack) {
+		this.attack = attack;
 	}
 }
