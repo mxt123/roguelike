@@ -11,7 +11,6 @@ public class Player extends Actor {
 	public Player(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
 		super(stats, map, location, tile, color, name, description);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
@@ -38,6 +37,9 @@ public class Player extends Actor {
 		List<Actor> actors = this.getMap().getActorsAt(new Point(x,y));
 		if (actors.size() > 0) {
 			this.setMessage("!"); // TODO do attack here
+			// there can only be one blocking mob on a tile at the mo
+			Actor a = actors.get(0);
+			a.setMessage("ow!");
 			return false;
 		} else if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));

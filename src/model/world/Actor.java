@@ -9,6 +9,8 @@ import model.Point;
 
 public class Actor extends Thing implements Stats {
 
+	private static final int SPEED = 1;
+
 	private String message = this.getTile().getMessage();
 	
 	private String profileName;
@@ -16,21 +18,11 @@ public class Actor extends Thing implements Stats {
 	private int hp;
 	private int defence;
 	private int attack;
-            
-    public void takeDamage(){
-    	/*
-    	def take_damage(self, damage):
-            #apply damage if possible
-            if damage > 0:
-                self.hp -= damage
-                */
-    }
 	
 	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
 		super(map, location, tile, color, name, description);
 		this.setStats(stats);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void setStats(Stats s) {
@@ -89,8 +81,9 @@ public class Actor extends Thing implements Stats {
 
 	public void act() {
 		Player p = this.getMap().getPlayer();
+   	 	this.clearMessages();
 	     if (this.getDistanceTo(p) >= 2) {
-	    	  this.moveTowards(p.getLocation());
+	    	 this.moveTowards(p.getLocation());
 	    	  //this.setMessage("!");
 	     } else {
 	    	 //this.getTile().setMessage("X");
@@ -137,17 +130,17 @@ public class Actor extends Thing implements Stats {
 	
 	private boolean moveVertical(int dy) {
 		if (dy >0) {
-			return this.move(Direction.SOUTH, 1 ); // TODO actors should have a speed
+			return this.move(Direction.SOUTH, SPEED ); // TODO actors should have a speed
 		} else {
-			return this.move(Direction.NORTH, 1 );
+			return this.move(Direction.NORTH, SPEED );
 		}
 	}
 
 	private boolean moveHorizontal(int dx) {
 		if (dx >0) {
-			return this.move(Direction.EAST, 1 ); 
+			return this.move(Direction.EAST, SPEED ); 
 		} else {
-			return this.move(Direction.WEST, 1 ); 
+			return this.move(Direction.WEST, SPEED ); 
 		}
 	}
 
