@@ -39,7 +39,8 @@ public class Player extends Actor {
 			this.setMessage("!"); // TODO do attack here
 			// there can only be one blocking mob on a tile at the mo
 			Actor a = actors.get(0);
-			a.setMessage("ow!");
+			int damage = attack(a);
+			a.setMessage(String.valueOf(damage));
 			return false;
 		} else if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));

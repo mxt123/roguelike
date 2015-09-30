@@ -1,6 +1,8 @@
 package model.world;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import util.Randoms;
 
@@ -9,8 +11,6 @@ import model.Point;
 
 public class Actor extends Thing implements Stats {
 
-	private static final int SPEED = 1;
-
 	private String message = this.getTile().getMessage();
 	
 	private String profileName;
@@ -18,6 +18,20 @@ public class Actor extends Thing implements Stats {
 	private int hp;
 	private int defence;
 	private int attack;
+	private int speed;
+	
+	public List<Thing> destroy() {
+		List<Thing> loot = new ArrayList<Thing>();
+		// remove this object
+		// drop some loot
+		return loot;
+	}
+	
+	public int attack(Actor target) {
+		int damage = attack - target.getDefence() + Randoms.d6();
+		target.takeDamage(damage);
+		return damage;
+	}
 	
 	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
@@ -31,6 +45,7 @@ public class Actor extends Thing implements Stats {
 		this.hp = s.getHp();
 		this.attack = s.getAttack();
 		this.defence = s.getDefence();
+		this.speed = s.getSpeed();
 	}
 	
 	public boolean takeDamage(int damage) {
@@ -86,7 +101,8 @@ public class Actor extends Thing implements Stats {
 	    	 this.moveTowards(p.getLocation());
 	    	  //this.setMessage("!");
 	     } else {
-	    	 //this.getTile().setMessage("X");
+	    	int damage = attack(p);
+	    	p.setMessage(String.valueOf(damage));
 	     }
 	}
 
@@ -130,17 +146,17 @@ public class Actor extends Thing implements Stats {
 	
 	private boolean moveVertical(int dy) {
 		if (dy >0) {
-			return this.move(Direction.SOUTH, SPEED ); // TODO actors should have a speed
+			return this.move(Direction.SOUTH, speed ); // TODO actors should have a speed
 		} else {
-			return this.move(Direction.NORTH, SPEED );
+			return this.move(Direction.NORTH, speed );
 		}
 	}
 
 	private boolean moveHorizontal(int dx) {
 		if (dx >0) {
-			return this.move(Direction.EAST, SPEED ); 
+			return this.move(Direction.EAST, speed ); 
 		} else {
-			return this.move(Direction.WEST, SPEED ); 
+			return this.move(Direction.WEST, speed ); 
 		}
 	}
 
@@ -188,5 +204,10 @@ public class Actor extends Thing implements Stats {
 
 	public void setAttack(int attack) {
 		this.attack = attack;
+	}
+
+	@Override
+	public int getSpeed() {
+		return this.speed;
 	}
 }

@@ -11,7 +11,6 @@ import model.world.Actor;
 import model.world.Map;
 import model.world.Monster;
 import model.world.Player;
-import model.world.Thing;
 import model.world.Tile;
 import util.Randoms;
 

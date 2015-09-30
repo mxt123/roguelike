@@ -190,7 +190,9 @@ public class DrawMap2 extends JPanel  implements KeyListener{
     }
 
 	@Override
-	public void keyPressed(KeyEvent key) {	
+	public void keyPressed(KeyEvent key) {	 
+		
+		// check player hp
 		
 		boolean tookTurn = false;
 		
@@ -273,12 +275,20 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 			// run all actors, timers and things here
 		    if (tookTurn) {
 		        for (Thing t : yourMap.getThings()){
-		        	// fires burn water runs etc		        	
-		        	if ( t instanceof Actor && t.isActive() &&!(t instanceof Player) ) {
-		        		// just get a message for now call get action later
-		        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
-		        		t.act();
+		        	if ( t instanceof Actor) {
+		        		Actor a = (Actor) t;
+		        		if (a.getHp() < 1) {
+		        			yourMap.getThings().remove(t); // conccurent mod exception whoops
+		        			f.repaint();
+		        		}
+		        		if (  t.isActive() &&!(t instanceof Player) ) {
+			        		// just get a message for now call get action later
+			        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
+			        		t.act();
+			        	}
 		        	}
+		        	// fires burn water runs etc		        	
+		        	
 		        }
 		    }
 		}

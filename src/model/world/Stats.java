@@ -7,4 +7,5 @@ public interface Stats {
 	public int getHp();
 	public int getDefence();
 	public int getAttack();
+	public int getSpeed();
 }

@@ -2,12 +2,22 @@ TODO
 
 simple combat
 
+sort out killing mobs properly and conccurent mod exception
+
+add damage stat for monsters
+
+messages should have a colour (red for damage taken etc)
+
+add a noise map make noise activate and attract mobs 
+if active look for noiseiest thing of map and try to move towards it
+chance to become active if noise > wakeup thrshold and not allready active
+chance to deactivate if quiet and not active in last (mob thrshold turns)
+scent trails
+
 DONE slightly crazy chasing movement to fix
 	could still be better
 	
 add pathfinding for non stupid mobs 
-
-DONE if movement blocked dx try dy (mob check is passable like player does)
 
 move messages off tile onto actor object
 
