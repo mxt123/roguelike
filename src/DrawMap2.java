@@ -126,9 +126,12 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         	int x = thing.getLocation().getX();
 			int y = thing.getLocation().getY();
 			if (!thing.getName().equals("Player") && lightMap[x][y] > 0)  {
-    			thing.setActive(true);
-    			g2.setColor(thing.getColor());
-    			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
+				if (!(thing instanceof Actor) || thing instanceof Actor && (((Actor) thing).getHp() >0 )) {
+					thing.setActive(true);
+	    			g2.setColor(thing.getColor());
+	    			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
+				}
+    		
         }
 
 		// draw player last so appears on top of any passable things
@@ -277,7 +280,8 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		        	if ( t instanceof Actor) {
 		        		Actor a = (Actor) t;
 		        		if (a.getHp() < 1) {
-		        			yourMap.getThings().remove(t); // conccurent mod exception whoops
+		        		//	yourMap.getThings().remove(t); // conccurent mod exception whoops
+		        			// call the destroy here and create loot add xp etc
 		        			f.repaint();
 		        		}
 		        		if (  t.isActive() &&!(t instanceof Player) ) {

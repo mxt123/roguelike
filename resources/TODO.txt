@@ -1,8 +1,10 @@
 TODO  
 
-simple combat
+sort out mob and pc placement on cave maps
 
-sort out killing mobs properly and conccurent modification exception
+better stats and better combat
+
+call destroy on mobs when beaten
 
 add damage stat for monsters
 
