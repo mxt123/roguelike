@@ -1,6 +1,19 @@
 TODO  
 
+look into using A* or similar for better mob pathfinding than current simplisitic dx/dy
+
+externalise screen size image file location to props file
+
+add a game state and start menu return to menu on player death
+
+add save and persistence of levels
+
 sort out mob and pc placement on cave maps
+change connected island to give whole island back in results then we have 'rooms' to add stuff to
+
+add support for static maps and or static map segments (pregenerated rooms ?)
+
+inventory
 
 better stats and better combat
 
@@ -19,10 +32,6 @@ scent trails
 DONE slightly crazy chasing movement to fix
 	could still be better
 	
-add pathfinding for non stupid mobs 
-
-move messages off tile onto actor object
-
 seperate light radius from aggro radius
 
 json for levels
@@ -39,8 +48,6 @@ stairs/teleporters
 traps
 
 blank off edges of generated caves/world
-
-change connected island to give whole island back in results
 
 place player on an island/cave
 

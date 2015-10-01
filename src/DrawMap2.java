@@ -126,7 +126,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         	int x = thing.getLocation().getX();
 			int y = thing.getLocation().getY();
 			if (!thing.getName().equals("Player") && lightMap[x][y] > 0)  {
-				if (!(thing instanceof Actor) || thing instanceof Actor && (((Actor) thing).getHp() >0 )) {
+				if (!(thing instanceof Actor) || thing instanceof Actor && (((Actor) thing).getHp() > 0 )) {
 					thing.setActive(true);
 	    			g2.setColor(thing.getColor());
 	    			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
