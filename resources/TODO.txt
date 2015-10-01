@@ -1,5 +1,7 @@
 TODO  
 
+FOV doesnt need to send out 360/5 rays stuff this in props file can use far less
+
 look into using A* or similar for better mob pathfinding than current simplisitic dx/dy
 
 externalise screen size image file location to props file
@@ -47,7 +49,7 @@ secret doors
 stairs/teleporters 
 traps
 
-blank off edges of generated caves/world
+TODO move this to utility class for use in world map as well as caves blank off edges of generated caves/world
 
 place player on an island/cave
 
