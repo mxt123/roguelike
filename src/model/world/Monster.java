@@ -1,5 +1,7 @@
 package model.world;
 
+import model.world.interfaces.Stats;
+
 public enum Monster implements Stats {
 	//				maxHp,hp,defence,attack,speed
 	PLAYER("Player",50,50,1,1,1),

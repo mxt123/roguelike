@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.Direction;
 import model.Point;
+import model.world.interfaces.Stats;
 
 public class Player extends Actor {
 	

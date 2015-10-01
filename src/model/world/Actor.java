@@ -8,8 +8,10 @@ import util.Randoms;
 
 import model.Direction;
 import model.Point;
+import model.world.interfaces.Fights;
+import model.world.interfaces.Stats;
 
-public class Actor extends Thing implements Stats {
+public class Actor extends Thing implements Stats, Fights {
 
 	private String message = this.getTile().getMessage();
 	
@@ -20,6 +22,7 @@ public class Actor extends Thing implements Stats {
 	private int attack;
 	private int speed;
 	
+	@Override
 	public List<Thing> destroy() {
 		List<Thing> loot = new ArrayList<Thing>();
 		// remove this object
@@ -27,6 +30,7 @@ public class Actor extends Thing implements Stats {
 		return loot;
 	}
 	
+	@Override
 	public int attack(Actor target) {
 		int damage = attack - target.getDefence() + Randoms.d6();
 		target.takeDamage(damage);
@@ -48,6 +52,7 @@ public class Actor extends Thing implements Stats {
 		this.speed = s.getSpeed();
 	}
 	
+	@Override
 	public boolean takeDamage(int damage) {
 		this.hp -= damage;
 		return true;

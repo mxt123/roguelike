@@ -25,7 +25,6 @@ import model.Point;
 import model.world.Actor;
 import model.world.Map;
 import model.world.Player;
-import model.world.Stats;
 import model.world.Thing;
 import model.world.Tile;
 import util.Fov;

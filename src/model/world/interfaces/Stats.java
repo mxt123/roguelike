@@ -1,4 +1,4 @@
-package model.world;
+package model.world.interfaces;
 
 public interface Stats {
 

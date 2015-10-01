@@ -2,7 +2,7 @@ TODO
 
 simple combat
 
-sort out killing mobs properly and conccurent mod exception
+sort out killing mobs properly and conccurent modification exception
 
 add damage stat for monsters
 
