@@ -1,8 +1,5 @@
 package model;
 
-
-// converted from python
-// http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod,_part_3
 public class Rect {
 
 	public int getX() {

@@ -33,7 +33,12 @@ public class Thing {
 	public int getDistanceTo(Thing t) {
 		int dx = t.getLocation().getX() - this.getLocation().getX();
 		int dy = t.getLocation().getY() - this.getLocation().getY();
-		return (int) Math.sqrt(Math.pow(dx,2) + Math.pow(dy, 2));
+		int distance = (int) Math.sqrt(Math.pow(dx,2) + Math.pow(dy, 2));
+		// TODO this is relevant if no diagonal movement check for diagonal 
+		if (distance == 1 && this.getLocation().getX() != t.getLocation().getX()  && this.getLocation().getY() != t.getLocation().getY()) {
+			distance +=1;
+		}
+		return distance;
 	}
 	
 	public Thing(Map map, Point location,Tile tile,Color color, String name, String description) {

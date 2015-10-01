@@ -105,11 +105,11 @@ public class Map {
 		this.level = level;
 	}
 
-	public List<Thing> getThings() {
+	public synchronized List<Thing> getThings() {
 		return things;
 	}
 
-	public void setThings(List<Thing> things) {
+	public synchronized void setThings(List<Thing> things) {
 		this.things = things;
 	}
 

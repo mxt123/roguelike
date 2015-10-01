@@ -1,10 +1,21 @@
-TODO  
+TODO
+
+main draw loop is wrong things that are not actors are disappearing
+
+add a pass button to skip a turn
+
+DONE if were not allowing diaganol movement dont count diagonally 1 square away as next too
+monsters still block cells after dead as not removed ... still needs syncronizing
 
 FOV doesnt need to send out 360/5 rays stuff this in props file can use far less
+depending on radius of light source 20 or deg per inc is enough only start to notice
+problems with radius 10+ light sources
 
 look into using A* or similar for better mob pathfinding than current simplisitic dx/dy
 
 externalise screen size image file location to props file
+
+scale screen to window
 
 add a game state and start menu return to menu on player death
 

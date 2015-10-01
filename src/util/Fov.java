@@ -6,13 +6,15 @@ import model.world.Map;
 // adapted from looking at example at http://www.roguebasin.com/index.php?title=Eligloscode
 public class Fov {
 	
+	private static final int ANGLE_INCREMENT = 10;
+
 	// update for multipl sources and set light level decreasing from centre
 	public static int[][] getFov(Map map, Point source, int lightRadius)
 	{
 	  double x;
 	  double y;
 	  int[][] lightMap = new int[map.getWidth()][map.getHeight()];//Initially set all tiles to not visible.
-	  for(int i=0;i<360;i+=5) // increasing i increment to send out less than 360 rays
+	  for(int i=0;i<360;i+=ANGLE_INCREMENT) // increasing i increment to send out less than 360 rays depending on radius
 	  {
 	    x=Math.cos(i*0.01745f);
 	    y=Math.sin(i*0.01745f);
