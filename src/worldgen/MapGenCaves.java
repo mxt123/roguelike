@@ -42,7 +42,7 @@ public class MapGenCaves {
 		    for (int x = 0; x < grid[0].length ; x++) {    
 		      int count = countAliveNeighbours(map,x,y);
 			      boolean isAlive = (grid[y][x]) == Tile.WALL;
-			      if (isAlive) {
+			      if (isAlive && ! isBorder(grid,x,y) ) {
 			        if ( count < 3) {
 			          newgrid[y][x] = Tile.SPACE;
 			        } 
@@ -62,12 +62,16 @@ public class MapGenCaves {
 		  map.setLevel(grid);
 		  return map;
 	}
+	
+	private static boolean isBorder(Tile[][] grid, int x, int y) {
+		return x == 0  || x == grid[0].length -1 || y == 0 || y == grid.length -1;
+	}
 
 	public static Map generateGrid(Map map){  
 		Tile[][] grid = map.getLevel();
 		  for (int y = 0; y < grid.length ; y++) {
 		    for (int x = 0; x < grid[0].length ; x++) {    
-		        if (  Math.random() < CHANCE_TO_START_WALL) {
+		        if (  Math.random() < CHANCE_TO_START_WALL || isBorder(grid,x,y) ) {
 		          grid[y][x] = Tile.WALL;
 		        }
 		        else {
