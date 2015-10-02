@@ -1,6 +1,7 @@
 package worldgen;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.List;
 
 import util.ConnectedIslands;
@@ -32,8 +33,9 @@ public class MapGenWorld extends MapGenBase {
     	}
 		
 		// label the island
-		List<Point> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.LAND);
-		for (Point p : islands) {
+		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.LAND);
+		for (List<Point> island : islands) {
+			Point p = island.get(0); // get the first point change to get first one
 			map.getPermanentMessages().add(new Message(p,"Island"));
 		}
 		
