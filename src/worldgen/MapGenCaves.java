@@ -1,7 +1,12 @@
 package worldgen;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
+import util.ConnectedIslands;
+
+import model.Message;
 import model.Point;
 import model.world.Map;
 import model.world.Monster;
@@ -29,15 +34,27 @@ public class MapGenCaves extends MapGenBase {
 		//TODO edges are always walls
 		//TODO carve tunnels linking any isolated caves	
 		
-		map.getThings().add(new Player(
-				Monster.PLAYER,
-				map,
-				new Point(0,0),
-				Tile.PERSON,
-				Color.YELLOW,
-				"Player",
-				"this is you :)"
-				));
+		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.SPACE);
+		int count = 0;
+		for (List<Point> island : islands) {
+			// trim all but largest 'island'
+			Point p = island.get(0); // TODO get the first point change to get centre
+			map.getPermanentMessages().add(new Message(p,"Island"));
+			if (count ==0){
+				map.getThings().add(new Player(
+						Monster.PLAYER,
+						map,
+						p,
+						Tile.PERSON,
+						Color.YELLOW,
+						"Player",
+						"this is you :)"
+						));
+				count++;
+			}
+		}
+		
+		
 		
 		map.setVisited(visited);
 		

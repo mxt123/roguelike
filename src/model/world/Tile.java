@@ -7,27 +7,12 @@ public enum Tile {
 	LAND(',',true,true,Color.BLACK, Color.GREEN,"land",""),
 	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall",""),
 	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space",""),
-	SEA('~',true,true,Color.BLACK,Color.BLUE,"water",""),
+	SEA('~',false,true,Color.BLACK,Color.BLUE,"water",""),
 	TREE('T',false,true,Color.BLACK,Color.GREEN,"tree",""),
 	PERSON('@',false,true,Color.YELLOW,Color.YELLOW,"A person",""),
 	GOBLIN('g',false,true,Color.BLACK,Color.green,"A goblin","grrr!"),
 	OGRE('H',false,true,Color.BLACK,Color.green,"An ogre","RAAAR!"),
 	COIN('o',true,true,Color.BLACK,Color.YELLOW,"A coin","");
-	
-	//old wall #
-	//old space _
-	// http://www.alanwood.net/unicode/unicode_samples.html 
-	//:)
-	/*
-	∙
-	▨
-	□
-	⟰
-	ȣ
-	Ȣ
-	Ѧ
-	о҉
-	*/
 	
 	private char character;
 	private boolean passable;

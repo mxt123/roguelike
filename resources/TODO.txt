@@ -1,6 +1,16 @@
 TODO
 
-add an island type to contain a new island with get center and get intersection methods a name and a list of points
+drill and join caves or trim any islands
+
+add a list of precooked rooms as an enum and add these randomly in create dungeon
+along with stairs/portals etc
+
+add an island type to contain a new island with 
+	get center
+	get intersection 
+	name 
+	list of points
+	
 that represent the poly
 
 sort out mob and pc placement on cave maps
