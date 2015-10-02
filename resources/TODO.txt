@@ -1,5 +1,8 @@
 TODO
 
+add an island type to contain a new island with get center and get intersection methods a name and a list of points
+that represent the poly
+
 sort out mob and pc placement on cave maps
 change connected island to give whole island back in results then we have 'rooms' to add stuff to
 

@@ -161,8 +161,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                         
         for (Message m: yourMap.getMessages()) { 
         	if (m.getMessage() != null) {
-	        	Font fontSmall = new Font(Font.MONOSPACED,Font.PLAIN,fontSize/2);
-	     		g2.setFont(fontSmall);  
+	     		g2.setFont(font);  
 	        	g2.setColor(Color.yellow); // messages should store a color
 	    		g2.drawString(m.getMessage(), ((m.getP().getX() ) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         	}
@@ -171,6 +170,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         
         for (Message m: yourMap.getPermanentMessages()) { 
         	// TODO permanent messages should be toggled
+        	g2.setFont(font);  
         	g2.setColor(Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }

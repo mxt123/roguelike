@@ -4,7 +4,7 @@ import java.awt.Color;
 
 public enum Tile {	
 	
-	LAND(',',false,true,Color.BLACK, Color.GREEN,"land",""),
+	LAND(',',true,true,Color.BLACK, Color.GREEN,"land",""),
 	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall",""),
 	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space",""),
 	SEA('~',true,true,Color.BLACK,Color.BLUE,"water",""),
