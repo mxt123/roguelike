@@ -1,13 +1,18 @@
 TODO
 
-main draw loop is wrong things that are not actors are disappearing
+sort out mob and pc placement on cave maps
+change connected island to give whole island back in results then we have 'rooms' to add stuff to
+
+add dialogs
+
+add anger/appease the RNG ? :)
 
 add a pass button to skip a turn
 
 DONE if were not allowing diaganol movement dont count diagonally 1 square away as next too
 monsters still block cells after dead as not removed ... still needs syncronizing
 
-FOV doesnt need to send out 360/5 rays stuff this in props file can use far less
+DONE FOV doesnt need to send out 360/5 rays stuff this in props file can use far less
 depending on radius of light source 20 or deg per inc is enough only start to notice
 problems with radius 10+ light sources
 
@@ -20,9 +25,6 @@ scale screen to window
 add a game state and start menu return to menu on player death
 
 add save and persistence of levels
-
-sort out mob and pc placement on cave maps
-change connected island to give whole island back in results then we have 'rooms' to add stuff to
 
 add support for static maps and or static map segments (pregenerated rooms ?)
 
@@ -84,5 +86,20 @@ npcs
 
 this for ipad ? or similar for chromebook
 
+teleport
+remote view
+channel and target spell at closest
+charge
+kickback
+block
+heal
+transfer mana/health
+poly
+buff
+curse
+aoe fireball
+reveal map
+
+add planes ?
 
 https://itunes.apple.com/us/app/make-pixel-art/id482186692?mt=8

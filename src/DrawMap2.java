@@ -87,7 +87,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
             				
         final int spacing = getSpacing();
         
-        // get lightmap this should be stored in map and persisted
+        // TODO get lightmap this should be stored in map and persisted ?
         Player p = yourMap.getPlayer();
 		Point pLoc = p.getLocation();
 		int[][] lightMap = Fov.getFov(yourMap, pLoc, LIGHT_RADIUS );    
@@ -236,6 +236,11 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		
 		if (FOLLOW) {centreView(spacing);}
 		
+		//skip
+		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
+			tookTurn = true;
+		}
+		
 		if (key.getKeyCode() == KeyEvent.VK_1) {
 			fontSize += 1;	
 			centreView(spacing);
@@ -260,7 +265,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_8) {
-			this.yourMap = MapGenCaves.newWorld("world",50,50,2);
+			this.yourMap = MapGenCaves.newWorld("world",50,50,3);
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_9) {
@@ -271,11 +276,11 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 			}
         }
 		
-		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_SPACE ) {
+		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_R ) {
 			mapY = 0;
 			mapX = 0;
 			fontSize = 14;
-		} else if (key.getKeyCode() == KeyEvent.VK_SPACE) {
+		} else if (key.getKeyCode() == KeyEvent.VK_R) {
 			centreView(spacing);
         }
 		

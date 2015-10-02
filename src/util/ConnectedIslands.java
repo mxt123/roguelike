@@ -44,13 +44,11 @@ public class ConnectedIslands {
 	    boolean visited[][] = new boolean[M.length][M[0].length];
 	   
 	 
-	    // Initialize count as 0 and traverse through the all cells of
-	    // given matrix
-	   // int count = 0;
+	    // Initialize count as 0 and traverse through all cells
 	    for (int i = 0; i < M.length; ++i)
 	        for (int j = 0; j < M[0].length; ++j)
-	            if (M[i][j] == tileType && !visited[i][j]) // If a cell with value 1 is not
-	            {                              // visited yet, then new island found
+	            if (M[i][j] == tileType && !visited[i][j]) // If a cell with value (tile) is not visited yet, then new island found
+	            {      
 	                DFS(M, tileType,  i, j, visited);     // Visit all cells in this island.
 	                //++count;                   // and increment island count
 	                result.add(new Point(j,i));
