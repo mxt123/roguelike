@@ -14,6 +14,7 @@ public class Map {
 	private List<Thing> things;
 	private List<Message> messages = new ArrayList<Message>();
 	private List<Message> permanentMessages = new ArrayList<Message>();
+	private List<PolyRoom> rooms;
 	
 	public List<Thing> getThingsAt(Point p){
 		List<Thing> things = new ArrayList<Thing>();
@@ -135,6 +136,14 @@ public class Map {
 
 	public void setPermanentMessages(List<Message> permanentMessages) {
 		this.permanentMessages = permanentMessages;
+	}
+
+	public List<PolyRoom> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(List<PolyRoom> places) {
+		this.rooms = places;
 	}
 
 }

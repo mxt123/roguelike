@@ -1,5 +1,8 @@
 TODO
 
+create things as light sources
+set a light level for lights not just on/off
+
 drill and join caves or trim any islands
 
 add a list of precooked rooms as an enum and add these randomly in create dungeon

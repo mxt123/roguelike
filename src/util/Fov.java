@@ -6,7 +6,7 @@ import model.world.Map;
 // adapted from looking at example at http://www.roguebasin.com/index.php?title=Eligloscode
 public class Fov {
 	
-	private static final int ANGLE_INCREMENT = 15;
+	private static final int ANGLE_INCREMENT = 1;
 
 	// update for multipl sources and set light level decreasing from centre
 	public static int[][] getFov(Map map, Point source, int lightRadius)

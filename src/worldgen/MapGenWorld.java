@@ -5,18 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.ConnectedIslands;
+import util.Randoms;
 
 import model.Message;
 import model.Point;
 import model.world.Actor;
 import model.world.Map;
 import model.world.Monster;
+import model.world.Place;
 import model.world.Player;
+import model.world.PolyRoom;
 import model.world.Tile;
 
 public class MapGenWorld extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_SEA = 0.43;
+	private static final int MAX_THINGS = 20;
 
 	public static Map newWorld(String name, int height, int width, int generations) {
 		Map map =  Map.newFilledMap(name, Tile.SEA, height, width);
@@ -34,16 +38,25 @@ public class MapGenWorld extends MapGenBase {
     	}
 		
 		// label the island and add some things
-		int count = 0;
+
 		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.LAND);
+		List<PolyRoom> places = new ArrayList<PolyRoom>();
+		
 		for (List<Point> island : islands) {
-			Point p = island.get(0); // get the first point change to get first one
+			places.add( new PolyRoom ("island",island));
+		}
+			
+		map.setRooms(places);
+		int count = 0;
+		while  (count <= MAX_THINGS) {			
+			Place place = places.get(Randoms.getRandom(0,places.size()-1));
+			Point p = place.getPoints().get(0); 
 			map.getPermanentMessages().add(new Message(p,"Island"));
 			if (count == 0) {
 				map.getThings().add(new Player(
 						Monster.PLAYER,
 						map,
-						island.get(0),
+						place.getRandomPoint(),
 						Tile.PERSON,
 						Color.YELLOW,
 						"Player",
@@ -53,14 +66,13 @@ public class MapGenWorld extends MapGenBase {
 				map.getThings().add(new Actor(
 						Monster.GOBLIN,
 						map,
-						island.get(0),
+						place.getRandomPoint(),
 						Tile.GOBLIN,
 						Color.GREEN,
 						"goblin",
 						"this is a goblin"
 						));	
 			}
-			
 			count++;
 		}
 				
