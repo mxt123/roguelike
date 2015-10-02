@@ -10,6 +10,12 @@ add an island type to contain a new island with
 	get intersection 
 	name 
 	list of points
+
+island/and cave should provide the methods to populate the polygon with Tiles/things
+new class of things for world objects
+
+generate a new level of map between world and cave/dungeon start with zoomed out version of island
+from world map 
 	
 that represent the poly
 

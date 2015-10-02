@@ -8,9 +8,9 @@ import model.world.Tile;
 //http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
 
 
-// lifted from c version of this algorithm  on connected graph theory adapted to java 
-// and to calculate islands points and return as data structers rather than just count them.
-// http://www.geeksforgeeks.org/find-number-of-islands/
+// adapted from c version of this algorithm on connected graph theory converted to java 
+// and to calculate islands of point objects and return as data structures rather than just count them.
+// original c code that counts 'islands' is on http://www.geeksforgeeks.org/find-number-of-islands/
 public class ConnectedIslands {
 
 	// A function to check if a given cell (row, col) can be included in DFS
@@ -47,19 +47,14 @@ public class ConnectedIslands {
 	public static List<ArrayList<Point>> getIslands(Tile M[][], Tile tileType)
 	{
 		List<ArrayList<Point>> islands = new ArrayList<ArrayList<Point>>();
-		//List<Point> result = new ArrayList<Point>();
-	    // Make a bool array to mark visited cells.
-	    // Initially all cells are unvisited
 	    boolean visited[][] = new boolean[M.length][M[0].length];
-	 
-	    // Initialize count as 0 and traverse through all cells
+
 	    for (int i = 0; i < M.length; ++i) {
 	        for (int j = 0; j < M[0].length; ++j) {
 	        	List<Point> island = new ArrayList<Point>();
 	            if (M[i][j] == tileType && !visited[i][j]) // If a cell with value (tile) is not visited yet, then new island found
 	            {      
 	            	List<Point> newIsland = (ArrayList<Point>) DFS(M, tileType,  i, j, visited, island);     // Visit all cells in this island.
-	               // result.add(new Point(j,i));
 	            	if (newIsland.size() > 0) {
 	            		islands.add((ArrayList<Point>) newIsland);
 	            	}
