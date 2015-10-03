@@ -1,7 +1,5 @@
 TODO
 
-sort out break in drawmap
-
 splatmarks for dead mobs
 
 import images from ipad
