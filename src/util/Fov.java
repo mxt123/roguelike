@@ -34,8 +34,8 @@ public class Fov {
 		 if (ox >= 0 && oy >= 0 && ox <= map.getWidth() && oy <= map.getHeight()) {
 			  lightMap[(int)ox][(int)oy]=1;//Set the tile to visible.
 		  }	
-	 //   if(!map.getLevel()[(int)ox][(int)oy].isTransparent())
-	   //   return;
+	    if(!map.getLevel()[(int)oy][(int)ox].isTransparent())
+	      return;
 	    ox+=x;
 	    oy+=y;
 	  };

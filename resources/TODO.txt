@@ -1,5 +1,19 @@
 TODO
 
+dont random gen mobs on top (or even near player in world/caves)
+caves arent properly creating with just one large room
+mobs arent redrawing properly after killing one
+
+add a noise map make noise activate and attract mobs 
+if active look for noiseiest thing of map and try to move towards it
+chance to become active if noise > wakeup thrshold and not allready active
+chance to deactivate if quiet and not active in last (mob thrshold turns)
+scent trails
+
+messages should have a colour (red for damage taken etc)
+
+seperate light radius from aggro radius (eg infravision or tracking skills or stealth)
+
 create things as light sources
 set a light level for lights not just on/off
 
@@ -7,12 +21,6 @@ drill and join caves or trim any islands
 
 add a list of precooked rooms as an enum and add these randomly in create dungeon
 along with stairs/portals etc
-
-add an island type to contain a new island with 
-	get center
-	get intersection 
-	name 
-	list of points
 
 island/and cave should provide the methods to populate the polygon with Tiles/things
 new class of things for world objects
@@ -26,19 +34,6 @@ sort out mob and pc placement on cave maps
 change connected island to give whole island back in results then we have 'rooms' to add stuff to
 
 add dialogs
-
-add anger/appease the RNG ? :)
-
-add a pass button to skip a turn
-
-DONE if were not allowing diaganol movement dont count diagonally 1 square away as next too
-monsters still block cells after dead as not removed ... still needs syncronizing
-
-DONE FOV doesnt need to send out 360/5 rays stuff this in props file can use far less
-depending on radius of light source 20 or deg per inc is enough only start to notice
-problems with radius 10+ light sources
-
-look into using A* or similar for better mob pathfinding than current simplisitic dx/dy
 
 externalise screen size image file location to props file
 
@@ -54,22 +49,12 @@ inventory
 
 better stats and better combat
 
-call destroy on mobs when beaten
 
-add damage stat for monsters
-
-messages should have a colour (red for damage taken etc)
-
-add a noise map make noise activate and attract mobs 
-if active look for noiseiest thing of map and try to move towards it
-chance to become active if noise > wakeup thrshold and not allready active
-chance to deactivate if quiet and not active in last (mob thrshold turns)
-scent trails
 
 DONE slightly crazy chasing movement to fix
 	could still be better
 	
-seperate light radius from aggro radius
+
 
 json for levels
 json mobs
