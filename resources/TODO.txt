@@ -1,5 +1,13 @@
 TODO
 
+sort out break in drawmap
+
+splatmarks for dead mobs
+
+import images from ipad
+
+autoexplore + auto fight ?
+
 dont random gen mobs on top (or even near player in world/caves)
 caves arent properly creating with just one large room
 mobs arent redrawing properly after killing one

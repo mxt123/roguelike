@@ -133,31 +133,36 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 	    			g2.setColor(thing.getColor());
 	    			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
 				}
-				if (isActor && !liveActor) {
-					yourMap.getThings().remove(thing);
-					break;
-				}
-    		
-        }
+			}		
 
-		// draw player last so appears on top of any passable things
-		int playerX = p.getLocation().getX();
-		int playerY = p.getLocation().getY();
-		if (p.getMessage() != null) {
-				g2.setColor(Color.BLUE); // messages should store a color
-				g2.drawString(p.getMessage(), (playerX * spacing )+mapX,((playerY -1)   *spacing)+mapY); 
-				p.clearMessages();
-				// TODO draw splat marks from attacking here
-		}
-
-		g2.drawImage(
-				ghost,
-				(int) ((playerX*spacing)+mapX),
-				(int) ( (playerY*spacing)+mapY) -spacing,
-				spacing,
-				spacing,
-				null);
+			// draw player last so appears on top of any passable things
+			int playerX = p.getLocation().getX();
+			int playerY = p.getLocation().getY();
+			if (p.getMessage() != null) {
+					g2.setColor(Color.BLUE); // messages should store a color
+					g2.drawString(p.getMessage(), (playerX * spacing )+mapX,((playerY -1)   *spacing)+mapY); 
+					p.clearMessages();
+					// TODO draw splat marks from attacking here
+			}
+	
+			g2.drawImage(
+					ghost,
+					(int) ((playerX*spacing)+mapX),
+					(int) ( (playerY*spacing)+mapY) -spacing,
+					spacing,
+					spacing,
+					null);
         }
+    
+    	// remove dead things
+ 		for (int i = 0 ; i < yourMap.getThings().size();i++){ 
+ 			Thing thing = yourMap.getThings().get(i);
+ 			boolean isActor = thing instanceof Actor;
+        	boolean liveActor = isActor && ((Actor) thing).getHp() > 0;
+ 			if (isActor && !liveActor) {
+ 				yourMap.getThings().remove(thing);					
+ 			}
+ 		}
                         
         for (Message m: yourMap.getMessages()) { 
         	if (m.getMessage() != null) {
