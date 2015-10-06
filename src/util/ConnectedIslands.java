@@ -36,7 +36,7 @@ public class ConnectedIslands {
 	    visited[row][col] = true;
 	 
 	    // Recur for all <diagonally> connected neighbours
-	    for (int k = 0; k < 8; ++k)
+	    for (int k = 0; k < 8; k++)
 	        if (isSafeMatch(M, tileType, row + rowNbr[k], col + colNbr[k], visited) ) { 
 	        	island.add(new Point(col,row));
 	            DFS(M, tileType, row + rowNbr[k], col + colNbr[k], visited, island);

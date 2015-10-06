@@ -20,7 +20,7 @@ import model.world.Tile;
 public class MapGenCaves extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_WALL = 0.36;
-	private static final int MAX_THINGS = 100;
+	private static final int MAX_THINGS = 2;
 	
 	public static Map newWorld(String name, int height, int width, int generations) {
 		Map map =  Map.newFilledMap(name, Tile.WALL, height, width);
@@ -39,28 +39,33 @@ public class MapGenCaves extends MapGenBase {
 		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.SPACE);
 		List<PolyRoom> places = new ArrayList<PolyRoom>();
 		
+		// testing code spam with tiles and add messages
 		for (List<Point> island : islands) {
 			places.add( new PolyRoom ("island",island));
+			map.getPermanentMessages().add(new Message(island.get(0),"cave"));
+			for (Point p : island) {
+				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
+			} //mark islands for test
 		}
 		
 		// only add the largest room delete the rest
 		Collections.sort(places);
 		for (int i =0 ; i < places.size(); i++){
-			if (i == 0) {
+			if (i == places.size()-1) {
 				map.setRooms(Arrays.asList(places.get(i)));
 			} else {
-				PolyRoom p = places.get(0);
+				PolyRoom p = places.get(i);
 				for (Point pnt : p.getPoints()) {
-					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.WALL; 
+					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.TREE	; 
 				}
 			}
 		}
 		places = null;
 		
 		int count = 0;
+		PolyRoom room = map.getRooms().get(0);
+		Point p = room.getPoints().get(0); 
 		while  (count <= MAX_THINGS) {	
-			PolyRoom room = map.getRooms().get(0);
-			Point p = room.getPoints().get(0); 
 			map.getPermanentMessages().add(new Message(p,"A Cave"));
 			if (count == 0) {
 				map.getThings().add(new Player(

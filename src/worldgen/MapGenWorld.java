@@ -44,6 +44,9 @@ public class MapGenWorld extends MapGenBase {
 		
 		for (List<Point> island : islands) {
 			places.add( new PolyRoom ("island",island));
+			for (Point p : island) {
+				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
+			} //mark islands for test
 		}
 			
 		map.setRooms(places);

@@ -1,5 +1,7 @@
 TODO
 
+islands algorithm failing on caves should do horizontals and verticals only not diagonals
+
 splatmarks for dead mobs
 
 import images from ipad
