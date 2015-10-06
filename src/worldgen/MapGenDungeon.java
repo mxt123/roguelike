@@ -121,6 +121,7 @@ public class MapGenDungeon {
 					Tile.GOBLIN,
 					Color.GREEN,
 					"goblin",
+					false,
 					"this is a goblin"
 					));	
 			} else if( labelCount % 3== 0){
@@ -142,6 +143,7 @@ public class MapGenDungeon {
 						Tile.OGRE,
 						Color.RED,
 						"ogre",
+						false,
 						"this is an ogre"
 						));	
 				

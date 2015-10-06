@@ -116,6 +116,7 @@ public class TestRoom {
 					Tile.GOBLIN,
 					Color.GREEN,
 					"goblin",
+					false,
 					"this is a goblin"
 					));	
 		}

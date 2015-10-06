@@ -27,16 +27,18 @@ public class ConnectedIslands {
 	// the 8 neighbors as adjacent vertices
 	static List<Point> DFS(Tile M[][], Tile tileType, int row, int col, boolean visited[][], List<Point> island)
 	{
-	    // These arrays are used to get row and column numbers of 8 neighbors 
-	    // of a given cell
-	    int rowNbr[] = {-1, -1, -1,  0, 0,  1, 1, 1};
-	    int colNbr[] = {-1,  0,  1, -1, 1, -1, 0, 1};
+		// diagonals
+	  //  int rowNbr[] = {-1, -1, -1,  0, 0,  1, 1, 1};
+	   //  int colNbr[] = {-1,  0,  1, -1, 1, -1, 0, 1};
+		
+		// straight lines only 
+		int rowNbr[] = {0,1,0,-1};
+		int colNbr[] = {-1,0,1,0};
 	 
 	    // Mark this cell as visited
 	    visited[row][col] = true;
 	 
-	    // Recur for all <diagonally> connected neighbours
-	    for (int k = 0; k < 8; k++)
+	    for (int k = 0; k < 4; k++)
 	        if (isSafeMatch(M, tileType, row + rowNbr[k], col + colNbr[k], visited) ) { 
 	        	island.add(new Point(col,row));
 	            DFS(M, tileType, row + rowNbr[k], col + colNbr[k], visited, island);
@@ -52,7 +54,7 @@ public class ConnectedIslands {
 	    for (int i = 0; i < M.length; ++i) {
 	        for (int j = 0; j < M[0].length; ++j) {
 	        	List<Point> island = new ArrayList<Point>();
-	            if (M[i][j] == tileType && !visited[i][j]) // If a cell with value (tile) is not visited yet, then new island found
+	            if (M[i][j] == tileType  && !visited[i][j]) // If a cell with value (tile) is not visited yet, then new island found
 	            {      
 	            	List<Point> newIsland = (ArrayList<Point>) DFS(M, tileType,  i, j, visited, island);     // Visit all cells in this island.
 	            	if (newIsland.size() > 0) {

@@ -4,15 +4,16 @@ import java.awt.Color;
 
 public enum Tile {	
 	
-	LAND(',',true,true,Color.BLACK, Color.GREEN,"land",""),
-	WALL('▨',false,false,Color.BLACK,Color.GRAY,"wall",""),
-	SPACE('_',true,true,Color.BLACK,Color.ORANGE,"open space",""),
-	SEA('~',false,true,Color.BLACK,Color.BLUE,"water",""),
-	TREE('T',false,true,Color.BLACK,Color.GREEN,"tree",""),
-	PERSON('@',false,true,Color.YELLOW,Color.YELLOW,"A person",""),
-	GOBLIN('g',false,true,Color.BLACK,Color.green,"A goblin","grrr!"),
-	OGRE('H',false,true,Color.BLACK,Color.green,"An ogre","RAAAR!"),
-	COIN('o',true,true,Color.BLACK,Color.YELLOW,"A coin","");
+	LAND(',',true,false,true,Color.BLACK, Color.GREEN,"land",""),
+	WALL('▨',false,false,false,Color.BLACK,Color.GRAY,"wall",""),
+	SPACE('_',true,false,true,Color.BLACK,Color.ORANGE,"open space",""),
+	SEA('~',false,true,true,Color.BLACK,Color.BLUE,"water",""),
+	TREE('T',false,false,true,Color.BLACK,Color.GREEN,"tree",""),
+	PERSON('@',false,false,true,Color.YELLOW,Color.YELLOW,"A person",""),
+	GOBLIN('g',false,false,true,Color.BLACK,Color.green,"A goblin","grrr!"),
+	OGRE('H',false,false,true,Color.BLACK,Color.green,"An ogre","RAAAR!"),
+	COIN('o',true,false,true,Color.BLACK,Color.YELLOW,"A coin",""),
+	SHARK('^',false,false,true,Color.BLACK,Color.WHITE,"A shark","");
 	
 	private char character;
 	private boolean passable;
@@ -21,8 +22,9 @@ public enum Tile {
 	private Color colorLight;
 	private String description;
 	private String message;
+	private boolean swimable;
 	
-	Tile( char character, boolean passable, boolean transparent, Color colorDark, Color colorLight, String description, String message) {
+	Tile( char character, boolean passable,boolean swimable, boolean transparent, Color colorDark, Color colorLight, String description, String message) {
 		this.setCharacter(character);
 		this.setPassable(passable);
 		this.setTransparent(transparent);
@@ -30,6 +32,12 @@ public enum Tile {
 		this.setColorDark(colorDark);
 		this.setColorLight(colorLight);
 		this.setMessage(message);
+		this.setSwimable(swimable);
+	}
+
+	private void setSwimable(boolean swimable) {
+		this.swimable = swimable;
+		
 	}
 
 	public String getMessage() {
@@ -102,5 +110,9 @@ public enum Tile {
 
 	public void setColorDark(Color colorDark) {
 		this.colorDark = colorDark;
+	}
+
+	public boolean isSwimable() {
+		return swimable;
 	}
 }

@@ -44,9 +44,11 @@ public class MapGenWorld extends MapGenBase {
 		
 		for (List<Point> island : islands) {
 			places.add( new PolyRoom ("island",island));
+			/*
 			for (Point p : island) {
 				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
 			} //mark islands for test
+			*/
 		}
 			
 		map.setRooms(places);
@@ -62,10 +64,10 @@ public class MapGenWorld extends MapGenBase {
 						place.getRandomPoint(),
 						Tile.PERSON,
 						Color.YELLOW,
-						"Player",
+						"Player",			
 						"this is you :)"
 						));
-			} else {
+			} else if (count % 2 == 0){
 				map.getThings().add(new Actor(
 						Monster.GOBLIN,
 						map,
@@ -73,7 +75,19 @@ public class MapGenWorld extends MapGenBase {
 						Tile.GOBLIN,
 						Color.GREEN,
 						"goblin",
+						false,
 						"this is a goblin"
+						));	
+			} else {
+				map.getThings().add(new Actor(
+						Monster.SHARK,
+						map,
+						place.getRandomPoint(),
+						Tile.SHARK,
+						Color.WHITE,
+						"shark",
+						true,
+						"this is a shark"
 						));	
 			}
 			count++;

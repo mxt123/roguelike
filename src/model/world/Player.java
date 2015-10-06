@@ -11,7 +11,7 @@ public class Player extends Actor {
 	
 	public Player(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
-		super(stats, map, location, tile, color, name, description);
+		super(stats, map, location, tile, color, name,true, description);
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class Player extends Actor {
 			int damage = attack(a);
 			a.setMessage(String.valueOf(damage));
 			return false;
-		} else if (target.isPassable() && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+		} else if (target.isPassable() || (target.isSwimable() && this.isSwims())  && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			return true;
 		} else {

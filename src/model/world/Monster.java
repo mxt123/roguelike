@@ -5,7 +5,8 @@ import model.world.interfaces.Stats;
 public enum Monster implements Stats {
 	//				maxHp,hp,defence,attack,speed
 	PLAYER("Player",50,50,1,1,1),
-	GOBLIN("Goblin",1,1,1,1,1);
+	GOBLIN("Goblin",1,1,1,1,1),
+	SHARK("Shark",1,1,1,1,1);
 	
 	private String profileName;
 	private int maxHp; 
