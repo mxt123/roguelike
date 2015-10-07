@@ -76,6 +76,7 @@ public class MapGenWorld extends MapGenBase {
 						Color.GREEN,
 						"goblin",
 						false,
+						true,
 						"this is a goblin"
 						));	
 			} else {
@@ -87,7 +88,8 @@ public class MapGenWorld extends MapGenBase {
 						Color.WHITE,
 						"shark",
 						true,
-						"this is a shark"
+						true,
+						"this is a shark they still walk at the mo "
 						));	
 			}
 			count++;

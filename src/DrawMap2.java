@@ -104,7 +104,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                     			boolean isLit = lightMap[x][y] > 0;
                     			if (visited || isLit) {
                         			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker().darker());                      
+                        				g2.setColor(t.getColorLight().darker().darker().darker());                      
                         			}
                         			if (lightMap[x][y] > 0) {
                         				g2.setColor(t.getColorLight());

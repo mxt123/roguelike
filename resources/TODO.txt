@@ -1,5 +1,11 @@
 TODO
 
+change to use light  levels and fade rather than dark/light 
+
+mobs should stay active once activated
+
+get random point/  not island/room  method on Map
+
 islands algorithm failing on caves should do horizontals and verticals only not diagonals
 
 splatmarks for dead mobs

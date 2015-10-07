@@ -20,7 +20,7 @@ import model.world.Tile;
 public class MapGenCaves extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_WALL = 0.36;
-	private static final int MAX_THINGS = 20;
+	private static final int MAX_THINGS = 10;
 	
 	public static Map newWorld(String name, int height, int width, int generations) {
 		Map map =  Map.newFilledMap(name, Tile.WALL, height, width);
@@ -66,9 +66,14 @@ public class MapGenCaves extends MapGenBase {
 		
 		int count = 0;
 		PolyRoom room = map.getRooms().get(0);
-		Point p = room.getPoints().get(0); 
 		while  (count <= MAX_THINGS) {	
 			//map.getPermanentMessages().add(new Message(p,"A Cave"));
+			Point p = room.getRandomPoint();
+			int countAdd = 0;
+			while (countAdd++ < 4 && map.getActorsAt(p).size() > 0) {
+				// try 3 times then give up and dont add thing room is too full
+				p = room.getRandomPoint();
+			}
 			if (count == 0) {
 				map.getThings().add(new Player(
 						Monster.PLAYER,
@@ -88,6 +93,7 @@ public class MapGenCaves extends MapGenBase {
 						Color.GREEN,
 						"goblin",
 						false,
+						true,
 						"this is a goblin"
 						));	
 			}

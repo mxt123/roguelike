@@ -11,7 +11,7 @@ public class Player extends Actor {
 	
 	public Player(Stats stats, Map map, Point location, Tile tile, Color color, String name,
 			String description) {
-		super(stats, map, location, tile, color, name,true, description);
+		super(stats, map, location, tile, color, name,true, true, description);
 	}
 	
 	@Override

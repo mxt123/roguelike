@@ -117,6 +117,7 @@ public class TestRoom {
 					Color.GREEN,
 					"goblin",
 					false,
+					true,
 					"this is a goblin"
 					));	
 		}

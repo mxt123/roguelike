@@ -22,7 +22,7 @@ public class Actor extends Thing implements Stats, Fights {
 	private int attack;
 	private int speed;
 	private boolean swims;
-	//private boolean walks;
+	private boolean walks;
 	
 	@Override
 	public List<Thing> destroy() {
@@ -39,11 +39,12 @@ public class Actor extends Thing implements Stats, Fights {
 		return damage;
 	}
 	
-	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name, boolean swims,
+	public Actor(Stats stats, Map map, Point location, Tile tile, Color color, String name, boolean swims, boolean walks,
 			String description) {
 		super(map, location, tile, color, name, description);
 		this.setStats(stats);
 		this.setSwims(swims);
+		this.setWalks(walks);
 	}
 	
 	public void setStats(Stats s) {
@@ -94,7 +95,7 @@ public class Actor extends Thing implements Stats, Fights {
 			break;
 		}
 		Tile target = this.getMap().getLevel()[y][x];		
-		if (target.isPassable() || (target.isSwimable() && this.isSwims()) && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+		if ((target.isPassable() && this.walks ) || (target.isSwimable() && this.swims) && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			return true;
 		} else {
@@ -225,5 +226,13 @@ public class Actor extends Thing implements Stats, Fights {
 
 	public void setSwims(boolean swims) {
 		this.swims = swims;
+	}
+
+	public boolean isWalks() {
+		return walks;
+	}
+
+	public void setWalks(boolean walks) {
+		this.walks = walks;
 	}
 }
