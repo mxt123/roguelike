@@ -29,7 +29,7 @@ public class MapGenWorld extends MapGenBase {
 			MapGenWorld.evolveGrid(map,Tile.SEA,Tile.LAND);
 		} 
 		
-		boolean [][] visited = new boolean [map.getHeight()][map.getWidth()];
+		boolean [][] visited = new boolean [map.getWidth()][map.getHeight()];
 		
 		for (int i =0;i < map.getHeight(); i++){
     		for (int j =0; j < map.getWidth(); j ++) {

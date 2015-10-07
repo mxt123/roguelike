@@ -36,7 +36,7 @@ import worldgen.TestRoom;
 public class DrawMap2 extends JPanel  implements KeyListener{
 	private static final int GAME_Y = 40;
 	private static final int GAME_X = 40;
-	private static final int LIGHT_RADIUS = 7;
+	private static final int LIGHT_RADIUS = 50;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
 	static int fontSize = 14;
@@ -104,7 +104,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                     			boolean isLit = lightMap[x][y] > 0;
                     			if (visited || isLit) {
                         			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker().darker().darker());                      
+                        				g2.setColor(t.getColorLight().darker().darker().darker().darker()); //lol suck change to a alpha level                     
                         			}
                         			if (lightMap[x][y] > 0) {
                         				g2.setColor(t.getColorLight());
