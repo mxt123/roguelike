@@ -16,6 +16,29 @@ public class Map {
 	private List<Message> permanentMessages = new ArrayList<Message>();
 	private List<PolyRoom> rooms;
 	
+	public List<Point> getRoomPoints() {
+		List <Point> result = new ArrayList<Point>();
+		for (PolyRoom room: rooms) {
+			for (Point p : room.getPoints()) {
+				result.add(p);
+			}
+		}
+		return result;
+	}
+	
+	public List<Point> getNonRoomPoints() {
+		final List<Point> roomPoints = getRoomPoints();
+		List <Point> result = new ArrayList<Point>();
+		for (int i = 0; i < level.length; ++i) {
+	        for (int j = 0; j < level[0].length; ++j) {
+	        	if (!roomPoints.contains(level[i][j])) {
+	        		result.add(new Point(i,j));
+	        	}
+	        }
+	    }
+		return result;
+	}
+	
 	public List<Thing> getThingsAt(Point p){
 		List<Thing> things = new ArrayList<Thing>();
 		for (Thing t : this.things) {

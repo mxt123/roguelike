@@ -52,6 +52,8 @@ public class MapGenWorld extends MapGenBase {
 		}
 			
 		map.setRooms(places);
+		final List<Point> nonRoomPoints = map.getNonRoomPoints();
+		
 		int count = 0;
 		while  (count <= MAX_THINGS) {			
 			Place place = places.get(Randoms.getRandom(0,places.size()-1));
@@ -83,12 +85,12 @@ public class MapGenWorld extends MapGenBase {
 				map.getThings().add(new Actor(
 						Monster.SHARK,
 						map,
-						place.getRandomPoint(),
+						nonRoomPoints.get(Randoms.getRandom(0,nonRoomPoints.size()-1)),
 						Tile.SHARK,
 						Color.WHITE,
 						"shark",
 						true,
-						true,
+						false,
 						"this is a shark they still walk at the mo "
 						));	
 			}
