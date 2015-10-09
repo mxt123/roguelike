@@ -38,12 +38,11 @@ public class Player extends Actor {
 		List<Actor> actors = this.getMap().getActorsAt(new Point(x,y));
 		if (actors.size() > 0) {
 			this.setMessage("!"); // TODO do attack here
-			// there can only be one blocking mob on a tile at the mo
 			Actor a = actors.get(0);
 			int damage = attack(a);
 			a.setMessage(String.valueOf(damage));
 			return false;
-		} else if (target.isPassable() || (target.isSwimable() && this.isSwims())  && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+		} else if ((target.isPassable() || (target.isSwimable() && this.isSwims()))  && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			return true;
 		} else {

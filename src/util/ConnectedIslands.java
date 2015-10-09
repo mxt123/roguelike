@@ -51,8 +51,8 @@ public class ConnectedIslands {
 		List<ArrayList<Point>> islands = new ArrayList<ArrayList<Point>>();
 	    boolean visited[][] = new boolean[M.length][M[0].length];
 
-	    for (int i = 0; i < M.length; ++i) {
-	        for (int j = 0; j < M[0].length; ++j) {
+	    for (int i = 0; i < M.length; i++) {
+	        for (int j = 0; j < M[0].length; j++) {
 	        	List<Point> island = new ArrayList<Point>();
 	            if (M[i][j] == tileType  && !visited[i][j]) // If a cell with value (tile) is not visited yet, then new island found
 	            {      
@@ -63,7 +63,6 @@ public class ConnectedIslands {
 	            }
 	        }
 	    }
-	    
 	    return islands;
 	}
 	

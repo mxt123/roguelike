@@ -1,5 +1,11 @@
 TODO
 
+sort out project relative paths
+
+add Write 2d and tests to sort out funny bug in connected islands
+
+Install zeal with java docs espec java 2d stuff
+
 some points in islands/rooms are not counting as a point in the island not sure why (sharks can  spawn on these too ...)
 
 change to use light  levels and fade rather than dark/light 

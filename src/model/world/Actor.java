@@ -95,7 +95,7 @@ public class Actor extends Thing implements Stats, Fights {
 			break;
 		}
 		Tile target = this.getMap().getLevel()[y][x];		
-		if ((target.isPassable() && this.walks ) || (target.isSwimable() && this.swims) && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+		if (((target.isPassable() && this.walks ) || (target.isSwimable() && this.swims)) && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			return true;
 		} else {
