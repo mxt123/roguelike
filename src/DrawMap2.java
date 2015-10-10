@@ -34,8 +34,8 @@ import worldgen.MapGenWorld;
 import worldgen.TestRoom;
 
 public class DrawMap2 extends JPanel  implements KeyListener{
-	private static final int GAME_Y = 40;
-	private static final int GAME_X = 40;
+	private static final int GAME_Y = 50;
+	private static final int GAME_X = 50;
 	private static final int LIGHT_RADIUS = 50;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
@@ -67,7 +67,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
     public DrawMap2(int height, int width) {
     	mapHeight = height;
     	mapWidth = width;
-    	this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+    //	this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
     	mapY = 0 + getSpacing();
     	mapX = 0;
     }
@@ -75,9 +75,13 @@ public class DrawMap2 extends JPanel  implements KeyListener{
     public void paint(Graphics g) {
     	
     	// for the moment things become inactive if out of light
-    	for (Thing t : yourMap.getThings()) {
-    		t.setActive(false);
-    	}
+    	if (yourMap != null) {
+    		
+	    	for (Thing t : yourMap.getThings()) {
+	    		t.setActive(false);
+	    	}
+	    	
+    	
 		
         int displayWidth = f.getWidth();
         int displayHeight = f.getHeight();
@@ -104,7 +108,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
                     			boolean isLit = lightMap[x][y] > 0;
                     			if (visited || isLit) {
                         			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker().darker().darker().darker()); //lol suck change to a alpha level                     
+                        				g2.setColor(t.getColorLight().darker());//.darker().darker().darker()); //lol suck change to a alpha level                     
                         			}
                         			if (lightMap[x][y] > 0) {
                         				g2.setColor(t.getColorLight());
@@ -183,6 +187,8 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         	g2.setColor(Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }
+        
+    	}
        
     }
 

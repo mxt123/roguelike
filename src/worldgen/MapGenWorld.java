@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.ConnectedIslands;
+import util.FloodFill;
 import util.Randoms;
 
 import model.Message;
@@ -38,17 +39,23 @@ public class MapGenWorld extends MapGenBase {
     	}
 		
 		// label the island and add some things
-
+/*
 		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.LAND);
 		List<PolyRoom> places = new ArrayList<PolyRoom>();
 		
 		for (List<Point> island : islands) {
 			places.add( new PolyRoom ("island",island));
-			/*
+			
 			for (Point p : island) {
 				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
 			} //mark islands for test
-			*/
+		}*/
+		
+		List<PolyRoom> places = FloodFill.getRooms(map,Tile.LAND);
+		for (PolyRoom island : places) {
+			for (Point p : island.getPoints()) {
+				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
+			} //mark islands for test
 		}
 			
 		map.setRooms(places);
@@ -69,7 +76,8 @@ public class MapGenWorld extends MapGenBase {
 						"Player",			
 						"this is you :)"
 						));
-			} else if (count % 2 == 0){
+			} 
+			 else if (count % 2 == 0){
 				map.getThings().add(new Actor(
 						Monster.GOBLIN,
 						map,
