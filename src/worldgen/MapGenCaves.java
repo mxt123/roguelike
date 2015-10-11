@@ -48,7 +48,7 @@ public class MapGenCaves extends MapGenBase {
 			} else {
 				PolyRoom p = places.get(i);
 				for (Point pnt : p.getPoints()) {
-					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.TREE	; 
+					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.WALL; 
 				}
 			}
 		}

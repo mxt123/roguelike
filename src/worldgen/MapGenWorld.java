@@ -40,18 +40,18 @@ public class MapGenWorld extends MapGenBase {
 		
 		List<PolyRoom> places = FloodFill.getRooms(map,Tile.LAND);
 		for (PolyRoom island:places) {
-			Point p = island.getPoints().get(0); 
+			Point p = island	.getPoints().get(0); 
 			map.getPermanentMessages().add(new Message(p,"Island"));
 		}
 		
-		//List<PolyRoom> notplaces = FloodFill.getRooms(map,Tile.SEA);
+		List<PolyRoom> allsea = FloodFill.getRooms(map,Tile.SEA);
 			
 		map.setRooms(places);
-		final List<Point> nonRoomPoints = map.getNonRoomPoints();
 		
 		int count = 0;
 		while  (count <= MAX_THINGS) {			
 			Place place = places.get(Randoms.getRandom(0,places.size()-1));
+			Place sea = allsea.get(Randoms.getRandom(0,allsea.size()-1));
 
 			if (count == 0) {
 				map.getThings().add(new Player(
@@ -81,7 +81,7 @@ public class MapGenWorld extends MapGenBase {
 				map.getThings().add(new Actor(
 						Monster.SHARK,
 						map,
-						nonRoomPoints.get(Randoms.getRandom(0,nonRoomPoints.size()-1)),
+						sea.getRandomPoint(),
 						Tile.SHARK,
 						Color.WHITE,
 						"shark",
