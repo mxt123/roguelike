@@ -23,6 +23,7 @@ public class MapGenWorld extends MapGenBase {
 	private static final int MAX_THINGS = 20;
 
 	public static Map newWorld(String name, int height, int width, int generations) {
+		
 		Map map =  Map.newFilledMap(name, Tile.SEA, height, width);
 		generateGrid(map, Tile.SEA, Tile.LAND, CHANCE_TO_START_SEA);
 		for (int i = 0; i < generations;i++) {
@@ -37,21 +38,13 @@ public class MapGenWorld extends MapGenBase {
     		}
     	}
 		
-		// label the island and add some things
-/*
-		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.LAND);
-		List<PolyRoom> places = new ArrayList<PolyRoom>();
-		
-		for (List<Point> island : islands) {
-			places.add( new PolyRoom ("island",island));
-			
-			for (Point p : island) {
-				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
-			} //mark islands for test
-		}*/
-		
 		List<PolyRoom> places = FloodFill.getRooms(map,Tile.LAND);
-	
+		for (PolyRoom island:places) {
+			Point p = island.getPoints().get(0); 
+			map.getPermanentMessages().add(new Message(p,"Island"));
+		}
+		
+		//List<PolyRoom> notplaces = FloodFill.getRooms(map,Tile.SEA);
 			
 		map.setRooms(places);
 		final List<Point> nonRoomPoints = map.getNonRoomPoints();
@@ -59,8 +52,7 @@ public class MapGenWorld extends MapGenBase {
 		int count = 0;
 		while  (count <= MAX_THINGS) {			
 			Place place = places.get(Randoms.getRandom(0,places.size()-1));
-			Point p = place.getPoints().get(0); 
-			map.getPermanentMessages().add(new Message(p,"Island"));
+
 			if (count == 0) {
 				map.getThings().add(new Player(
 						Monster.PLAYER,

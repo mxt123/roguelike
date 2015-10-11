@@ -22,7 +22,7 @@ import model.world.Tile;
 public class MapGenCaves extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_WALL = 0.36;
-	private static final int MAX_THINGS = 0;//10;
+	private static final int MAX_THINGS = 10;
 	
 	public static Map newWorld(String name, int height, int width, int generations) {
 		Map map =  Map.newFilledMap(name, Tile.WALL, height, width);
@@ -38,27 +38,7 @@ public class MapGenCaves extends MapGenBase {
     		}
     	}
 		
-		/*
-		List<ArrayList<Point>> islands = ConnectedIslands.getIslands(map.getLevel(), Tile.SPACE);
-		List<PolyRoom> places = new ArrayList<PolyRoom>();
-		// testing code spam with tiles and add messages
-		for (List<Point> island : islands) {
-			places.add( new PolyRoom ("island",island));
-			map.getPermanentMessages().add(new Message(island.get(0),"cave"));
-		
-			for (Point p : island) {
-				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
-			} //mark islands for test
-		
-		}
-		*/
-		
 		List<PolyRoom> places = FloodFill.getRooms(map, Tile.SPACE);
-		for (PolyRoom place: places){
-			for (Point p : place.getPoints()) {
-				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
-			} //mark islands for test
-		}
 		
 		// only add the largest room delete the rest
 		Collections.sort(places);
