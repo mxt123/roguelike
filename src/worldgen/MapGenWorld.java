@@ -1,10 +1,9 @@
 package worldgen;
 
+
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 
-import util.ConnectedIslands;
 import util.FloodFill;
 import util.Randoms;
 
@@ -52,11 +51,7 @@ public class MapGenWorld extends MapGenBase {
 		}*/
 		
 		List<PolyRoom> places = FloodFill.getRooms(map,Tile.LAND);
-		for (PolyRoom island : places) {
-			for (Point p : island.getPoints()) {
-				map.getLevel()[p.getY()][p.getX()] = Tile.COIN;
-			} //mark islands for test
-		}
+	
 			
 		map.setRooms(places);
 		final List<Point> nonRoomPoints = map.getNonRoomPoints();
@@ -89,7 +84,8 @@ public class MapGenWorld extends MapGenBase {
 						true,
 						"this is a goblin"
 						));	
-			} else {
+			} 
+			else {
 				map.getThings().add(new Actor(
 						Monster.SHARK,
 						map,

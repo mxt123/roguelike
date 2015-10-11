@@ -280,7 +280,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_8) {
-			this.yourMap = MapGenCaves.newWorld("world",GAME_X,GAME_Y,4);
+			this.yourMap = MapGenCaves.newWorld("world",GAME_X,GAME_Y,5);
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_9) {
