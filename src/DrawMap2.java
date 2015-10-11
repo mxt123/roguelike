@@ -34,8 +34,8 @@ import worldgen.MapGenWorld;
 import worldgen.TestRoom;
 
 public class DrawMap2 extends JPanel  implements KeyListener{
-	private static final int GAME_Y = 50;
-	private static final int GAME_X = 50;
+	private static final int GAME_Y = 40;
+	private static final int GAME_X = 40;
 	private static final int LIGHT_RADIUS = 7;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
