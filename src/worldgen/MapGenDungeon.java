@@ -111,7 +111,8 @@ public class MapGenDungeon {
 					Tile.PERSON,
 					Color.YELLOW,
 					"Player",
-					"this is you :)"
+					"this is you :)",
+					1
 					));
 			} else if( labelCount % 2== 1){
 				map.getThings().add(new Actor(
@@ -123,17 +124,20 @@ public class MapGenDungeon {
 					"goblin",
 					false,
 					true,
-					"this is a goblin"
+					"this is a goblin",
+					1
 					));	
 			} else if( labelCount % 3== 0){
 				map.getThings().add(new Thing(
-						
 						map,
 						new Point(center.getX(),center.getY()),
 						Tile.COIN,
 						Color.YELLOW,
 						"coin",
-						"this is gold!"
+						"this is gold!",
+						0,
+						false,
+						false
 						));
 				}
 			else {
@@ -146,7 +150,8 @@ public class MapGenDungeon {
 						"ogre",
 						false,
 						true,
-						"this is an ogre"
+						"this is an ogre",
+						1
 						));	
 				
 		}

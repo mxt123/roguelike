@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,10 +9,14 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -19,12 +24,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.sun.org.apache.bcel.internal.generic.FNEG;
+
 import model.Direction;
 import model.Message;
 import model.Point;
 import model.world.Actor;
 import model.world.Map;
 import model.world.Player;
+import model.world.Projectile;
 import model.world.Thing;
 import model.world.Tile;
 import util.Fov;
@@ -33,10 +41,10 @@ import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
 import worldgen.TestRoom;
 
-public class DrawMap2 extends JPanel  implements KeyListener{
-	private static final int GAME_Y = 40;
-	private static final int GAME_X = 40;
-	private static final int LIGHT_RADIUS = 7;
+public class DrawMap2 extends JPanel  implements KeyListener {
+	private static final int GAME_Y = 50;
+	private static final int GAME_X = 50;
+	private static final int LIGHT_RADIUS = 50;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
 	static int fontSize = 14;
@@ -96,7 +104,7 @@ public class DrawMap2 extends JPanel  implements KeyListener{
         // TODO get lightmap this should be stored in map and persisted ?
         Player p = yourMap.getPlayer();
 		Point pLoc = p.getLocation();
-		int[][] lightMap = Fov.getFov(yourMap, pLoc, LIGHT_RADIUS );    
+		int[][] lightMap = Fov.getFov(yourMap, Arrays.asList(pLoc), Arrays.asList(LIGHT_RADIUS));    
         
         // draw the map tiles
         for (int x = 0; x < mapWidth; x++) {
@@ -299,11 +307,29 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 			centreView(spacing);
         }
 		
+		if ( key.getKeyCode() == KeyEvent.VK_Z ) {
+			Player p = yourMap.getPlayer();
+			Point target = p.getNearestActor(p).getLocation();
+			yourMap.getThings().add(
+				new Projectile(yourMap,p.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 10)
+			);
+			tookTurn = true;
+        }
+		
 		if (tookTurn) {
 			// run all actors, timers and things here
 		    if (tookTurn) {
 		        for (Thing t : yourMap.getThings()){
-		        	if ( t instanceof Actor) {
+		        	
+		        	// fires burn water runs etc		        	
+		        	if (t instanceof Projectile) {
+		        		while(((Projectile)t).getPower() > 0) {
+			        		t.act();	
+			        		f.repaint();
+		        		}
+		        	}
+		        	
+		        	if ( t instanceof Actor ) {
 		        		Actor a = (Actor) t;
 		        		if (a.getHp() < 1) {
 		        		//	yourMap.getThings().remove(t); // conccurent mod exception whoops
@@ -313,11 +339,10 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		        		if (  t.isActive() &&!(t instanceof Player) ) {
 			        		// just get a message for now call get action later
 			        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
-			        		t.act();
+			        	//	t.act();
 			        	}
 		        	}
-		        	// fires burn water runs etc		        	
-		        	
+		        
 		        }
 		    }
 		}
@@ -342,5 +367,16 @@ public class DrawMap2 extends JPanel  implements KeyListener{
 		//displayArea.setText(String.valueOf(key.getKeyChar()));
 		
 	}
+
+	public void mouseClicked(MouseEvent arg0) {
+		java.awt.Point clickPoint = arg0.getPoint();
+		yourMap.getMessages().add(
+				new Message(
+						new Point(
+								(int)clickPoint.getX()*fontSize,
+								(int)clickPoint.getY()*fontSize),
+								"click"));
+	}
+
 
 }

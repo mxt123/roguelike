@@ -1,5 +1,7 @@
 package util;
 
+import java.util.List;
+
 import model.Point;
 import model.world.Map;
 
@@ -9,7 +11,7 @@ public class Fov {
 	private static final int ANGLE_INCREMENT = 1;
 
 	// update for multipl sources and set light level decreasing from centre
-	public static int[][] getFov(Map map, Point source, int lightRadius)
+	public static int[][] getFov(Map map, List<Point> sources, List<Integer> lightRadius)
 	{
 	  double x;
 	  double y;
@@ -18,7 +20,11 @@ public class Fov {
 	  {
 	    x=Math.cos(i*0.01745f);
 	    y=Math.sin(i*0.01745f);
-	    Fov.doFov(map, lightMap, source,  x, y, lightRadius);
+	    int count = sources.size();
+	    for (int lightCount = 0; lightCount < count; lightCount++) {
+	        Fov.doFov(map, lightMap, sources.get(lightCount),  x, y, lightRadius.get(lightCount));
+	    }
+	
 	  };
 	//  lightMap[source.getX()][source.getY()] = 1;
 	  return lightMap;

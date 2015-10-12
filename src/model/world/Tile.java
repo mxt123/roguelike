@@ -13,6 +13,7 @@ public enum Tile {
 	GOBLIN('g',false,false,true,Color.BLACK,Color.green,"A goblin","grrr!"),
 	OGRE('H',false,false,true,Color.BLACK,Color.green,"An ogre","RAAAR!"),
 	COIN('o',true,false,true,Color.BLACK,Color.YELLOW,"A coin",""),
+	ARROW('▨',true,true,true,Color.BLACK,Color.WHITE,"An arrow",""),
 	SHARK('^',false,false,true,Color.BLACK,Color.WHITE,"A shark","");
 	
 	private char character;

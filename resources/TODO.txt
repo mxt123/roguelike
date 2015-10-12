@@ -2,28 +2,17 @@ TODO
 
 sort out project relative paths
 
-add Write 2d and tests to sort out funny bug in connected islands
-
 rectangles not sorted
-
-some points in islands/rooms are not counting as a point in the island not sure why (sharks can  spawn on these too ...)
 
 change to use light  levels and fade rather than dark/light 
 
 mobs should stay active once activated
-
-
-islands algorithm failing on caves should do horizontals and verticals only not diagonals
 
 splatmarks for dead mobs
 
 import images from ipad
 
 autoexplore + auto fight ?
-
-dont random gen mobs on top (or even near player in world/caves)
-caves arent properly creating with just one large room
-mobs arent redrawing properly after killing one
 
 add a noise map make noise activate and attract mobs 
 if active look for noiseiest thing of map and try to move towards it
@@ -38,22 +27,12 @@ seperate light radius from aggro radius (eg infravision or tracking skills or st
 create things as light sources
 set a light level for lights not just on/off
 
-drill and join caves or trim any islands
-
 add a list of precooked rooms as an enum and add these randomly in create dungeon
 along with stairs/portals etc
-
-island/and cave should provide the methods to populate the polygon with Tiles/things
-new class of things for world objects
 
 generate a new level of map between world and cave/dungeon start with zoomed out version of island
 from world map 
 	
-that represent the poly
-
-sort out mob and pc placement on cave maps
-change connected island to give whole island back in results then we have 'rooms' to add stuff to
-
 add dialogs
 
 externalise screen size image file location to props file
@@ -70,20 +49,11 @@ inventory
 
 better stats and better combat
 
-
-
-DONE slightly crazy chasing movement to fix
-	could still be better
-	
-
-
 json for levels
 json mobs
 json items
 
 quests
-
-npcs
 
 door
 secret doors
@@ -92,27 +62,6 @@ traps
 
 TODO move this to utility class for use in world map as well as caves blank off edges of generated caves/world
 
-place player on an island/cave
-
-movement for activated mobs
-
-stats for player / mobs and combat mechanics
-
-look at the stuff in here and the c++ version :
-
-http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod
-
-animated (even if two alternating frames) tiles for stuff like fire etc
-
-other lighting algotrithms ?
-
-maze generation algotrithms
-
-quests
-
-npcs
-
-this for ipad ? or similar for chromebook
 
 teleport
 remote view

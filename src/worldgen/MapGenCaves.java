@@ -48,7 +48,7 @@ public class MapGenCaves extends MapGenBase {
 			} else {
 				PolyRoom p = places.get(i);
 				for (Point pnt : p.getPoints()) {
-					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.WALL; 
+					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.TREE; 
 				}
 			}
 		}
@@ -72,7 +72,8 @@ public class MapGenCaves extends MapGenBase {
 						Tile.PERSON,
 						Color.YELLOW,
 						"Player",
-						"this is you :)"
+						"this is you :)",
+						1
 						));
 			} else {
 				map.getThings().add(new Actor(
@@ -84,7 +85,8 @@ public class MapGenCaves extends MapGenBase {
 						"goblin",
 						false,
 						true,
-						"this is a goblin"
+						"this is a goblin",
+						1
 						));	
 			}
 			count++;

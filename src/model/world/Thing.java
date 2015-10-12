@@ -2,6 +2,9 @@ package model.world;
 
 import java.awt.Color;
 
+import util.Randoms;
+
+import model.Direction;
 import model.Point;
 
 public class Thing {
@@ -12,6 +15,21 @@ public class Thing {
 	private String name;
 	private String description;
 	private boolean active;
+	private int speed;
+	private boolean swims;
+	private boolean walks;
+	
+	public Thing(Map map, Point location,Tile tile,Color color, String name, String description,int speed, boolean swims, boolean walks) {
+		this.location = location;
+		this.tile = tile;
+		this.color = color;
+		this.name = name;
+		this.description = description;
+		this.map = map;
+		this.speed = speed;
+		this.setSwims(swims);
+		this.setWalks(walks);
+	}
 	
 	public void act(){
 		// nothing for most things :)
@@ -30,6 +48,20 @@ public class Thing {
 		this.active = active;
 	}
 	
+	public Actor getNearestActor(Thing toThing) {
+		
+		Actor nearestThing = null;
+		
+		for (Thing t: this.getMap().getThings()) {
+			if (t instanceof Actor && ! t.equals(toThing)) {
+				if (nearestThing == null || t.getDistanceTo(toThing) < nearestThing.getDistanceTo(toThing)){
+					nearestThing = (Actor) t;
+				}
+			}
+		}
+		return (Actor) nearestThing;
+	}
+	
 	public int getDistanceTo(Thing t) {
 		int dx = t.getLocation().getX() - this.getLocation().getX();
 		int dy = t.getLocation().getY() - this.getLocation().getY();
@@ -41,15 +73,6 @@ public class Thing {
 		return distance;
 	}
 	
-	public Thing(Map map, Point location,Tile tile,Color color, String name, String description) {
-		this.location = location;
-		this.tile = tile;
-		this.color = color;
-		this.name = name;
-		this.description = description;
-		this.map = map;
-	}
-
 	public Point getLocation() {
 		return location;
 	}
@@ -96,5 +119,111 @@ public class Thing {
 
 	public void setMap(Map map) {
 		this.map = map;
+	}
+	
+	public boolean move(Direction direction, int distance){
+		int x = this.getLocation().getX();
+		int y = this.getLocation().getY();
+		switch (direction) {
+		case NORTH:
+			y -= 1;
+			break;
+		case SOUTH:
+			y += 1;
+			break;
+		case EAST:
+			x += 1;
+			break;
+		case WEST:
+			x -= 1;
+			break;
+		default:
+			break;
+		}
+		Tile target = this.getMap().getLevel()[y][x];		
+		if (((target.isPassable() && this.walks ) || (target.isSwimable() && this.swims)) && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+			this.setLocation(new Point(x,y));
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void moveTowards(Point point) {
+		// adapted from python method on http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod,_part_6
+		// get a vector from this object to the target, and distance
+		int dx = point.getX() - this.getLocation().getX();
+		int dy = point.getY() - this.getLocation().getY();
+		int distance =  (int) Math.sqrt(Math.pow(dx,2) + Math.pow(dy, 2));
+		
+		//#normalize it to length 1 (preserving direction), then round it and
+	    //#convert to integer so the movement is restricted to the map grid
+        dx = (int) Math.ceil( (double)dx / (double)distance);
+        dy = (int) Math.ceil( (double)dy / (double)distance);
+        
+        // no diagonal movement yet or at all :)  so changed this bit
+        if ( Math.abs(dx) > Math.abs(dy)) {
+        	if (!moveHorizontal(dx)) {
+    			moveVertical(dy);
+    		}
+        } else if (Math.abs(dx) < Math.abs(dy) ) {
+        	if (!moveVertical(dy)) {
+    			moveHorizontal(dx);	
+    		}
+        } else 
+
+        { // equal, flip a coin
+        	if (Randoms.getRandom(0, 1) < 1) {
+        		if (!moveHorizontal(dx)) {
+        			moveVertical(dy);
+        		}
+        	} else {
+        		if (!moveVertical(dy)) {
+        			moveHorizontal(dx);
+        		}
+        	}
+        	
+        }
+    
+	}
+	
+	private boolean moveVertical(int dy) {
+		if (dy >0) {
+			return this.move(Direction.SOUTH, speed ); // TODO actors should have a speed
+		} else {
+			return this.move(Direction.NORTH, speed );
+		}
+	}
+
+	private boolean moveHorizontal(int dx) {
+		if (dx >0) {
+			return this.move(Direction.EAST, speed ); 
+		} else {
+			return this.move(Direction.WEST, speed ); 
+		}
+	}
+
+	public boolean isSwims() {
+		return swims;
+	}
+
+	public void setSwims(boolean swims) {
+		this.swims = swims;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public boolean isWalks() {
+		return walks;
+	}
+
+	public void setWalks(boolean walks) {
+		this.walks = walks;
 	}
 }

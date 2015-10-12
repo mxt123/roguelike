@@ -61,7 +61,8 @@ public class MapGenWorld extends MapGenBase {
 						Tile.PERSON,
 						Color.YELLOW,
 						"Player",			
-						"this is you :)"
+						"this is you :)",
+						1
 						));
 			} 
 			 else if (count % 2 == 0){
@@ -74,7 +75,8 @@ public class MapGenWorld extends MapGenBase {
 						"goblin",
 						false,
 						true,
-						"this is a goblin"
+						"this is a goblin",
+						1
 						));	
 			} 
 			else {
@@ -87,7 +89,8 @@ public class MapGenWorld extends MapGenBase {
 						"shark",
 						true,
 						false,
-						"this is a shark they still walk at the mo "
+						"this is a shark they still walk at the mo ",
+						2
 						));	
 			}
 			count++;

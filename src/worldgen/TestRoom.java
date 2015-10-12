@@ -107,7 +107,8 @@ public class TestRoom {
 					Tile.PERSON,
 					Color.YELLOW,
 					"Player",
-					"this is you :)"
+					"this is you :)",
+					1
 					));
 				map.getThings().add(new Actor(
 					Monster.GOBLIN,
@@ -118,7 +119,8 @@ public class TestRoom {
 					"goblin",
 					false,
 					true,
-					"this is a goblin"
+					"this is a goblin",
+					1
 					));	
 		}
 	
