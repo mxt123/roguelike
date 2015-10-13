@@ -39,7 +39,7 @@ public class Projectile extends Thing {
 			break;
 		}
 		Tile target = this.getMap().getLevel()[y][x];		
-		if ( target.isPassable() ) {	
+		if ( target.isPassable() || target.isSwimable()) {	
 			this.setLocation(new Point(x,y));
 			return true;
 		} else {

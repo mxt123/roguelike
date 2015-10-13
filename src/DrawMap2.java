@@ -174,8 +174,9 @@ public class DrawMap2 extends JPanel  implements KeyListener {
  		for (int i = 0 ; i < yourMap.getThings().size();i++){ 
  			Thing thing = yourMap.getThings().get(i);
  			boolean isActor = thing instanceof Actor;
+ 			boolean isProjectile = thing instanceof Projectile;
         	boolean liveActor = isActor && ((Actor) thing).getHp() > 0;
- 			if ((!(thing instanceof Player)) && isActor && !liveActor) {
+ 			if (((!(thing instanceof Player)) && isActor && !liveActor) || isProjectile) {
  				yourMap.getThings().remove(thing);					
  			}
  		}
@@ -311,7 +312,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 			Player p = yourMap.getPlayer();
 			Point target = p.getNearestActor(p).getLocation();
 			yourMap.getThings().add(
-				new Projectile(yourMap,p.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 10)
+				new Projectile(yourMap,p.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 7)
 			);
 			tookTurn = true;
         }
@@ -325,8 +326,13 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 		        	if (t instanceof Projectile) {
 		        		while(((Projectile)t).getPower() > 0) {
 			        		t.act();	
-			        		f.repaint();
 		        		}
+		        		for (Point p : t.getMovementHistory()) {
+		         			int x = p.getX();
+		        			int y = p.getY()+1;
+		        			yourMap.getMessages().add(new Message( new Point(x,y),"#"));
+		        		}
+		        		f.repaint();
 		        	}
 		        	
 		        	if ( t instanceof Actor ) {

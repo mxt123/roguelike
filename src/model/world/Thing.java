@@ -1,6 +1,8 @@
 package model.world;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
 import util.Randoms;
 
@@ -18,6 +20,7 @@ public class Thing {
 	private int speed;
 	private boolean swims;
 	private boolean walks;
+	private List<Point> movementHistory = new ArrayList<Point>();
 	
 	public Thing(Map map, Point location,Tile tile,Color color, String name, String description,int speed, boolean swims, boolean walks) {
 		this.location = location;
@@ -152,8 +155,13 @@ public class Thing {
 	public void moveTowards(Point point) {
 		// adapted from python method on http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod,_part_6
 		// get a vector from this object to the target, and distance
-		int dx = point.getX() - this.getLocation().getX();
-		int dy = point.getY() - this.getLocation().getY();
+		final int oldX = this.getLocation().getX();
+		final int oldY = this.getLocation().getY();
+        this.movementHistory.add(new Point(oldX,oldY));
+        
+		int dx = point.getX() - oldX;
+		int dy = point.getY() - oldY;
+		
 		int distance =  (int) Math.sqrt(Math.pow(dx,2) + Math.pow(dy, 2));
 		
 		//#normalize it to length 1 (preserving direction), then round it and
@@ -162,7 +170,7 @@ public class Thing {
         dy = (int) Math.ceil( (double)dy / (double)distance);
         
         // no diagonal movement yet or at all :)  so changed this bit
-        if ( Math.abs(dx) > Math.abs(dy)) {
+        if ( Math.abs(dx) > Math.abs(dy)) { 
         	if (!moveHorizontal(dx)) {
     			moveVertical(dy);
     		}
@@ -170,9 +178,7 @@ public class Thing {
         	if (!moveVertical(dy)) {
     			moveHorizontal(dx);	
     		}
-        } else 
-
-        { // equal, flip a coin
+        } else   { // equal, flip a coin
         	if (Randoms.getRandom(0, 1) < 1) {
         		if (!moveHorizontal(dx)) {
         			moveVertical(dy);
@@ -225,5 +231,13 @@ public class Thing {
 
 	public void setWalks(boolean walks) {
 		this.walks = walks;
+	}
+
+	public List<Point> getMovementHistory() {
+		return movementHistory;
+	}
+
+	public void setMovementHistory(List<Point> movementHistory) {
+		this.movementHistory = movementHistory;
 	}
 }
