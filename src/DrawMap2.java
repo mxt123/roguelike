@@ -310,10 +310,15 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 		
 		if ( key.getKeyCode() == KeyEvent.VK_Z ) {
 			Player p = yourMap.getPlayer();
-			Point target = p.getNearestActor(p).getLocation();
-			yourMap.getThings().add(
-				new Projectile(yourMap,p.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 7)
-			);
+			Actor a = p.getNearestActor(p);
+			if (a != null) {
+				Point target = a.getLocation();
+				if (target != null) {
+					yourMap.getThings().add(
+						new Projectile(yourMap,p.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 20)
+					);
+				}
+			}
 			tookTurn = true;
         }
 		
@@ -345,7 +350,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 		        		if (  t.isActive() &&!(t instanceof Player) ) {
 			        		// just get a message for now call get action later
 			        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
-			        	//	t.act();
+			        		t.act();
 			        	}
 		        	}
 		        

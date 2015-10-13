@@ -22,7 +22,7 @@ import model.world.Tile;
 public class MapGenCaves extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_WALL = 0.36;
-	private static final int MAX_THINGS = 10;
+	private static final int MAX_THINGS = 200;
 	
 	public static Map newWorld(String name, int height, int width, int generations) {
 		Map map =  Map.newFilledMap(name, Tile.WALL, height, width);
@@ -48,7 +48,7 @@ public class MapGenCaves extends MapGenBase {
 			} else {
 				PolyRoom p = places.get(i);
 				for (Point pnt : p.getPoints()) {
-					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.TREE; 
+					map.getLevel()[pnt.getY()][pnt.getX()] = Tile.WALL; 
 				}
 			}
 		}

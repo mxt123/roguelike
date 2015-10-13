@@ -193,7 +193,7 @@ public class Thing {
     
 	}
 	
-	private boolean moveVertical(int dy) {
+	protected boolean moveVertical(int dy) {
 		if (dy >0) {
 			return this.move(Direction.SOUTH, speed ); // TODO actors should have a speed
 		} else {
@@ -201,7 +201,7 @@ public class Thing {
 		}
 	}
 
-	private boolean moveHorizontal(int dx) {
+	protected boolean moveHorizontal(int dx) {
 		if (dx >0) {
 			return this.move(Direction.EAST, speed ); 
 		} else {

@@ -20,7 +20,7 @@ import model.world.Tile;
 public class MapGenWorld extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_SEA = 0.43;
-	private static final int MAX_THINGS = 20;
+	private static final int MAX_THINGS = 200;
 
 	public static Map newWorld(String name, int height, int width, int generations) {
 		
