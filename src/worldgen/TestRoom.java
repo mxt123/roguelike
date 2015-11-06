@@ -100,28 +100,32 @@ public class TestRoom {
 		for (Rect room:rooms){
 			Point center = room.center();
 		
-				map.getThings().add(new Player(
-					Monster.PLAYER,
-					map,
-					new Point(center.getX(),center.getY()),
-					Tile.PERSON,
-					Color.YELLOW,
-					"Player",
-					"this is you :)",
-					1
-					));
-				map.getThings().add(new Actor(
-					Monster.GOBLIN,
-					map,
-					new Point(center.getX() +2,center.getY() +2),
-					Tile.GOBLIN,
-					Color.GREEN,
-					"goblin",
-					false,
-					true,
-					"this is a goblin",
-					1
-					));	
+			map.getThings().add(new Player(
+				Monster.PLAYER,
+				map,
+				new Point(center.getX(),center.getY()),
+				Tile.PERSON,
+				Color.YELLOW,
+				"Player",
+				"this is you :)",
+				1
+				));
+			map.getThings().add(new Actor(
+				Monster.GOBLIN,
+				map,
+				new Point(center.getX() +3,center.getY() +3),
+				Tile.GOBLIN,
+				Color.GREEN,
+				"goblin",
+				false,
+				true,
+				"this is a goblin",
+				1
+				));	
+			map.getLevel()[center.getY() -2][center.getX() -2] = Tile.WALL;
+			map.getLevel()[center.getY() -2][center.getX() +2] = Tile.WALL;
+			map.getLevel()[center.getY() +2][center.getX() -2] = Tile.WALL;
+			map.getLevel()[center.getY() +2][center.getX() +2] = Tile.WALL;
 		}
 	
 		map.setVisited(visited);

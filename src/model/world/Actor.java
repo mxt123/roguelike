@@ -20,6 +20,8 @@ public class Actor extends Thing implements Stats, Fights {
 	private int hp;
 	private int defence;
 	private int attack;
+	private List<Point> onPath;
+	private List<Thing> inventory;
 	
 	@Override
 	public List<Thing> destroy() {
@@ -127,6 +129,22 @@ public class Actor extends Thing implements Stats, Fights {
 
 	public void setAttack(int attack) {
 		this.attack = attack;
+	}
+
+	public List<Point> getOnPath() {
+		return onPath;
+	}
+
+	public void setOnPath(List<Point> onPath) {
+		this.onPath = onPath;
+	}
+
+	public List<Thing> getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(List<Thing> inventory) {
+		this.inventory = inventory;
 	}
 
 }

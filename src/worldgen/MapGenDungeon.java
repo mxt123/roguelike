@@ -13,6 +13,7 @@ import model.world.Actor;
 import model.world.Map;
 import model.world.Monster;
 import model.world.Player;
+import model.world.PolyRoom;
 import model.world.Thing;
 import model.world.Tile;
 
@@ -25,11 +26,14 @@ public class MapGenDungeon {
 	static int MAX_ROOMS = 300;
 
 	public static void createRoom(Map map, Rect room) {
+		List<Point> points = new ArrayList<Point>();
 	    for (int x = room.getX();x < room.getX() + room.getW() -1; x++) {
 	        for (int y = room.getY(); y < room.getY() + room.getH()  -1; y++) {
 	            map.getLevel()[y][x] = Tile.SPACE;
+	            points.add(new Point(x,y) );
 	        }
 	    }
+		map.getRooms().add(new PolyRoom("room", points));
 	}
 	
 	public static void createHTunnel(Map map, int x1, int x2, int y)

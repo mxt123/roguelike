@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -9,22 +8,19 @@ import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-
-import com.sun.org.apache.bcel.internal.generic.FNEG;
 
 import model.Direction;
 import model.Message;
@@ -35,6 +31,7 @@ import model.world.Player;
 import model.world.Projectile;
 import model.world.Thing;
 import model.world.Tile;
+import util.AStar;
 import util.Fov;
 import worldgen.MapGenCaves;
 import worldgen.MapGenDungeon;
@@ -42,9 +39,11 @@ import worldgen.MapGenWorld;
 import worldgen.TestRoom;
 
 public class DrawMap2 extends JPanel  implements KeyListener {
+	
+	private static final int STATS_WIDTH = 300;
 	private static final int GAME_Y = 50;
 	private static final int GAME_X = 50;
-	private static final int LIGHT_RADIUS = 50;
+	private static final int LIGHT_RADIUS = 5;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
 	static int fontSize = 14;
@@ -75,23 +74,16 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     public DrawMap2(int height, int width) {
     	mapHeight = height;
     	mapWidth = width;
-    //	this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+    	this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
     	mapY = 0 + getSpacing();
     	mapX = 0;
     }
    
     public void paint(Graphics g) {
     	
-    	// for the moment things become inactive if out of light
     	if (yourMap != null) {
     		
-	    	for (Thing t : yourMap.getThings()) {
-	    		t.setActive(false);
-	    	}
-	    	
-    	
-		
-        int displayWidth = f.getWidth();
+        int displayWidth = f.getWidth()-STATS_WIDTH;
         int displayHeight = f.getHeight();
     	
         Graphics2D g2 = (Graphics2D)g;
@@ -101,7 +93,6 @@ public class DrawMap2 extends JPanel  implements KeyListener {
             				
         final int spacing = getSpacing();
         
-        // TODO get lightmap this should be stored in map and persisted ?
         Player p = yourMap.getPlayer();
 		Point pLoc = p.getLocation();
 		int[][] lightMap = Fov.getFov(yourMap, Arrays.asList(pLoc), Arrays.asList(LIGHT_RADIUS));    
@@ -116,7 +107,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     			boolean isLit = lightMap[x][y] > 0;
                     			if (visited || isLit) {
                         			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker().darker().darker().darker()); //lol suck change to a alpha level                     
+                        				g2.setColor(t.getColorLight().darker().darker().darker().darker()); //TODO remove this suck and change to a alpha level                     
                         			}
                         			if (lightMap[x][y] > 0) {
                         				g2.setColor(t.getColorLight());
@@ -127,7 +118,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     			}
                     			g2.drawString(String.valueOf(t.getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY); 
                     		} else {
-                    			System.out.println("wtf");
+                    			System.out.println("Something is very wrong here...");
                     		}
                         }
                 }
@@ -155,12 +146,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 			// draw player last so appears on top of any passable things
 			int playerX = p.getLocation().getX();
 			int playerY = p.getLocation().getY();
-			if (p.getMessage() != null) {
-					g2.setColor(Color.BLUE); // messages should store a color
-					g2.drawString(p.getMessage(), (playerX * spacing )+mapX,((playerY -1)   *spacing)+mapY); 
-					p.clearMessages();
-			}
-	
+			
 			g2.drawImage(
 					ghost,
 					(int) ((playerX*spacing)+mapX),
@@ -183,8 +169,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                         
         for (Message m: yourMap.getMessages()) { 
         	if (m.getMessage() != null) {
-	     		g2.setFont(font);  
-	        	g2.setColor(Color.yellow); // messages should store a color
+	     		g2.setFont(m.getFont() != null ? m.getFont() : font);  
+	        	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
 	    		g2.drawString(m.getMessage(), ((m.getP().getX() ) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         	}
         }
@@ -192,8 +178,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         
         for (Message m: yourMap.getPermanentMessages()) { 
         	// TODO permanent messages should be toggled
-        	g2.setFont(font);  
-        	g2.setColor(Color.yellow); // messages should store a color
+        	g2.setFont(m.getFont() != null ? m.getFont() : font);  
+        	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }
         
@@ -209,22 +195,33 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         DrawMap2 map = new DrawMap2(GAME_X,GAME_Y);
         f.getContentPane().add(map);
         JTextArea displayArea = new JTextArea();
+        JTextArea statsArea = new JTextArea();
+        statsArea.setPreferredSize(new Dimension(STATS_WIDTH, GAME_Y));
         displayArea.setEditable(false);
+        statsArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
         scrollPane.setPreferredSize(new Dimension(40, 40));
         f.getContentPane().add(scrollPane, BorderLayout.SOUTH);
+        f.getContentPane().add(statsArea, BorderLayout.EAST);
         displayArea.setFont(new Font(Font.MONOSPACED,Font.PLAIN, 20));
         displayArea.setText("[5] generate [1,2] zoom, [arrows] move [shift + arrows] [6] toggle follow scroll [space] center view, shift space to reset view");
+        statsArea.setText("Hello stats inv and other stuf goes here XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         f.setSize(1024, 768);
         f.setPreferredSize(new Dimension(1026, 768));                           
         f.setVisible(true);
+        // todo add glass pane over top of all
         displayArea.addKeyListener(map);
+        statsArea.addKeyListener(map);
     }
 
 	@Override
 	public void keyPressed(KeyEvent key) {	 
 		
 		// check player hp
+		Player player = null;
+		if (yourMap != null) {
+			player = yourMap.getPlayer();
+		}
 		
 		boolean tookTurn = false;
 		
@@ -233,28 +230,28 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_RIGHT ) {
 			mapX -= spacing;
 		} else if (key.getKeyCode() == KeyEvent.VK_RIGHT) {
-			yourMap.getPlayer().move(Direction.EAST, 1);
+			player.move(Direction.EAST, 1);
 			tookTurn = true;
 		}
 		
 		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_LEFT ) {
 			mapX += spacing;
 		} else if (key.getKeyCode() == KeyEvent.VK_LEFT) {
-			yourMap.getPlayer().move(Direction.WEST, 1);
+			player.move(Direction.WEST, 1);
 			tookTurn = true;
 		}
 		
 		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_DOWN ) {
 			mapY -= spacing;
 		} else if (key.getKeyCode() == KeyEvent.VK_DOWN) {
-			yourMap.getPlayer().move(Direction.SOUTH, 1);
+			player.move(Direction.SOUTH, 1);
 			tookTurn = true;
 		}
 		
 		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_UP ) {
 			mapY += spacing;
 		} else if (key.getKeyCode() == KeyEvent.VK_UP) {
-			yourMap.getPlayer().move(Direction.NORTH, 1);
+			player.move(Direction.NORTH, 1);
 			tookTurn = true;
 		}
 		
@@ -309,53 +306,93 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         }
 		
 		if ( key.getKeyCode() == KeyEvent.VK_Z ) {
-			Player p = yourMap.getPlayer();
-			Actor a = p.getNearestActor(p);
+			Actor a = player.getNearestActor(player);
 			if (a != null) {
 				Point target = a.getLocation();
 				if (target != null) {
 					yourMap.getThings().add(
-						new Projectile(yourMap,p.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 20)
+						new Projectile(yourMap,player.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 20)
 					);
 				}
 			}
 			tookTurn = true;
         }
 		
+		if (key.getKeyCode() == KeyEvent.VK_M) {
+			
+			List<Point> path = player.getOnPath();
+				
+			Point target = null;
+			if (key.isShiftDown()) {
+				Actor nearest = player.getNearestActor(player);
+				if (nearest != null) {
+					target = nearest.getLocation();
+				}
+			} else {
+				target = yourMap.getNearestUnVisitedCellToActor(player);
+			}
+			
+			if (target != null) {
+				if (path == null || path.size()<1) {
+					path = AStar.aStar(player.getLocation(),target,yourMap,Arrays.asList(Tile.SPACE,Tile.LAND,Tile.SEA));
+				}
+				
+				if (path !=null && path.size() > 0) {
+				
+					/*// display path on map as messages
+					int count = 0;
+					for (Point pnt : path ){
+						yourMap.getMessages().add(new Message(new Point(pnt.getX()-1,pnt.getY()+1),Integer.toString(count++)));
+					}
+					*/
+					
+					Point calcStep = path.get(path.size()-1);
+					path.remove(calcStep);
+					player.setOnPath(path);
+					player.moveTowards(calcStep);
+				}
+				
+			}
+			
+			tookTurn = true;
+			
+		}
+		
+		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			System.exit(1);
+		}
+		
 		if (tookTurn) {
 			// run all actors, timers and things here
-		    if (tookTurn) {
 		        for (Thing t : yourMap.getThings()){
 		        	
-		        	// fires burn water runs etc		        	
-		        	if (t instanceof Projectile) {
-		        		while(((Projectile)t).getPower() > 0) {
-			        		t.act();	
-		        		}
-		        		for (Point p : t.getMovementHistory()) {
-		         			int x = p.getX();
-		        			int y = p.getY()+1;
-		        			yourMap.getMessages().add(new Message( new Point(x,y),"#"));
-		        		}
-		        		f.repaint();
+	        	// fires burn water runs etc		        	
+	        	if (t instanceof Projectile) {
+	        		while(((Projectile)t).getPower() > 0) {
+		        		t.act();	
+	        		}
+	        		for (Point p : t.getMovementHistory()) {
+	         			int x = p.getX();
+	        			int y = p.getY()+1;
+	        			yourMap.getMessages().add(new Message( new Point(x,y),"#"));
+	        		}
+	        		f.repaint();
+	        	}
+	        	
+	        	if ( t instanceof Actor ) {
+	        		Actor a = (Actor) t;
+	        		if (a.getHp() < 1) {
+	        		//	yourMap.getThings().remove(t); // conccurent mod exception whoops
+	        			// call the destroy here and create loot add xp etc
+	        		//	f.repaint();
+	        		} else if (  t.isActive() && !(t instanceof Player) ) {
+		        		// just get a message for now call get action later
+		        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
+		        		t.act();
 		        	}
-		        	
-		        	if ( t instanceof Actor ) {
-		        		Actor a = (Actor) t;
-		        		if (a.getHp() < 1) {
-		        		//	yourMap.getThings().remove(t); // conccurent mod exception whoops
-		        			// call the destroy here and create loot add xp etc
-		        		//	f.repaint();
-		        		}
-		        		if (  t.isActive() &&!(t instanceof Player) ) {
-			        		// just get a message for now call get action later
-			        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
-			        		t.act();
-			        	}
-		        	}
-		        
-		        }
-		    }
+	        	}
+	        
+	        }
 		}
 		
 		f.repaint();

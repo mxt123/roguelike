@@ -29,6 +29,16 @@ public class Point {
 		}
 		return  result; 
 	}
+	
+	@Override
+	public String toString(){
+		return "(" + this.x + " " + this.y + ")";
+	}
+	
+	@Override
+	public int hashCode(){
+		return Integer.valueOf(Integer.toString(x) + Integer.toString(y) );
+	}
 
 	
 }

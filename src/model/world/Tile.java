@@ -2,20 +2,21 @@ package model.world;
 
 import java.awt.Color;
 
-public enum Tile {	
-	
-	LAND(',',true,false,true,Color.BLACK, Color.GREEN,"land",""),
-	WALL('▨',false,false,false,Color.BLACK,Color.GRAY,"wall",""),
-	SPACE('_',true,false,true,Color.BLACK,Color.ORANGE,"open space",""),
-	SEA('~',false,true,true,Color.BLACK,Color.BLUE,"water",""),
-	TREE('T',false,false,true,Color.BLACK,Color.GREEN,"tree",""),
-	PERSON('@',false,false,true,Color.YELLOW,Color.YELLOW,"A person",""),
-	GOBLIN('g',false,false,true,Color.BLACK,Color.green,"A goblin","grrr!"),
-	OGRE('H',false,false,true,Color.BLACK,Color.green,"An ogre","RAAAR!"),
-	COIN('o',true,false,true,Color.BLACK,Color.YELLOW,"A coin",""),
-	ARROW('▨',true,true,true,Color.BLACK,Color.WHITE,"An arrow",""),
-	SHARK('^',false,false,true,Color.BLACK,Color.WHITE,"A shark","");
-	
+public enum Tile {
+
+	LAND(',', true, false, true, Color.BLACK, Color.GREEN, "land", ""), WALL(
+			'▨', false, false, false, Color.BLACK, Color.GRAY, "wall", ""), SPACE(
+			'_', true, false, true, Color.BLACK, Color.ORANGE, "open space", ""), SEA(
+			'~', false, true, true, Color.BLACK, Color.BLUE, "water", ""), TREE(
+			'T', false, false, true, Color.BLACK, Color.GREEN, "tree", ""), PERSON(
+			'@', false, false, true, Color.YELLOW, Color.YELLOW, "A person", ""), GOBLIN(
+			'g', false, false, true, Color.BLACK, Color.green, "A goblin",
+			"grrr!"), OGRE('H', false, false, true, Color.BLACK, Color.green,
+			"An ogre", "RAAAR!"), COIN('o', true, false, true, Color.BLACK,
+			Color.YELLOW, "A coin", ""), ARROW('▨', true, true, true,
+			Color.BLACK, Color.WHITE, "An arrow", ""), SHARK('^', false, false,
+			true, Color.BLACK, Color.WHITE, "A shark", "");
+
 	private char character;
 	private boolean passable;
 	private boolean transparent;
@@ -24,8 +25,10 @@ public enum Tile {
 	private String description;
 	private String message;
 	private boolean swimable;
-	
-	Tile( char character, boolean passable,boolean swimable, boolean transparent, Color colorDark, Color colorLight, String description, String message) {
+
+	Tile(char character, boolean passable, boolean swimable,
+			boolean transparent, Color colorDark, Color colorLight,
+			String description, String message) {
 		this.setCharacter(character);
 		this.setPassable(passable);
 		this.setTransparent(transparent);
@@ -38,7 +41,7 @@ public enum Tile {
 
 	private void setSwimable(boolean swimable) {
 		this.swimable = swimable;
-		
+
 	}
 
 	public String getMessage() {
@@ -72,22 +75,21 @@ public enum Tile {
 	public void setTransparent(boolean transparent) {
 		this.transparent = transparent;
 	}
-	
+
 	public Tile[] getAll() {
 		return Tile.values();
 	}
-	
+
 	public static Tile getByChar(char tile) {
 		Tile result = null;
-		for (Tile t:  Tile.values()) {
-			if (t.getCharacter()== tile) {
+		for (Tile t : Tile.values()) {
+			if (t.getCharacter() == tile) {
 				result = t;
 				break;
 			}
 		}
 		return result;
 	}
-
 
 	public String getDescription() {
 		return description;

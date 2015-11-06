@@ -1,12 +1,23 @@
 TODO
 
+splash screens dialogues and inventory
+
+messages should have a colour and a size (red for damage taken etc) dngisplaying messages should read this
+
+target selection
+
+add writefile
+
+alpha channels and change lightsource to be stored on map have a radius and a power 
+change to use light  levels and fade rather than dark/light 
+
+change maps to gen inside a world container
+
 sort out project relative paths
 
 rectangles not sorted
 
-change to use light  levels and fade rather than dark/light 
-
-mobs should stay active once activated
+2d animation
 
 splatmarks for dead mobs
 
@@ -19,8 +30,6 @@ if active look for noiseiest thing of map and try to move towards it
 chance to become active if noise > wakeup threshold and not allready active
 chance to deactivate if quiet and not active in last (mob thrshold turns)
 scent trails
-
-messages should have a colour (red for damage taken etc)
 
 seperate light radius from aggro radius (eg infravision or tracking skills or stealth)
 

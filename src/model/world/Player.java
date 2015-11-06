@@ -44,6 +44,7 @@ public class Player extends Actor {
 			return false;
 		} else if ((target.isPassable() || (target.isSwimable() && this.isSwims()))  && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
+			this.getMap().getVisited()[x][y] = true;
 			return true;
 		} else {
 			return false;

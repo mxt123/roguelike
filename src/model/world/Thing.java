@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.AStar;
+import util.Distances;
 import util.Randoms;
 
 import model.Direction;
@@ -65,10 +67,22 @@ public class Thing {
 		return (Actor) nearestThing;
 	}
 	
+	public Actor getNearestActiveActor(Thing toThing) {
+		
+		Actor nearestThing = null;
+		
+		for (Thing t: this.getMap().getThings()) {
+			if (t instanceof Actor && ! t.equals(toThing) && t.isActive()) {
+				if (nearestThing == null || t.getDistanceTo(toThing) < nearestThing.getDistanceTo(toThing)){
+					nearestThing = (Actor) t;
+				}
+			}
+		}
+		return (Actor) nearestThing;
+	}
+	
 	public int getDistanceTo(Thing t) {
-		int dx = t.getLocation().getX() - this.getLocation().getX();
-		int dy = t.getLocation().getY() - this.getLocation().getY();
-		int distance = (int) Math.sqrt(Math.pow(dx,2) + Math.pow(dy, 2));
+		int distance = Distances.manhattanDistance(this.location,t.location);
 		// TODO this is relevant if no diagonal movement check for diagonal 
 		if (distance == 1 && this.getLocation().getX() != t.getLocation().getX()  && this.getLocation().getY() != t.getLocation().getY()) {
 			distance +=1;
@@ -195,7 +209,7 @@ public class Thing {
 	
 	protected boolean moveVertical(int dy) {
 		if (dy >0) {
-			return this.move(Direction.SOUTH, speed ); // TODO actors should have a speed
+			return this.move(Direction.SOUTH, speed ); 
 		} else {
 			return this.move(Direction.NORTH, speed );
 		}

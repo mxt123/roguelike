@@ -3,6 +3,8 @@ package model.world;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.Distances;
+
 import model.Message;
 import model.Point;
 
@@ -14,7 +16,7 @@ public class Map {
 	private List<Thing> things;
 	private List<Message> messages = new ArrayList<Message>();
 	private List<Message> permanentMessages = new ArrayList<Message>();
-	private List<PolyRoom> rooms;
+	private List<PolyRoom> rooms = new ArrayList<PolyRoom>();
 	
 	public List<Point> getRoomPoints() {
 		List <Point> result = new ArrayList<Point>();
@@ -24,6 +26,20 @@ public class Map {
 			}
 		}
 		return result;
+	}
+	
+	public Point getNearestUnVisitedCellToActor(Actor a) {
+		Point nearest = null;
+		final Point apos = a.getLocation();
+		
+		for (Point p: this.getRoomPoints()) {
+			if ( apos != p && !visited[p.getX()][p.getY()]) {
+				if (nearest==null || Distances.manhattanDistance(apos,p) <  Distances.manhattanDistance(nearest, p)) {
+					nearest = p;
+				}
+			}
+		}
+		return nearest;
 	}
 	
 	public List<Point> getNonRoomPoints() {

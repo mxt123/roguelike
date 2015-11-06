@@ -22,7 +22,7 @@ import model.world.Tile;
 public class MapGenCaves extends MapGenBase {
 	
 	private static final double CHANCE_TO_START_WALL = 0.36;
-	private static final int MAX_THINGS = 200;
+	private static final int MAX_THINGS = 30;
 	
 	public static Map newWorld(String name, int height, int width, int generations) {
 		Map map =  Map.newFilledMap(name, Tile.WALL, height, width);
