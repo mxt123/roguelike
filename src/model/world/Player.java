@@ -34,17 +34,24 @@ public class Player extends Actor {
 		default:
 			break;
 		}
-		Tile target = this.getMap().getLevel()[y][x];	
-		List<Actor> actors = this.getMap().getActorsAt(new Point(x,y));
+		final Tile target = this.getMap().getLevel()[y][x];	
+		final Point here = new Point(x,y);
+		List<Actor> actors = this.getMap().getActorsAt(here);
+		// its a monster attack it
 		if (actors.size() > 0) {
-			this.setMessage("!"); // TODO do attack here
 			Actor a = actors.get(0);
 			int damage = attack(a);
 			a.setMessage(String.valueOf(damage));
 			return false;
-		} else if ((target.isPassable() || (target.isSwimable() && this.isSwims()))  && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
+		} 
+		else if ((target.isPassable() || (target.isSwimable() && this.isSwims()))  && !this.getMap().isImpassibleThingAt(new Point(x,y))) {	
 			this.setLocation(new Point(x,y));
 			this.getMap().getVisited()[x][y] = true;
+			
+			// pick up any things TODO have an autopickup
+			final List<Thing> things= this.getMap().getThings(here);
+			addItems(this.getMap(), things);
+			
 			return true;
 		} else {
 			return false;

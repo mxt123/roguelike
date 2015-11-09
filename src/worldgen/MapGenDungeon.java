@@ -119,18 +119,32 @@ public class MapGenDungeon {
 					1
 					));
 			} else if( labelCount % 2== 1){
-				map.getThings().add(new Actor(
-					Monster.GOBLIN,
-					map,
-					new Point(center.getX(),center.getY()),
-					Tile.GOBLIN,
-					Color.GREEN,
-					"goblin",
-					false,
-					true,
-					"this is a goblin",
-					1
-					));	
+				
+				final Actor a = new Actor(
+						Monster.GOBLIN,
+						map,
+						new Point(center.getX(),center.getY()),
+						Tile.GOBLIN,
+						Color.GREEN,
+						"goblin",
+						false,
+						true,
+						"this is a goblin",
+						1
+						);
+				a.addItem(new Thing(
+						map,
+						null,
+						Tile.COIN,
+						Color.YELLOW,
+						"coin",
+						"this is gold!",
+						0,
+						false,
+						false
+						));
+				
+				map.getThings().add(a);	
 			} else if( labelCount % 3== 0){
 				map.getThings().add(new Thing(
 						map,

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import util.AStar;
 import util.Distances;
 import util.Randoms;
 
@@ -253,5 +252,8 @@ public class Thing {
 
 	public void setMovementHistory(List<Point> movementHistory) {
 		this.movementHistory = movementHistory;
+	}
+	
+	public void  destroy() {
 	}
 }

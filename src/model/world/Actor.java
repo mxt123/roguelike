@@ -6,7 +6,6 @@ import java.util.List;
 
 import util.Randoms;
 
-import model.Direction;
 import model.Point;
 import model.world.interfaces.Fights;
 import model.world.interfaces.Stats;
@@ -21,14 +20,15 @@ public class Actor extends Thing implements Stats, Fights {
 	private int defence;
 	private int attack;
 	private List<Point> onPath;
-	private List<Thing> inventory;
+	private List<Thing> inventory = new ArrayList<Thing>();
 	
-	@Override
-	public List<Thing> destroy() {
-		List<Thing> loot = new ArrayList<Thing>();
-		// remove this object
-		// drop some loot
-		return loot;
+	public void destroy() {
+		
+		final Map map = this.getMap();
+		for (final Thing t : inventory) {
+			map.getThings().add(new Thing(map,this.getLocation(),t.getTile(),t.getColor(),t.getName(),t.getDescription(),0,false,false));			
+		}
+		
 	}
 	
 	@Override
@@ -145,6 +145,19 @@ public class Actor extends Thing implements Stats, Fights {
 
 	public void setInventory(List<Thing> inventory) {
 		this.inventory = inventory;
+	}
+	
+	public void addItems(Map map, List<Thing> things) {
+		for (final Thing t: things) {
+			if (!(t instanceof Actor)) { 
+				this.inventory.add(t);
+				map.getThings().remove(t);
+			}
+		}
+	}
+	
+	public void addItem(Thing thing) {
+		this.inventory.add(thing);
 	}
 
 }

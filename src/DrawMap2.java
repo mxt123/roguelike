@@ -163,7 +163,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
  			boolean isProjectile = thing instanceof Projectile;
         	boolean liveActor = isActor && ((Actor) thing).getHp() > 0;
  			if (((!(thing instanceof Player)) && isActor && !liveActor) || isProjectile) {
- 				yourMap.getThings().remove(thing);					
+ 				thing.destroy();
+ 				yourMap.getThings().remove(thing);	
  			}
  		}
                         
