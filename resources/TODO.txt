@@ -23,8 +23,6 @@ splatmarks for dead mobs
 
 import images from ipad
 
-autoexplore + auto fight ?
-
 add a noise map make noise activate and attract mobs 
 if active look for noiseiest thing of map and try to move towards it
 chance to become active if noise > wakeup threshold and not allready active

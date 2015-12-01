@@ -55,7 +55,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     int displayHeight = 768; //Screen size height.
     private Map yourMap;
     private boolean FOLLOW = false;
-    private Image ghost = getImage("Blinky8bit.png");
+    private Image ghost = getImage("g.png");
+    private Image wall = getImage("wall.png");
         
     private BufferedImage getImage(String filename) {
     	try {
@@ -107,7 +108,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     			boolean isLit = lightMap[x][y] > 0;
                     			if (visited || isLit) {
                         			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker().darker().darker().darker()); //TODO remove this suck and change to a alpha level                     
+                        				g2.setColor(t.getColorLight().darker()); //TODO remove this suck and change to a alpha level                     
                         			}
                         			if (lightMap[x][y] > 0) {
                         				g2.setColor(t.getColorLight());
@@ -127,6 +128,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         }             
             
         // add the things
+        
         for (Thing thing : yourMap.getThings()) {
         	boolean isActor = thing instanceof Actor;
         	boolean liveActor = isActor && ((Actor) thing).getHp() > 0;
@@ -196,23 +198,23 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         DrawMap2 map = new DrawMap2(GAME_X,GAME_Y);
         f.getContentPane().add(map);
         JTextArea displayArea = new JTextArea();
-        JTextArea statsArea = new JTextArea();
-        statsArea.setPreferredSize(new Dimension(STATS_WIDTH, GAME_Y));
+      //  JTextArea statsArea = new JTextArea();
+       // statsArea.setPreferredSize(new Dimension(STATS_WIDTH, GAME_Y));
         displayArea.setEditable(false);
-        statsArea.setEditable(false);
+      //  statsArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
         scrollPane.setPreferredSize(new Dimension(40, 40));
         f.getContentPane().add(scrollPane, BorderLayout.SOUTH);
-        f.getContentPane().add(statsArea, BorderLayout.EAST);
+      //  f.getContentPane().add(statsArea, BorderLayout.EAST);
         displayArea.setFont(new Font(Font.MONOSPACED,Font.PLAIN, 20));
         displayArea.setText("[5] generate [1,2] zoom, [arrows] move [shift + arrows] [6] toggle follow scroll [space] center view, shift space to reset view");
-        statsArea.setText("Hello stats inv and other stuf goes here XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+      //  statsArea.setText("Hello stats inv and other stuf goes here XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         f.setSize(1024, 768);
         f.setPreferredSize(new Dimension(1026, 768));                           
         f.setVisible(true);
         // todo add glass pane over top of all
         displayArea.addKeyListener(map);
-        statsArea.addKeyListener(map);
+     //   statsArea.addKeyListener(map);
     }
 
 	@Override

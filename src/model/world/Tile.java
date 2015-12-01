@@ -4,18 +4,17 @@ import java.awt.Color;
 
 public enum Tile {
 
-	LAND(',', true, false, true, Color.BLACK, Color.GREEN, "land", ""), WALL(
-			'▨', false, false, false, Color.BLACK, Color.GRAY, "wall", ""), SPACE(
-			'_', true, false, true, Color.BLACK, Color.ORANGE, "open space", ""), SEA(
-			'~', false, true, true, Color.BLACK, Color.BLUE, "water", ""), TREE(
-			'T', false, false, true, Color.BLACK, Color.GREEN, "tree", ""), PERSON(
-			'@', false, false, true, Color.YELLOW, Color.YELLOW, "A person", ""), GOBLIN(
-			'g', false, false, true, Color.BLACK, Color.green, "A goblin",
-			"grrr!"), OGRE('H', false, false, true, Color.BLACK, Color.green,
-			"An ogre", "RAAAR!"), COIN('o', true, false, true, Color.BLACK,
-			Color.YELLOW, "A coin", ""), ARROW('▨', true, true, true,
-			Color.BLACK, Color.WHITE, "An arrow", ""), SHARK('^', false, false,
-			true, Color.BLACK, Color.WHITE, "A shark", "");
+	LAND(',', true, false, true, Color.BLACK, Color.GREEN, "land", "",""),
+	WALL('▨', false, false, false, Color.BLACK, Color.GRAY, "wall", "","wall.png"),
+	SPACE('_', true, false, true, Color.BLACK, Color.ORANGE, "open space", "",""),
+	SEA('~', false, true, true, Color.BLACK, Color.BLUE, "water", "",""), 
+	TREE('T', false, false, true, Color.BLACK, Color.GREEN, "tree", "",""), 
+	PERSON('@', false, false, true, Color.YELLOW, Color.YELLOW, "A person","","person.png"), 
+	GOBLIN('g', false, false, true, Color.BLACK, Color.green, "A goblin",	"grrr!",""), 
+	OGRE('H', false, false, true, Color.BLACK, Color.green,"An ogre", "RAAAR!",""), 
+	COIN('o', true, false, true, Color.BLACK,Color.YELLOW, "A coin", "",""), 
+	ARROW('▨', true, true, true,Color.BLACK, Color.WHITE, "An arrow", "",""), 
+	SHARK('^', false, false,true, Color.BLACK, Color.WHITE, "A shark", "","");
 
 	private char character;
 	private boolean passable;
@@ -25,10 +24,12 @@ public enum Tile {
 	private String description;
 	private String message;
 	private boolean swimable;
-
+	private String fileName;
+	
 	Tile(char character, boolean passable, boolean swimable,
 			boolean transparent, Color colorDark, Color colorLight,
-			String description, String message) {
+			String description, String message, String fileName) {
+		
 		this.setCharacter(character);
 		this.setPassable(passable);
 		this.setTransparent(transparent);
@@ -37,6 +38,7 @@ public enum Tile {
 		this.setColorLight(colorLight);
 		this.setMessage(message);
 		this.setSwimable(swimable);
+		this.setFileName(fileName);
 	}
 
 	private void setSwimable(boolean swimable) {
@@ -117,5 +119,13 @@ public enum Tile {
 
 	public boolean isSwimable() {
 		return swimable;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 }
