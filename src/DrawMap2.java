@@ -55,8 +55,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     int displayHeight = 768; //Screen size height.
     private Map yourMap;
     private boolean FOLLOW = false;
-    private Image ghost = getImage("g.png");
-    private Image wall = getImage("wall.png");
+    private Image ghost = getImage("player.png");
+  //  private Image wall = getImage("wall.png");
         
     private BufferedImage getImage(String filename) {
     	try {
@@ -215,6 +215,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         // todo add glass pane over top of all
         displayArea.addKeyListener(map);
      //   statsArea.addKeyListener(map);
+        
+        // TODO LOAD ALL images
     }
 
 	@Override

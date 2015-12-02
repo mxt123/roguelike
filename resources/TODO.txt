@@ -1,5 +1,9 @@
 TODO
 
+Load images on startup
+refactor show text and show image into show, and show image if available char if not
+
+
 splash screens dialogues and inventory
 
 messages should have a colour and a size (red for damage taken etc) dngisplaying messages should read this
