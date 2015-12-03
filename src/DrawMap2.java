@@ -10,6 +10,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -57,13 +59,26 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     private Map yourMap;
     private boolean FOLLOW = false;
     private HashMap<String, Image> images = new HashMap<String,Image>();
+    private HashMap<String, Image> darkimages = new HashMap<String,Image>();
         
     private void setupImages() {
+	    Kernel kernel = new Kernel(1, 1, new float[]{0.7f});
+	    ConvolveOp op = new ConvolveOp(kernel);
+	    
     	for (Tile t : Tile.values()) {
     		if (!t.getFileName().isEmpty()) {
     			images.put(t.name(),getImage(t.getFileName()));
     		}
     	}
+    	
+    	for (Tile t : Tile.values()) {
+    		if (!t.getFileName().isEmpty()) {
+    			BufferedImage image = getImage(t.getFileName());
+    			BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+    			darkimages.put(t.name(),op.filter(image,bufferedImage));
+    		}
+    	}
+    	
     }
     
     private BufferedImage getImage(String filename) {
@@ -84,13 +99,13 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     	g2.drawString(string, x, y);
     }
     
-    public void putTile(Graphics2D g2, Tile tile, Float x, Float y, int spacing) {
+    public void putTile(Graphics2D g2, Tile tile, Float x, Float y, int spacing, boolean lit,  boolean visited) {
     	if (!tile.getFileName().isEmpty()) {
-    		putImage( g2, images.get(tile.name()), x, y, spacing);
+    		Image image = lit && visited ? images.get(tile.name()) : darkimages.get(tile.name());
+    		putImage( g2, image, x, y, spacing);    		    		
     	} else {
     		putSring( g2, String.valueOf(tile.getCharacter()), x, y,  spacing);
     	}
-    			
     }
     
     private int getSpacing(){
@@ -133,7 +148,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     			boolean isLit = lightMap[x][y] > 0;
                     			if (visited || isLit) {
                         			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker()); //TODO remove this suck and change to a alpha level                     
+                        				g2.setColor(t.getColorLight().darker().darker().darker()); //TODO remove this suck and change to a alpha level                     
                         			}
                         			if (lightMap[x][y] > 0) {
                         				g2.setColor(t.getColorLight());
@@ -143,7 +158,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     				g2.setColor(t.getColorDark());
                     			}
                     			if (visited || isLit) {
-                    				putTile(g2, t, (x*spacing)+mapX, (y*spacing)+mapY,  spacing);
+                    				putTile(g2, t, (x*spacing)+mapX, (y*spacing)+mapY, spacing, isLit, visited); // add is lit 
                     			}
                     		} else {
                     			System.out.println("Something is very wrong here...");
@@ -165,7 +180,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 				if (!isActor || (isActor && liveActor)) {
 					thing.setActive(true);
 	    			g2.setColor(thing.getColor());
-	    			putTile(g2, thing.getTile(),(x*spacing)+mapX,  (y*spacing)+mapY,  spacing);
+	    			putTile(g2, thing.getTile(),(x*spacing)+mapX,  (y*spacing)+mapY,  spacing, true, true);
 				} else if (isActor && !liveActor){ 
 					g2.setColor(Color.WHITE); //TODO change this to the proper image
 					g2.drawString("Arrrrggg!", (x*spacing)+mapX, (y*spacing)+mapY);
@@ -175,7 +190,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 			// draw player last so appears on top of any passable things
 			int playerX = p.getLocation().getX();
 			int playerY = p.getLocation().getY();
-			putTile(g2, Tile.PERSON, (playerX*spacing)+mapX, ((playerY*spacing)+mapY),  spacing);
+			putTile(g2, Tile.PERSON, (playerX*spacing)+mapX, ((playerY*spacing)+mapY), spacing, true, true);
         }
     
     	// remove dead things

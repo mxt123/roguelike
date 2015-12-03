@@ -6,13 +6,13 @@ public enum Tile {
 
 	LAND(',', true, false, true, Color.BLACK, Color.GREEN, "land", "",""),
 	WALL('▨', false, false, false, Color.BLACK, Color.GRAY, "wall", "","wall.png"),
-	SPACE('_', true, false, true, Color.BLACK, Color.ORANGE, "open space", "",""),
+	SPACE('_', true, false, true, Color.BLACK, Color.ORANGE, "open space", "","floor.png"),
 	SEA('~', false, true, true, Color.BLACK, Color.BLUE, "water", "",""), 
 	TREE('T', false, false, true, Color.BLACK, Color.GREEN, "tree", "",""), 
 	PERSON('@', false, false, true, Color.YELLOW, Color.YELLOW, "A person","","player.png"), 
-	GOBLIN('g', false, false, true, Color.BLACK, Color.green, "A goblin",	"grrr!",""), 
-	OGRE('H', false, false, true, Color.BLACK, Color.green,"An ogre", "RAAAR!",""), 
-	COIN('o', true, false, true, Color.BLACK,Color.YELLOW, "A coin", "",""), 
+	GOBLIN('g', false, false, true, Color.BLACK, Color.green, "A goblin",	"grrr!","goblin.png"), 
+	OGRE('H', false, false, true, Color.BLACK, Color.green,"An ogre", "RAAAR!","troll.png"), 
+	COIN('o', true, false, true, Color.BLACK,Color.YELLOW, "A coin", "","gold.png"), 
 	ARROW('▨', true, true, true,Color.BLACK, Color.WHITE, "An arrow", "",""), 
 	SHARK('^', false, false,true, Color.BLACK, Color.WHITE, "A shark", "","");
 
