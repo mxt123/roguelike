@@ -9,7 +9,7 @@ public enum Tile {
 	SPACE('_', true, false, true, Color.BLACK, Color.ORANGE, "open space", "",""),
 	SEA('~', false, true, true, Color.BLACK, Color.BLUE, "water", "",""), 
 	TREE('T', false, false, true, Color.BLACK, Color.GREEN, "tree", "",""), 
-	PERSON('@', false, false, true, Color.YELLOW, Color.YELLOW, "A person","","person.png"), 
+	PERSON('@', false, false, true, Color.YELLOW, Color.YELLOW, "A person","","player.png"), 
 	GOBLIN('g', false, false, true, Color.BLACK, Color.green, "A goblin",	"grrr!",""), 
 	OGRE('H', false, false, true, Color.BLACK, Color.green,"An ogre", "RAAAR!",""), 
 	COIN('o', true, false, true, Color.BLACK,Color.YELLOW, "A coin", "",""), 

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -55,9 +56,16 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     int displayHeight = 768; //Screen size height.
     private Map yourMap;
     private boolean FOLLOW = false;
-    private Image ghost = getImage("player.png");
-  //  private Image wall = getImage("wall.png");
+    private HashMap<String, Image> images = new HashMap<String,Image>();
         
+    private void setupImages() {
+    	for (Tile t : Tile.values()) {
+    		if (!t.getFileName().isEmpty()) {
+    			images.put(t.name(),getImage(t.getFileName()));
+    		}
+    	}
+    }
+    
     private BufferedImage getImage(String filename) {
     	try {
     		InputStream in = getClass().getResourceAsStream(filename);
@@ -67,6 +75,23 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     	}
     	    return null;
     	}
+   
+    private void putImage(Graphics2D g2, Image image, float x, float y, int spacing) {
+		g2.drawImage(image, (int)x,(int)y - spacing, spacing, spacing, null);
+    }
+    
+    private void putSring(Graphics2D g2, String string, float x, float y, int spacing) {
+    	g2.drawString(string, x, y);
+    }
+    
+    public void putTile(Graphics2D g2, Tile tile, Float x, Float y, int spacing) {
+    	if (!tile.getFileName().isEmpty()) {
+    		putImage( g2, images.get(tile.name()), x, y, spacing);
+    	} else {
+    		putSring( g2, String.valueOf(tile.getCharacter()), x, y,  spacing);
+    	}
+    			
+    }
     
     private int getSpacing(){
     	return  fontSize;
@@ -117,7 +142,9 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     			}else {
                     				g2.setColor(t.getColorDark());
                     			}
-                    			g2.drawString(String.valueOf(t.getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY); 
+                    			if (visited || isLit) {
+                    				putTile(g2, t, (x*spacing)+mapX, (y*spacing)+mapY,  spacing);
+                    			}
                     		} else {
                     			System.out.println("Something is very wrong here...");
                     		}
@@ -138,7 +165,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 				if (!isActor || (isActor && liveActor)) {
 					thing.setActive(true);
 	    			g2.setColor(thing.getColor());
-	    			g2.drawString(String.valueOf(thing.getTile().getCharacter()), (x*spacing)+mapX, (y*spacing)+mapY);
+	    			putTile(g2, thing.getTile(),(x*spacing)+mapX,  (y*spacing)+mapY,  spacing);
 				} else if (isActor && !liveActor){ 
 					g2.setColor(Color.WHITE); //TODO change this to the proper image
 					g2.drawString("Arrrrggg!", (x*spacing)+mapX, (y*spacing)+mapY);
@@ -148,14 +175,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 			// draw player last so appears on top of any passable things
 			int playerX = p.getLocation().getX();
 			int playerY = p.getLocation().getY();
-			
-			g2.drawImage(
-					ghost,
-					(int) ((playerX*spacing)+mapX),
-					(int) ( (playerY*spacing)+mapY) -spacing,
-					spacing,
-					spacing,
-					null);
+			putTile(g2, Tile.PERSON, (playerX*spacing)+mapX, ((playerY*spacing)+mapY),  spacing);
         }
     
     	// remove dead things
@@ -216,7 +236,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         displayArea.addKeyListener(map);
      //   statsArea.addKeyListener(map);
         
-        // TODO LOAD ALL images
+        map.setupImages();
     }
 
 	@Override
