@@ -36,7 +36,6 @@ import model.world.Thing;
 import model.world.Tile;
 import util.AStar;
 import util.Fov;
-import util.GameFonts;
 import worldgen.MapGenCaves;
 import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
@@ -63,7 +62,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     private HashMap<String, Image> darkimages = new HashMap<String,Image>();
         
     private void setupImages() {
-	    Kernel kernel = new Kernel(1, 1, new float[]{0.1f});
+	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f,0.1f});
 	    ConvolveOp op = new ConvolveOp(kernel);
 	    
     	for (Tile t : Tile.values()) {
@@ -219,8 +218,6 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         yourMap.setMessages(new ArrayList<Message>()); // TODO add a clearMessages
         
         for (Message m: yourMap.getPermanentMessages()) { 
-        	// TODO permanent messages should be toggled
-        	//g2.setFont(m.getFont() != null ? m.getFont() : messageFont);  
         	g2.setFont(messageFont);  
         	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
@@ -238,31 +235,22 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         DrawMap2 map = new DrawMap2(GAME_X,GAME_Y);
         f.getContentPane().add(map);
         JTextArea displayArea = new JTextArea();
-      //  JTextArea statsArea = new JTextArea();
-       // statsArea.setPreferredSize(new Dimension(STATS_WIDTH, GAME_Y));
         displayArea.setEditable(false);
-      //  statsArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(displayArea);
         scrollPane.setPreferredSize(new Dimension(40, 40));
         f.getContentPane().add(scrollPane, BorderLayout.SOUTH);
-      //  f.getContentPane().add(statsArea, BorderLayout.EAST);
         displayArea.setFont(new Font(Font.MONOSPACED,Font.PLAIN, 20));
         displayArea.setText("[5] generate [1,2] zoom, [arrows] move [shift + arrows] [6] toggle follow scroll [space] center view, shift space to reset view");
-      //  statsArea.setText("Hello stats inv and other stuf goes here XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
         f.setSize(1024, 768);
         f.setPreferredSize(new Dimension(1026, 768));                           
         f.setVisible(true);
-        // todo add glass pane over top of all
         displayArea.addKeyListener(map);
-     //   statsArea.addKeyListener(map);
-        
         map.setupImages();
     }
 
 	@Override
 	public void keyPressed(KeyEvent key) {	 
 		
-		// check player hp
 		Player player = null;
 		if (yourMap != null) {
 			player = yourMap.getPlayer();
@@ -302,7 +290,6 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 		
 		if (FOLLOW) {centreView(spacing);}
 		
-		//skip
 		if (key.getKeyCode() == KeyEvent.VK_SPACE) {
 			tookTurn = true;
 		}
@@ -383,14 +370,6 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 				}
 				
 				if (path !=null && path.size() > 0) {
-				
-					/*// display path on map as messages
-					int count = 0;
-					for (Point pnt : path ){
-						yourMap.getMessages().add(new Message(new Point(pnt.getX()-1,pnt.getY()+1),Integer.toString(count++)));
-					}
-					*/
-					
 					Point calcStep = path.get(path.size()-1);
 					path.remove(calcStep);
 					player.setOnPath(path);
