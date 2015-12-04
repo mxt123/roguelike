@@ -36,6 +36,7 @@ import model.world.Thing;
 import model.world.Tile;
 import util.AStar;
 import util.Fov;
+import util.GameFonts;
 import worldgen.MapGenCaves;
 import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
@@ -43,9 +44,9 @@ import worldgen.TestRoom;
 
 public class DrawMap2 extends JPanel  implements KeyListener {
 	
-	private static final int STATS_WIDTH = 300;
-	private static final int GAME_Y = 100;
-	private static final int GAME_X = 100;
+//	private static final int STATS_WIDTH = 300;
+	private static final int GAME_Y = 50;
+	private static final int GAME_X = 50;
 	private static final int LIGHT_RADIUS = 5;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
@@ -62,7 +63,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     private HashMap<String, Image> darkimages = new HashMap<String,Image>();
         
     private void setupImages() {
-	    Kernel kernel = new Kernel(1, 1, new float[]{0.7f});
+	    Kernel kernel = new Kernel(1, 1, new float[]{0.1f});
 	    ConvolveOp op = new ConvolveOp(kernel);
 	    
     	for (Tile t : Tile.values()) {
@@ -124,12 +125,13 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     	
     	if (yourMap != null) {
     		
-        int displayWidth = f.getWidth()-STATS_WIDTH;
+        int displayWidth = f.getWidth();
         int displayHeight = f.getHeight();
     	
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Font font = new Font(Font.MONOSPACED,Font.PLAIN,fontSize);
+        Font messageFont = new Font(Font.MONOSPACED,Font.PLAIN,fontSize/2);
 		g2.setFont(font);            
             				
         final int spacing = getSpacing();
@@ -182,6 +184,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 	    			g2.setColor(thing.getColor());
 	    			putTile(g2, thing.getTile(),(x*spacing)+mapX,  (y*spacing)+mapY,  spacing, true, true);
 				} else if (isActor && !liveActor){ 
+					g2.setFont(messageFont);
 					g2.setColor(Color.WHITE); //TODO change this to the proper image
 					g2.drawString("Arrrrggg!", (x*spacing)+mapX, (y*spacing)+mapY);
 				}
@@ -207,7 +210,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                         
         for (Message m: yourMap.getMessages()) { 
         	if (m.getMessage() != null) {
-	     		g2.setFont(m.getFont() != null ? m.getFont() : font);  
+	     	//	g2.setFont(m.getFont() != null ? m.getFont() : messageFont);  
+        		g2.setFont(messageFont);  
 	        	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
 	    		g2.drawString(m.getMessage(), ((m.getP().getX() ) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         	}
@@ -216,7 +220,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         
         for (Message m: yourMap.getPermanentMessages()) { 
         	// TODO permanent messages should be toggled
-        	g2.setFont(m.getFont() != null ? m.getFont() : font);  
+        	//g2.setFont(m.getFont() != null ? m.getFont() : messageFont);  
+        	g2.setFont(messageFont);  
         	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }
