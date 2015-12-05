@@ -15,6 +15,7 @@ import model.world.Monster;
 import model.world.Place;
 import model.world.Player;
 import model.world.PolyRoom;
+import model.world.Thing;
 import model.world.Tile;
 
 public class MapGenWorld extends MapGenBase {
@@ -64,8 +65,19 @@ public class MapGenWorld extends MapGenBase {
 						"this is you :)",
 						1
 						));
-			} 
-			 else if (count % 2 == 0){
+			}  else if (count % 3 == 0){
+				map.getThings().add(new Thing(
+						map,
+						place.getRandomPoint(),
+						Tile.TREE,
+						Color.YELLOW,
+						"coin",
+						"this is gold!",
+						0,
+						false,
+						false
+						));
+			} else if (count % 2 == 0){
 				map.getThings().add(new Actor(
 						Monster.GOBLIN,
 						map,

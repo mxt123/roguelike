@@ -7,7 +7,7 @@ public enum Tile {
 	WALL('▨', false, false, false, Color.GRAY, "wall", "","wall.png"),
 	SPACE('_', true, false, true, Color.ORANGE, "open space", "","floor.png"),
 	SEA('~', false, true, true, Color.BLUE, "water", "","water.png"), 
-	TREE('T', false, false, true, Color.GREEN, "tree", "",""), 
+	TREE('T', false, false, true, Color.GREEN, "tree", "","tree.png"), 
 	PERSON('@', false, false, true, Color.YELLOW, "A person","","player.png"), 
 	GOBLIN('g', false, false, true, Color.green, "A goblin",	"grrr!","goblin.png"), 
 	OGRE('H', false, false, true, Color.green,"An ogre", "RAAAR!","troll.png"), 
