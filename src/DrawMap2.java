@@ -45,8 +45,8 @@ import worldgen.TestRoom;
 public class DrawMap2 extends JPanel  implements KeyListener {
 	
 //	private static final int STATS_WIDTH = 300;
-	private static final int GAME_Y = 50;
-	private static final int GAME_X = 50;
+	private static final int GAME_Y = 100;
+	private static final int GAME_X = 100;
 	private static final int LIGHT_RADIUS = 5;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
@@ -147,7 +147,10 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         
         Player p = yourMap.getPlayer();
 		Point pLoc = p.getLocation();
-		int[][] lightMap = Fov.getFov(yourMap, Arrays.asList(pLoc), Arrays.asList(LIGHT_RADIUS));    
+		List<Point> lights = new ArrayList<Point>();
+		lights.add(pLoc);
+		lights.addAll(this.yourMap.getLights());
+		int[][] lightMap = Fov.getFov(yourMap, lights , Arrays.asList(LIGHT_RADIUS));    
         
         // draw the map tiles
         for (int x = 0; x < mapWidth; x++) {
@@ -169,7 +172,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                         }
                 }
                 g2.setColor(Color.YELLOW);
-                g2.drawString(p.getMaxHp() +"\\" + p.getHp(),10+fontSize , 10+ fontSize);          
+                g2.drawString(p.getMaxHp() +"\\" + p.getHp(),10+(fontSize/2) , 10+ (fontSize/2));          
         }             
             
         // add the things
@@ -332,7 +335,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_8) {
-			this.yourMap = MapGenCaves.newWorld("world",GAME_X,GAME_Y,5);
+			this.yourMap = MapGenCaves.newWorld("world",GAME_X ,GAME_Y ,5);
 			init();
         }
 		

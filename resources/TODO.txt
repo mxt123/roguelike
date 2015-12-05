@@ -1,5 +1,7 @@
 TODO
 
+vary light radius and only display other lightsources if in los of player
+
 check player move is safe before allowing 
 
 refactor show text and show image into show, and show image if available char if not

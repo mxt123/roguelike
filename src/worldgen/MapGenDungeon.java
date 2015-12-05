@@ -23,7 +23,7 @@ public class MapGenDungeon {
 	
 	static int ROOM_MAX_SIZE = 10;
 	static int ROOM_MIN_SIZE = 3;
-	static int MAX_ROOMS = 20;
+	static int MAX_ROOMS = 40;
 
 	public static void createRoom(Map map, Rect room) {
 		List<Point> points = new ArrayList<Point>();
@@ -146,17 +146,19 @@ public class MapGenDungeon {
 				
 				map.getThings().add(a);	
 			} else if( labelCount % 3== 0){
+				Point p = new Point(center.getX(),center.getY());
 				map.getThings().add(new Thing(
 						map,
-						new Point(center.getX(),center.getY()),
-						Tile.COIN,
+						p,
+						Tile.FIRE,
 						Color.YELLOW,
-						"coin",
-						"this is gold!",
+						"fire",
+						"this is fire!",
 						0,
 						false,
 						false
 						));
+				map.getLights().add(p);
 				}
 			else {
 				map.getThings().add(new Actor(

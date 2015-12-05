@@ -22,7 +22,7 @@ public class Fov {
 	    y=Math.sin(i*0.01745f);
 	    int count = sources.size();
 	    for (int lightCount = 0; lightCount < count; lightCount++) {
-	        Fov.doFov(map, lightMap, sources.get(lightCount),  x, y, lightRadius.get(lightCount));
+	        Fov.doFov(map, lightMap, sources.get(lightCount),  x, y, lightRadius.get(0));
 	    }
 	
 	  };

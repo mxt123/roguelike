@@ -13,7 +13,8 @@ public enum Tile {
 	OGRE('H', false, false, true, Color.green,"An ogre", "RAAAR!","troll.png"), 
 	COIN('o', true, false, true, Color.YELLOW, "A coin", "","gold.png"), 
 	ARROW('▨', true, true, true, Color.WHITE, "An arrow", "",""), 
-	SHARK('^', false, false,true, Color.WHITE, "A shark", "","shark.png");
+	SHARK('^', false, false,true, Color.WHITE, "A shark", "","shark.png"),
+	FIRE('m', false, false,true, Color.WHITE, "A fire", "","fire.png");
 
 	private char character;
 	private boolean passable;
@@ -37,7 +38,7 @@ public enum Tile {
 		this.setSwimable(swimable);
 		this.setFileName(fileName);
 	}
-
+	
 	private void setSwimable(boolean swimable) {
 		this.swimable = swimable;
 
