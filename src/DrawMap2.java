@@ -159,7 +159,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                         }
                 }
                 g2.setColor(Color.YELLOW);
-                g2.drawString(p.getMaxHp() +"\\" + p.getHp(),10,10);          
+                g2.drawString(p.getMaxHp() +"\\" + p.getHp(),10+fontSize , 10+ fontSize);          
         }             
             
         // add the things
@@ -230,14 +230,24 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         scrollPane.setPreferredSize(new Dimension(40, 40));
         f.getContentPane().add(scrollPane, BorderLayout.SOUTH);
         displayArea.setFont(new Font(Font.MONOSPACED,Font.PLAIN, 20));
-        displayArea.setText("[5] generate [1,2] zoom, [arrows] move [shift + arrows] [6] toggle follow scroll [space] center view, shift space to reset view");
+        displayArea.setText("[5] dungeon [7] islands [8] caves");
         f.setSize(1024, 768);
         f.setPreferredSize(new Dimension(1026, 768));                           
         f.setVisible(true);
         displayArea.addKeyListener(map);
         map.setupImages();
+        map.FOLLOW = true;
+        map.init();
+   
     }
 
+    private void init() {
+        centreView(fontSize);
+        f.paint(f.getGraphics());
+        f.repaint();
+    	
+    }
+    
 	@Override
 	public void keyPressed(KeyEvent key) {	 
 		
@@ -299,16 +309,20 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 
 		if (key.isShiftDown() && key.getKeyCode() == KeyEvent.VK_5 ) {
 			this.yourMap = TestRoom.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+			init();
 		} else if (key.getKeyCode() == KeyEvent.VK_5) {
 			this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+			init();
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_7) {
 			this.yourMap = MapGenWorld.newWorld("world",GAME_X,GAME_Y,3);
+			init();
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_8) {
 			this.yourMap = MapGenCaves.newWorld("world",GAME_X,GAME_Y,5);
+			init();
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_9) {
