@@ -1,6 +1,7 @@
 TODO
 
-Load images on startup
+check player move is safe before allowing 
+
 refactor show text and show image into show, and show image if available char if not
 
 

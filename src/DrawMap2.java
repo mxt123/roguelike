@@ -62,7 +62,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     private HashMap<String, Image> darkimages = new HashMap<String,Image>();
         
     private void setupImages() {
-	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f,0.1f});
+	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f});
 	    ConvolveOp op = new ConvolveOp(kernel);
 	    
     	for (Tile t : Tile.values()) {
@@ -147,17 +147,9 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                     		if (t!=null) {
                     			boolean visited = yourMap.getVisited()[x][y];
                     			boolean isLit = lightMap[x][y] > 0;
-                    			if (visited || isLit) {
-                        			if (yourMap.getVisited()[x][y]){
-                        				g2.setColor(t.getColorLight().darker().darker().darker()); //TODO remove this suck and change to a alpha level                     
-                        			}
-                        			if (lightMap[x][y] > 0) {
-                        				g2.setColor(t.getColorLight());
-                        				yourMap.getVisited()[x][y] = true;
-                        			} 
-                    			}else {
-                    				g2.setColor(t.getColorDark());
-                    			}
+                    			if (lightMap[x][y] > 0) {
+                    				yourMap.getVisited()[x][y] = true;
+                    			} 
                     			if (visited || isLit) {
                     				putTile(g2, t, (x*spacing)+mapX, (y*spacing)+mapY, spacing, isLit, visited); // add is lit 
                     			}
@@ -171,7 +163,6 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         }             
             
         // add the things
-        
         for (Thing thing : yourMap.getThings()) {
         	boolean isActor = thing instanceof Actor;
         	boolean liveActor = isActor && ((Actor) thing).getHp() > 0;
@@ -209,7 +200,6 @@ public class DrawMap2 extends JPanel  implements KeyListener {
                         
         for (Message m: yourMap.getMessages()) { 
         	if (m.getMessage() != null) {
-	     	//	g2.setFont(m.getFont() != null ? m.getFont() : messageFont);  
         		g2.setFont(messageFont);  
 	        	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
 	    		g2.drawString(m.getMessage(), ((m.getP().getX() ) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
