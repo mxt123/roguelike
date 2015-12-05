@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -49,7 +50,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 	private static final int LIGHT_RADIUS = 5;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
-	static int fontSize = 50;//14
+	int fontSize = 50;//14
 	int mapHeight;
 	int mapWidth;
     float mapX;
@@ -118,6 +119,15 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     	this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
     	mapY = 0 + getSpacing();
     	mapX = 0;
+    	
+    	this.addComponentListener(new java.awt.event.ComponentAdapter() 
+		{
+			public void componentResized(ComponentEvent e)
+			{
+				init();
+			}
+		});
+    	
     }
    
     public void paint(Graphics g) {
@@ -242,9 +252,10 @@ public class DrawMap2 extends JPanel  implements KeyListener {
     }
 
     private void init() {
-        centreView(fontSize);
+    	this.fontSize = ((int) f.getSize().width/26);
         f.paint(f.getGraphics());
         f.repaint();
+        centreView(fontSize);
     	
     }
     
@@ -428,8 +439,8 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 	}
 
 	private void centreView(int spacing) {
-		mapX = displayWidth/ 2 - yourMap.getPlayer().getLocation().getX() * spacing;
-		mapY = displayHeight/2 - yourMap.getPlayer().getLocation().getY() * spacing;
+		mapX = f.getWidth() /2 - yourMap.getPlayer().getLocation().getX() * spacing;
+		mapY = f.getHeight() /2 - yourMap.getPlayer().getLocation().getY() * spacing;
 	}
 	
 	@Override

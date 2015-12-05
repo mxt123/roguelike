@@ -21,9 +21,9 @@ import model.world.Tile;
 // adapted from http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod,_part_3
 public class MapGenDungeon {
 	
-	static int ROOM_MAX_SIZE = 15;
+	static int ROOM_MAX_SIZE = 10;
 	static int ROOM_MIN_SIZE = 3;
-	static int MAX_ROOMS = 300;
+	static int MAX_ROOMS = 20;
 
 	public static void createRoom(Map map, Rect room) {
 		List<Point> points = new ArrayList<Point>();
