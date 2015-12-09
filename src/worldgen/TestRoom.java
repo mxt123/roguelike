@@ -122,10 +122,10 @@ public class TestRoom {
 				"this is a goblin",
 				1
 				));	
-			map.getLevel()[center.getY() -2][center.getX() -2] = Tile.WALL;
+			map.getLevel()[center.getY() -2][center.getX() -2] = Tile.TREE;
 			map.getLevel()[center.getY() -2][center.getX() +2] = Tile.WALL;
 			map.getLevel()[center.getY() +2][center.getX() -2] = Tile.WALL;
-			map.getLevel()[center.getY() +2][center.getX() +2] = Tile.WALL;
+			map.getLevel()[center.getY() +2][center.getX() +2] = Tile.TREE;
 		}
 	
 		map.setVisited(visited);

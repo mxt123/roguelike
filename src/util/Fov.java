@@ -16,6 +16,7 @@ public class Fov {
 	  double x;
 	  double y;
 	  int[][] lightMap = new int[map.getWidth()][map.getHeight()];//Initially set all tiles to not visible.
+	  
 	  for(int i=0;i<360;i+=ANGLE_INCREMENT) // increasing i increment to send out less than 360 rays depending on radius
 	  {
 	    x=Math.cos(i*0.01745f);
@@ -35,13 +36,15 @@ public class Fov {
 	  int i;
 	  float ox = (float)source.getX()+0.5f;
 	  float oy = (float)source.getY()+0.5f;
+	  
 	  for(i=0;i<radius;i++)
 	  {
+		  
 		 if (ox >= 0 && oy >= 0 && ox <= map.getWidth() && oy <= map.getHeight()) {
 			  lightMap[(int)ox][(int)oy]=1;//Set the tile to visible. //TODO change this to a light level
 			  if(!map.getLevel()[(int)oy][(int)ox].isTransparent()) {
 			      return;
-			    }
+			  }
 		  }	
 	    
 	    ox+=x;
