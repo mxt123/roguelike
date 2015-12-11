@@ -19,6 +19,14 @@ public class Map {
 	private List<PolyRoom> rooms = new ArrayList<PolyRoom>();
 	private List<Point> lights = new ArrayList<Point>();
 	
+	public Tile getTargetPoint(final int x, final int y) {
+		Tile result = null;
+		if (0 >= x && x <= this.getWidth() && y >=0 && y <= this.getHeight())  {
+			 result =  level[y][x];
+		} 
+		return result;
+	}
+	
 	public List<Point> getRoomPoints() {
 		List <Point> result = new ArrayList<Point>();
 		for (PolyRoom room: rooms) {

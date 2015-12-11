@@ -31,10 +31,12 @@ public class Player extends Actor {
 		case WEST:
 			x -= 1;
 			break;
-		default:
+		default: 
 			break;
 		}
 		final Tile target = this.getMap().getLevel()[y][x];	
+		//		final Tile target = this.getMap().getTargetPoint(x,y);	
+
 		final Point here = new Point(x,y);
 		List<Actor> actors = this.getMap().getActorsAt(here);
 		// its a monster attack it
