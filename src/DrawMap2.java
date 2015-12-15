@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,6 +11,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
@@ -25,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import model.Direction;
 import model.Message;
@@ -42,7 +45,7 @@ import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
 import worldgen.TestRoom;
 
-public class DrawMap2 extends JPanel  implements KeyListener {
+public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 	
 //	private static final int STATS_WIDTH = 300;
 	private static final int GAME_Y = 50;
@@ -248,6 +251,7 @@ public class DrawMap2 extends JPanel  implements KeyListener {
         f.setPreferredSize(new Dimension(1026, 768));                           
         f.setVisible(true);
         displayArea.addKeyListener(map);
+        f.getContentPane().addMouseListener(map);
         map.setupImages();
         map.FOLLOW = true;
         map.init();
@@ -458,14 +462,42 @@ public class DrawMap2 extends JPanel  implements KeyListener {
 		
 	}
 
-	public void mouseClicked(MouseEvent arg0) {
-		java.awt.Point clickPoint = arg0.getPoint();
-		yourMap.getMessages().add(
-				new Message(
-						new Point(
-								(int)clickPoint.getX()*fontSize,
-								(int)clickPoint.getY()*fontSize),
-								"click"));
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		java.awt.Point clickPoint = ((Component) e.getSource()).getMousePosition();
+		clickPoint = SwingUtilities.convertPoint((Component) e.getSource(),clickPoint,f);
+		int x = (int) ((clickPoint.getX() -mapX) / getSpacing() ) ;
+		int y = (int) ((clickPoint.getY()  - mapY) / getSpacing()) ;
+		//Point p = new Point(x,y);
+		this.putTile((Graphics2D)f.getGraphics(),Tile.SEA,new Float(x),new Float(y),getSpacing(),true,true);
+		System.out.println( "click from source (" + clickPoint.getX() + "," + clickPoint.getY() + ")" + 
+							"player(" + yourMap.getPlayer().getLocation().getX() + "," + yourMap.getPlayer().getLocation().getY() + ")" +   
+							"correct click(" + x + "," + y + ")");
+		// add get path to here
+		//init();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
