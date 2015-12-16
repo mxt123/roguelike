@@ -64,6 +64,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
     private boolean FOLLOW = false;
     private HashMap<String, Image> images = new HashMap<String,Image>();
     private HashMap<String, Image> darkimages = new HashMap<String,Image>();
+    public boolean putWall = false;
         
     private void setupImages() {
 	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f});
@@ -404,6 +405,11 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 			
 		}
 		
+		if (key.getKeyCode() == KeyEvent.VK_W ) {
+			putWall = !putWall;
+		}
+		
+		
 		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			System.exit(1);
 		}
@@ -469,7 +475,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 		int x = (int) (clickPoint.getX() - mapX) / getSpacing()  ;
 		int y = (int)  (clickPoint.getY() - mapY + 20) / getSpacing() ;
 		Point p = new Point(x,y);
-		yourMap.getLevel()[y][x] = Tile.SPACE;
+		yourMap.getLevel()[y][x] = putWall ? Tile.WALL : Tile.SPACE;
 		System.out.println( "click from source (" + clickPoint.getX() + "," + clickPoint.getY() + ")" + 
 							"player(" + yourMap.getPlayer().getLocation().getX() + "," + yourMap.getPlayer().getLocation().getY() + ")" +   
 							"correct click(" + x + "," + y + ")");
