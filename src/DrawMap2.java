@@ -466,10 +466,10 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		java.awt.Point clickPoint = ((Component) e.getSource()).getMousePosition();
 		clickPoint = SwingUtilities.convertPoint((Component) e.getSource(),clickPoint,f);
-		int x = (int) ((clickPoint.getX() -mapX) / getSpacing() ) ;
-		int y = (int) ((clickPoint.getY()  - mapY) / getSpacing()) ;
+		int x = (int) (clickPoint.getX() - mapX) / getSpacing()  ;
+		int y = (int)  (clickPoint.getY() - mapY + 20) / getSpacing() ;
 		Point p = new Point(x,y);
-		yourMap.getLevel()[y][x] = Tile.COIN;
+		yourMap.getLevel()[y][x] = Tile.SPACE;
 		System.out.println( "click from source (" + clickPoint.getX() + "," + clickPoint.getY() + ")" + 
 							"player(" + yourMap.getPlayer().getLocation().getX() + "," + yourMap.getPlayer().getLocation().getY() + ")" +   
 							"correct click(" + x + "," + y + ")");
