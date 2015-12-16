@@ -1,12 +1,14 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -65,7 +67,19 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
     private HashMap<String, Image> images = new HashMap<String,Image>();
     private HashMap<String, Image> darkimages = new HashMap<String,Image>();
     public boolean putWall = false;
-        
+    Cursor wallCursor;
+    Cursor floorCursor;
+    protected Toolkit toolkit = Toolkit.getDefaultToolkit();
+    
+    {
+	    Image image = toolkit.getImage("resources/wall.png");
+	    wallCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
+    }
+    {
+    	Image image = toolkit.getImage("resources/floor.png");
+    	floorCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
+    }
+    
     private void setupImages() {
 	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f});
 	    ConvolveOp op = new ConvolveOp(kernel);
@@ -264,6 +278,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
         f.paint(f.getGraphics());
         f.repaint();
         centreView(fontSize);
+        
     	
     }
     
@@ -407,6 +422,12 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 		
 		if (key.getKeyCode() == KeyEvent.VK_W ) {
 			putWall = !putWall;
+			if (putWall) {
+	            ((Component) f).setCursor(wallCursor);
+	        } else {
+	        	 ((Component) f).setCursor(floorCursor);
+	        	//((Component) f).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	        }
 		}
 		
 		
@@ -485,7 +506,6 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
