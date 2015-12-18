@@ -52,7 +52,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 //	private static final int STATS_WIDTH = 300;
 	private static final int GAME_Y = 50;
 	private static final int GAME_X = 50;
-	private static final int LIGHT_RADIUS = 5;
+	private static final int LIGHT_RADIUS = 7;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
 	int fontSize = 50;//14
@@ -72,11 +72,11 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
     protected Toolkit toolkit = Toolkit.getDefaultToolkit();
     
     {
-	    Image image = toolkit.getImage("resources/wall.png");
+	    Image image = getImage("wall.png");
 	    wallCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
     }
     {
-    	Image image = toolkit.getImage("resources/floor.png");
+    	Image image = getImage("floor.png");
     	floorCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
     }
     
@@ -479,13 +479,11 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 	
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent key) {
-		//displayArea.setText(String.valueOf(key.getKeyChar()));
 		
 	}
 
@@ -497,10 +495,6 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 		int y = (int)  (clickPoint.getY() - mapY + 20) / getSpacing() ;
 		Point p = new Point(x,y);
 		yourMap.getLevel()[y][x] = putWall ? Tile.WALL : Tile.SPACE;
-		System.out.println( "click from source (" + clickPoint.getX() + "," + clickPoint.getY() + ")" + 
-							"player(" + yourMap.getPlayer().getLocation().getX() + "," + yourMap.getPlayer().getLocation().getY() + ")" +   
-							"correct click(" + x + "," + y + ")");
-		// add get path to here
 		init();
 	}
 
