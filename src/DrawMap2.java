@@ -9,6 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -30,6 +32,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import model.Direction;
 import model.Message;
@@ -47,7 +50,7 @@ import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
 import worldgen.TestRoom;
 
-public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
+public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, ActionListener {
 	
 //	private static final int STATS_WIDTH = 300;
 	private static final int GAME_Y = 50;
@@ -69,8 +72,8 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
     public boolean putWall = false;
     Cursor wallCursor;
     Cursor floorCursor;
-    protected Toolkit toolkit = Toolkit.getDefaultToolkit();
     
+    protected Toolkit toolkit = Toolkit.getDefaultToolkit();    
     {
 	    Image image = getImage("wall.png");
 	    wallCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
@@ -79,6 +82,8 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
     	Image image = getImage("floor.png");
     	floorCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
     }
+    
+    Timer timer;
     
     private void setupImages() {
 	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f});
@@ -145,6 +150,10 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 				init();
 			}
 		});
+    	Timer timer = new Timer(1000, this);
+    	timer.setInitialDelay(0);
+    	timer.start();
+    	  
     	
     }
    
@@ -426,7 +435,6 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 	            ((Component) f).setCursor(wallCursor);
 	        } else {
 	        	 ((Component) f).setCursor(floorCursor);
-	        	//((Component) f).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	        }
 		}
 		
@@ -493,7 +501,6 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 		clickPoint = SwingUtilities.convertPoint((Component) e.getSource(),clickPoint,f);
 		int x = (int) (clickPoint.getX() - mapX) / getSpacing()  ;
 		int y = (int)  (clickPoint.getY() - mapY + 20) / getSpacing() ;
-		Point p = new Point(x,y);
 		yourMap.getLevel()[y][x] = putWall ? Tile.WALL : Tile.SPACE;
 		init();
 	}
@@ -517,6 +524,12 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		System.out.println("tick");
 		
 	}
 
