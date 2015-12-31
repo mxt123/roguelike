@@ -1,5 +1,9 @@
 TODO
 
+add charactermode on/off (same as filenames.size =0)
+
+change putimage to use system ticker counter
+
 add timer for animations
 add multiple images for tiles an array of alt images for timed animation changes and a facing set of images for actors
 

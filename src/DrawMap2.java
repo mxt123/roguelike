@@ -45,6 +45,7 @@ import model.world.Thing;
 import model.world.Tile;
 import util.AStar;
 import util.Fov;
+import util.Randoms;
 import worldgen.MapGenCaves;
 import worldgen.MapGenDungeon;
 import worldgen.MapGenWorld;
@@ -67,8 +68,8 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     int displayHeight = 768; //Screen size height.
     private Map yourMap;
     private boolean FOLLOW = false;
-    private HashMap<String, Image> images = new HashMap<String,Image>();
-    private HashMap<String, Image> darkimages = new HashMap<String,Image>();
+    private HashMap<String, List<Image>> images = new HashMap<String,List<Image>>();
+    private HashMap<String, List<Image>> darkimages = new HashMap<String,List<Image>>();
     public boolean putWall = false;
     Cursor wallCursor;
     Cursor floorCursor;
@@ -90,19 +91,23 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	    ConvolveOp op = new ConvolveOp(kernel);
 	    
     	for (Tile t : Tile.values()) {
-    		if (!t.getFileName().isEmpty()) {
-    			images.put(t.name(),getImage(t.getFileName()));
+    		if (t.getFileNames().length > 0 ) {
+    			List<Image> tileImages = new ArrayList<Image>();
+    			List<Image> darkTileImages = new ArrayList<Image>();
+    			for (int i=0; i < t.getFileNames().length;i++) {
+	    				if (!t.getFileNames()[i].isEmpty()) {
+	    				BufferedImage tileImage = getImage(t.getFileNames()[i]);
+	    				BufferedImage bufferedImage = new BufferedImage(tileImage.getWidth(), tileImage.getHeight(), tileImage.getType());
+	    				BufferedImage darkTileImage = op.filter(tileImage,bufferedImage);
+	    				tileImages.add(tileImage);
+	    				darkTileImages.add(darkTileImage);
+    				}
+    			}
+    			images.put(t.name(), tileImages);
+    			darkimages.put(t.name(),darkTileImages);
     		}
     	}
-    	
-    	for (Tile t : Tile.values()) {
-    		if (!t.getFileName().isEmpty()) {
-    			BufferedImage image = getImage(t.getFileName());
-    			BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
-    			darkimages.put(t.name(),op.filter(image,bufferedImage));
-    		}
-    	}
-    	
+
     }
     
     private BufferedImage getImage(String filename) {
@@ -124,11 +129,17 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     }
     
     public void putTile(Graphics2D g2, Tile tile, Float x, Float y, int spacing, boolean lit,  boolean visited) {
-    	if (!tile.getFileName().isEmpty()) {
-    		Image image = lit && visited ? images.get(tile.name()) : darkimages.get(tile.name());
+    	final List<Image> tileImages = images.get(tile.name());
+    	final List<Image> darkTileImages = darkimages.get(tile.name());
+    	try {
+    	if (tile.getFileNames().length > 0) {
+    		Image image = lit && visited ? tileImages.get(Randoms.getRandom(0, tileImages.size()-1)) : darkTileImages.get(Randoms.getRandom(0, darkTileImages.size()-1));
     		putImage( g2, image, x, y, spacing);    		    		
     	} else {
     		putSring( g2, String.valueOf(tile.getCharacter()), x, y,  spacing);
+    	}
+    	} catch (Exception e) {
+    		System.out.println("failed to put Tile");
     	}
     }
     
@@ -191,7 +202,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
                     				yourMap.getVisited()[x][y] = true;
                     			} 
                     			if (visited || isLit) {
-                    				putTile(g2, t, (x*spacing)+mapX, (y*spacing)+mapY, spacing, isLit, visited); // add is lit 
+                    				putTile(g2, t, (x*spacing)+mapX, (y*spacing)+mapY, spacing, isLit, visited); 
                     			}
                     		} else {
                     			System.out.println("Something is very wrong here...");
@@ -530,7 +541,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("tick");
-		
+		init();
 	}
 
 

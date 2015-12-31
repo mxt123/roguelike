@@ -3,18 +3,18 @@ package model.world;
 import java.awt.Color;
 
 public enum Tile {
-	LAND(',', true, false, true, Color.GREEN, "land", "","land.png"),
-	WALL('▨', false, false, false, Color.GRAY, "wall", "","wall.png"),
-	SPACE('_', true, false, true, Color.ORANGE, "open space", "","floor.png"),
-	SEA('~', false, true, true, Color.BLUE, "water", "","water.png"), 
-	TREE('T', true, false, false, Color.GREEN, "tree", "","tree.png"), 
-	PERSON('@', false, false, true, Color.YELLOW, "A person","","player.png"), 
-	GOBLIN('g', false, false, true, Color.green, "A goblin",	"grrr!","goblin.png"), 
-	OGRE('H', false, false, true, Color.green,"An ogre", "RAAAR!","troll.png"), 
-	COIN('o', true, false, true, Color.YELLOW, "A coin", "","gold.png"), 
-	ARROW('▨', true, true, true, Color.WHITE, "An arrow", "",""), 
-	SHARK('^', false, false,true, Color.WHITE, "A shark", "","shark.png"),
-	FIRE('m', false, false,true, Color.WHITE, "A fire", "","fire.png");
+	LAND(',', true, false, true, Color.GREEN, "land", "",new String[]{"land.png"}),
+	WALL('▨', false, false, false, Color.GRAY, "wall", "",new String[]{"wall.png"}),
+	SPACE('_', true, false, true, Color.ORANGE, "open space", "",new String[]{"floor.png"}),
+	SEA('~', false, true, true, Color.BLUE, "water", "",new String[]{"water.png"}), 
+	TREE('T', true, false, false, Color.GREEN, "tree", "",new String[]{"tree.png"}), 
+	PERSON('@', false, false, true, Color.YELLOW, "A person","",new String[]{"player.png"}), 
+	GOBLIN('g', false, false, true, Color.green, "A goblin",	"grrr!",new String[]{"goblin.png"}), 
+	OGRE('H', false, false, true, Color.green,"An ogre", "RAAAR!",new String[]{"troll.png"}), 
+	COIN('o', true, false, true, Color.YELLOW, "A coin", "",new String[]{"gold.png"}), 
+	ARROW('▨', true, true, true, Color.WHITE, "An arrow", "",new String[]{""}), 
+	SHARK('^', false, false,true, Color.WHITE, "A shark", "",new String[]{"shark.png"}),
+	FIRE('m', false, false,true, Color.WHITE, "A fire", "",new String[]{"fire.png","fire2.png"});
 
 	private char character;
 	private boolean passable;
@@ -23,11 +23,11 @@ public enum Tile {
 	private String description;
 	private String message;
 	private boolean swimable;
-	private String fileName;
+	private String [] fileNames;
 	
 	Tile(char character, boolean passable, boolean swimable,
 			boolean transparent, Color colorLight,
-			String description, String message, String fileName) {
+			String description, String message, String[] fileNames) {
 		
 		this.setCharacter(character);
 		this.setPassable(passable);
@@ -36,7 +36,7 @@ public enum Tile {
 		this.setColorLight(colorLight);
 		this.setMessage(message);
 		this.setSwimable(swimable);
-		this.setFileName(fileName);
+		this.setFileNames(fileNames);
 	}
 	
 	private void setSwimable(boolean swimable) {
@@ -111,11 +111,11 @@ public enum Tile {
 		return swimable;
 	}
 
-	public String getFileName() {
-		return fileName;
+	public String[] getFileNames() {
+		return fileNames;
 	}
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFileNames(String[] fileNames) {
+		this.fileNames = fileNames;
 	}
 }
