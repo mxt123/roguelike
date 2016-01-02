@@ -162,7 +162,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 				init();
 			}
 		});
-    	Timer timer = new Timer(1000, this);
+    	Timer timer = new Timer(300, this);
     	timer.setInitialDelay(0);
     	timer.start();
     	  
@@ -302,8 +302,11 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
         f.paint(f.getGraphics());
         f.repaint();
         centreView(fontSize);
-        
-    	
+    }
+    
+    private void redraw() {
+    	  f.paint(f.getGraphics());
+        f.repaint();
     }
     
 	@Override
@@ -397,19 +400,6 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 			fontSize = 14;
 		} else if (key.getKeyCode() == KeyEvent.VK_R) {
 			centreView(spacing);
-        }
-		
-		if ( key.getKeyCode() == KeyEvent.VK_Z ) {
-			Actor a = player.getNearestActor(player);
-			if (a != null) {
-				Point target = a.getLocation();
-				if (target != null) {
-					yourMap.getThings().add(
-						new Projectile(yourMap,player.getLocation() , Tile.ARROW, Color.RED, "arow", "arrow", true, true, target, 1, 20)
-					);
-				}
-			}
-			tookTurn = true;
         }
 		
 		if (key.getKeyCode() == KeyEvent.VK_M) {
@@ -545,7 +535,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("tick");
-	//	init();
+		redraw();
 	}
 
 

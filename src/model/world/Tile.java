@@ -7,13 +7,13 @@ public enum Tile {
 	LAND(',', true, false, true, Color.GREEN, "land", "","land.png"),
 	WALL('▨', false, false, false, Color.GRAY, "wall", "","wall.png"),
 	SPACE('_', true, false, true, Color.ORANGE, "open space", "","floor.png"),
-	SEA('~', false, true, true, Color.BLUE, "water", "","water.png"), 
+	SEA('~', false, true, true, Color.BLUE, "water", "","water2.png"), 
 	TREE('T', true, false, false, Color.GREEN, "tree", "","tree.png"), 
 	PERSON('@', false, false, true, Color.YELLOW, "A person","","player.png"), 
 	GOBLIN('g', false, false, true, Color.green, "A goblin",	"grrr!","goblin.png"), 
 	OGRE('H', false, false, true, Color.green,"An ogre", "RAAAR!","troll.png"), 
 	COIN('o', true, false, true, Color.YELLOW, "A coin", "","gold.png"), 
-	ARROW('▨', true, true, true, Color.WHITE, "An arrow", "",""), 
+	//ARROW('▨', true, true, true, Color.WHITE, "An arrow", "",""), 
 	SHARK('^', false, false,true, Color.WHITE, "A shark", "","shark.png");
 
 	private char character;
