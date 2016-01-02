@@ -56,7 +56,8 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 //	private static final int STATS_WIDTH = 300;
 	private static final int GAME_Y = 50;
 	private static final int GAME_X = 50;
-	private static final int LIGHT_RADIUS = 7;
+	private  int LIGHT_RADIUS_ORIGINAL = 7;
+	private  int LIGHT_RADIUS = 7;
 	private static final long serialVersionUID = 1L;
 	static JFrame f;
 	int fontSize = 50;//14
@@ -535,6 +536,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("tick");
+		//LIGHT_RADIUS = LIGHT_RADIUS_ORIGINAL + Randoms.getRandom(-1, 1);
 		redraw();
 	}
 
