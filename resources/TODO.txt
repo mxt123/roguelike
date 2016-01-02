@@ -1,5 +1,10 @@
 TODO
 
+spritesheets
+
+http://opengameart.org/content/camp-fire-animation-for-rpgs-finished
+http://stackoverflow.com/questions/10604824/reading-images-from-a-sprite-sheet-java
+
 add charactermode on/off (same as filenames.size =0)
 
 change putimage to use system ticker counter

@@ -74,6 +74,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     Cursor wallCursor;
     Cursor floorCursor;
     
+    
     protected Toolkit toolkit = Toolkit.getDefaultToolkit();    
     {
 	    Image image = getImage("wall.png");
@@ -91,21 +92,21 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	    ConvolveOp op = new ConvolveOp(kernel);
 	    
     	for (Tile t : Tile.values()) {
-    		if (t.getFileNames().length > 0 ) {
     			List<Image> tileImages = new ArrayList<Image>();
     			List<Image> darkTileImages = new ArrayList<Image>();
-    			for (int i=0; i < t.getFileNames().length;i++) {
-	    				if (!t.getFileNames()[i].isEmpty()) {
-	    				BufferedImage tileImage = getImage(t.getFileNames()[i]);
-	    				BufferedImage bufferedImage = new BufferedImage(tileImage.getWidth(), tileImage.getHeight(), tileImage.getType());
-	    				BufferedImage darkTileImage = op.filter(tileImage,bufferedImage);
-	    				tileImages.add(tileImage);
-	    				darkTileImages.add(darkTileImage);
-    				}
-    			}
+				BufferedImage tileImage = getImage(t.getFileName());
+				int numImages = tileImage.getWidth()/16;
+				
+				for ( int i=0; i< numImages; i++) {
+					BufferedImage subImage = tileImage.getSubimage(i * 16, 0, 16, 16);
+    				BufferedImage bufferedImage = new BufferedImage(subImage.getWidth(), subImage.getHeight(), subImage.getType());
+    				BufferedImage darkTileImage = op.filter(subImage,bufferedImage);
+    				tileImages.add(subImage);
+    				darkTileImages.add(darkTileImage);
+				}
+	    				
     			images.put(t.name(), tileImages);
     			darkimages.put(t.name(),darkTileImages);
-    		}
     	}
 
     }
@@ -132,7 +133,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     	final List<Image> tileImages = images.get(tile.name());
     	final List<Image> darkTileImages = darkimages.get(tile.name());
     	try {
-    	if (tile.getFileNames().length > 0) {
+    	if (!tile.getFileName().isEmpty()) {
     		Image image = lit && visited ? tileImages.get(Randoms.getRandom(0, tileImages.size()-1)) : darkTileImages.get(Randoms.getRandom(0, darkTileImages.size()-1));
     		putImage( g2, image, x, y, spacing);    		    		
     	} else {
@@ -269,11 +270,13 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     }
 
     public static void main(String[] args) throws IOException {
+    	
         f = new JFrame("xzz");
         f.getContentPane().setBackground(Color.BLACK);
         f.pack();
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         DrawMap2 map = new DrawMap2(GAME_X,GAME_Y);
+   	 	
         f.getContentPane().add(map);
         JTextArea displayArea = new JTextArea();
         displayArea.setEditable(false);
@@ -287,6 +290,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
         f.setVisible(true);
         displayArea.addKeyListener(map);
         f.getContentPane().addMouseListener(map);
+        
         map.setupImages();
         map.FOLLOW = true;
         map.init();
@@ -541,7 +545,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("tick");
-		init();
+	//	init();
 	}
 
 
