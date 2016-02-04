@@ -10,7 +10,7 @@ public enum Tile {
 	SEA('~', false, true, true, Color.BLUE, "water", "","water2.png"), 
 	TREE('T', true, false, false, Color.GREEN, "tree", "","tree.png"), 
 	PERSON('@', false, false, true, Color.YELLOW, "A person","","player.png"), 
-	GOBLIN('g', false, false, true, Color.green, "A goblin",	"grrr!","goblin.png"), 
+	GOBLIN('g', false, false, true, Color.green, "A goblin",	"grrr!", "goblin.png"), //elf.png"), 
 	OGRE('H', false, false, true, Color.green,"An ogre", "RAAAR!","troll.png"), 
 	COIN('o', true, false, true, Color.YELLOW, "A coin", "","gold.png"), 
 	//ARROW('▨', true, true, true, Color.WHITE, "An arrow", "",""), 
