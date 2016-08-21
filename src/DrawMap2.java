@@ -79,11 +79,11 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     protected Toolkit toolkit = Toolkit.getDefaultToolkit();    
     {
 	    Image image = getImage("wall.png");
-	    wallCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
+	 //   wallCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
     }
     {
     	Image image = getImage("floor.png");
-    	floorCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
+    //	floorCursor = toolkit.createCustomCursor(image , new java.awt.Point(f.getX(),  f.getY()), "img");
     }
     
     Timer timer;
