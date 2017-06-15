@@ -15,11 +15,17 @@ public class Customer {
     private String firstName;
     private String lastName;
 
-    protected Customer() {}
+    public Customer() {}
 
     public Customer(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Customer(String firstName, String lastName, long id) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.id = id;
     }
 
     @Override
