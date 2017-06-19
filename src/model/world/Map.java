@@ -17,19 +17,10 @@ public class Map {
 	private List<Message> messages = new ArrayList<Message>();
 	private List<Message> permanentMessages = new ArrayList<Message>();
 	private List<PolyRoom> rooms = new ArrayList<PolyRoom>();
-	private List<Point> lights = new ArrayList<Point>();
-	
-	public Tile getTargetPoint(final int x, final int y) {
-		Tile result = null;
-		if (0 >= x && x <= this.getWidth() && y >=0 && y <= this.getHeight())  {
-			 result =  level[y][x];
-		} 
-		return result;
-	}
 	
 	public List<Point> getRoomPoints() {
 		List <Point> result = new ArrayList<Point>();
-		for (PolyRoom room: rooms) {
+		for (PolyRoom room: rooms) {          
 			for (Point p : room.getPoints()) {
 				result.add(p);
 			}
@@ -192,14 +183,6 @@ public class Map {
 
 	public void setRooms(List<PolyRoom> places) {
 		this.rooms = places;
-	}
-
-	public List<Point> getLights() {
-		return lights;
-	}
-
-	public void setLights(List<Point> lights) {
-		this.lights = lights;
 	}
 
 }

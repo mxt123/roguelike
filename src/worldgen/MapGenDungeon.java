@@ -158,7 +158,6 @@ public class MapGenDungeon {
 						false,
 						false
 						));
-				map.getLights().add(p);
 				}
 			else {
 				map.getThings().add(new Actor(

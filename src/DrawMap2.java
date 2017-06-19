@@ -68,7 +68,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     int displayWidth =1026; //Screen size width.
     int displayHeight = 768; //Screen size height.
     private Map yourMap;
-    private boolean FOLLOW = false;
+    private boolean FOLLOW = false;  
     private HashMap<String, List<Image>> images = new HashMap<String,List<Image>>();
     private HashMap<String, List<Image>> darkimages = new HashMap<String,List<Image>>();
     public boolean putWall = false;
@@ -89,7 +89,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     Timer timer;
     
     private void setupImages() {
-	    Kernel kernel = new Kernel(1, 1, new float[]{0.2f});
+	    Kernel kernel = new Kernel(1, 1, new float[]{1f});
 	    ConvolveOp op = new ConvolveOp(kernel);
 	    
     	for (Tile t : Tile.values()) {
@@ -189,7 +189,6 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 		Point pLoc = p.getLocation();
 		List<Point> lights = new ArrayList<Point>();
 		lights.add(pLoc);
-		lights.addAll(this.yourMap.getLights());
 		int[][] lightMap = Fov.getFov(yourMap, lights , Arrays.asList(LIGHT_RADIUS));    
         
         // draw the map tiles
@@ -199,7 +198,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
                     		final Tile t = yourMap.getLevel()[y][x]; 
                     		if (t!=null) {
                     			boolean visited = yourMap.getVisited()[x][y];
-                    			boolean isLit = lightMap[x][y] > 0;
+                    			boolean isLit = true; //lightMap[x][y] > 0;
                     			if (lightMap[x][y] > 0) {
                     				yourMap.getVisited()[x][y] = true;
                     			} 
@@ -221,7 +220,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
         	boolean liveActor = isActor && ((Actor) thing).getHp() > 0;
         	int x = thing.getLocation().getX();
 			int y = thing.getLocation().getY();
-			if (!thing.getName().equals("Player") && lightMap[x][y] > 0)  {
+			if (!thing.getName().equals("Player") && true ) { //lightMap[x][y] > 0)  {
 				if (!isActor || (isActor && liveActor)) {
 					thing.setActive(true);
 	    			g2.setColor(thing.getColor());
@@ -240,6 +239,7 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
         }
     
     	// remove dead things
+        /*
  		for (int i = 0 ; i < yourMap.getThings().size();i++){ 
  			Thing thing = yourMap.getThings().get(i);
  			boolean isActor = thing instanceof Actor;
@@ -250,7 +250,9 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
  				yourMap.getThings().remove(thing);	
  			}
  		}
-                        
+ 		*/
+          
+        /*
         for (Message m: yourMap.getMessages()) { 
         	if (m.getMessage() != null) {
         		g2.setFont(messageFont);  
@@ -259,12 +261,15 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
         	}
         }
         yourMap.setMessages(new ArrayList<Message>()); // TODO add a clearMessages
+        */
         
+        /*
         for (Message m: yourMap.getPermanentMessages()) { 
         	g2.setFont(messageFont);  
         	g2.setColor(m.getColor() != null ? m.getColor() : Color.yellow); // messages should store a color
     		g2.drawString(m.getMessage(), ((m.getP().getX() +1) * spacing )+mapX,((m.getP().getY() -1)   *spacing)+mapY); 
         }
+        */
         
     	}
        
@@ -445,6 +450,19 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 		}
 		
 		
+		if (key.getKeyCode() == KeyEvent.VK_X ) {
+			  for (Thing t : yourMap.getThings()){
+		        	
+		        	
+		        	if ( t instanceof Actor &&   !(t instanceof Player)) {
+	     	        		 ((Actor) t).setTarget(null);
+		 
+		        	}
+	        
+	        }
+		}
+		
+		
 		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			System.exit(1);
 		}
@@ -453,31 +471,11 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 			// run all actors, timers and things here
 		        for (Thing t : yourMap.getThings()){
 		        	
-	        	// fires burn water runs etc		        	
-	        	if (t instanceof Projectile) {
-	        		while(((Projectile)t).getPower() > 0) {
-		        		t.act();	
-	        		}
-	        		for (Point p : t.getMovementHistory()) {
-	         			int x = p.getX();
-	        			int y = p.getY()+1;
-	        			yourMap.getMessages().add(new Message( new Point(x,y),"#"));
-	        		}
-	        		f.repaint();
-	        	}
-	        	
-	        	if ( t instanceof Actor ) {
-	        		Actor a = (Actor) t;
-	        		if (a.getHp() < 1) {
-	        		//	yourMap.getThings().remove(t); // conccurent mod exception whoops
-	        			// call the destroy here and create loot add xp etc
-	        		//	f.repaint();
-	        		} else if (  t.isActive() && !(t instanceof Player) ) {
-		        		// just get a message for now call get action later
-		        		yourMap.getMessages().add(new Message(t.getLocation(),t.getMessage()));
-		        		t.act();
+        	
+		        	if ( t instanceof Actor &&   !(t instanceof Player)) {
+	     	        		 t.act();
+		 
 		        	}
-	        	}
 	        
 	        }
 		}
@@ -500,15 +498,25 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 	public void keyTyped(KeyEvent key) {
 		
 	}
-
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		java.awt.Point clickPoint = ((Component) e.getSource()).getMousePosition();
 		clickPoint = SwingUtilities.convertPoint((Component) e.getSource(),clickPoint,f);
 		int x = (int) (clickPoint.getX() - mapX) / getSpacing()  ;
 		int y = (int)  (clickPoint.getY() - mapY + 20) / getSpacing() ;
-		yourMap.getLevel()[y][x] = putWall ? Tile.WALL : Tile.SPACE;
-		init();
+		// yourMap.getLevel()[y][x] = putWall ? Tile.WALL : Tile.SPACE;
+		//init();
+		  for (Thing t : yourMap.getThings()){
+	        	
+	        	
+	        	if ( t instanceof Actor &&   !(t instanceof Player)) {
+   	        		 ((Actor) t).setTarget(new Point(x, y));
+	 
+	        	}
+      
+      }
+		
 	}
 
 	@Override
@@ -535,9 +543,9 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		System.out.println("tick");
+	//	System.out.println("tick");
 		//LIGHT_RADIUS = LIGHT_RADIUS_ORIGINAL + Randoms.getRandom(-1, 1);
-		redraw();
+	//	redraw();
 	}
 
 

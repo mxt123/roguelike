@@ -5,7 +5,7 @@ import java.awt.Color;
 public enum Tile {
 	FIRE('m', false, false,true, Color.WHITE, "A fire", "","fire3.png"),
 	LAND(',', true, false, true, Color.GREEN, "land", "","land.png"),
-	WALL('▨', false, false, false, Color.GRAY, "wall", "","wall.png"),
+	WALL('#', false, false, false, Color.GRAY, "wall", "","wall.png"),
 	SPACE('_', true, false, true, Color.ORANGE, "open space", "","floor.png"),
 	SEA('~', false, true, true, Color.BLUE, "water", "","water2.png"), 
 	TREE('T', true, false, false, Color.GREEN, "tree", "","tree.png"), 

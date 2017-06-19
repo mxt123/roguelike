@@ -2,8 +2,10 @@ package model.world;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import util.AStar;
 import util.Randoms;
 
 import model.Point;
@@ -21,7 +23,16 @@ public class Actor extends Thing implements Stats, Fights {
 	private int attack;
 	private List<Point> onPath;
 	private List<Thing> inventory = new ArrayList<Thing>();
+	private Point target;
 	
+	public Point getTarget() {
+		return target;
+	}
+
+	public void setTarget(Point target) {
+		this.target = target;
+	}
+
 	public void destroy() {
 		
 		final Map map = this.getMap();
@@ -71,19 +82,33 @@ public class Actor extends Thing implements Stats, Fights {
 		this.message = null;
 	}
 	
-	public void act() {
-		Player p = this.getMap().getPlayer();
-   	 	this.clearMessages();
-	     if (this.getDistanceTo(p) >= 2) {
-	    	 for (int i = 0 ; i < getSpeed(); i ++) {
-	    		 this.moveTowards(p.getLocation());
-	    	 }
-	    	  //this.setMessage("!");
-	     } else {
-	    	int damage = attack(p);
-	    	p.setMessage(String.valueOf(damage));
-	     }
+public void act() {             
+		
+		this.clearMessages();
+		
+		if (this.target != null) {
+			onPath = AStar.aStar(this.getLocation(),target,this.getMap(),Arrays.asList(Tile.SPACE,Tile.LAND,Tile.SEA));
+			//this.target = null;
+		}
+		
+
+		if (onPath == null || onPath.size()<1) {
+			List<Point> points = this.getMap().getRoomPoints();
+			Point target = points.get(Randoms.getRandom(0, points.size()-1));
+			onPath = AStar.aStar(this.getLocation(),target,this.getMap(),Arrays.asList(Tile.SPACE,Tile.LAND,Tile.SEA));
+		}		
+				
+		if (onPath !=null && onPath.size() > 0) {
+			//for (int i = 0 ; i < getSpeed(); i ++) {
+				Point calcStep = onPath.get(onPath.size()-1);
+				onPath.remove(calcStep);
+				this.setOnPath(onPath);		    
+		    	this.moveTowards(calcStep); 
+		   // }
+		}
+	    
 	}
+
 
 	@Override
 	public String getProfileName() {
