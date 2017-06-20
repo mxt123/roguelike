@@ -9,12 +9,12 @@ import java.awt.image.DataBufferInt;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 
+import model.world.Map;
+
 //http://www.instructables.com/id/Making-a-Basic-3D-Engine-in-Java/
 public class Game extends JFrame implements Runnable{
 	
 	private static final long serialVersionUID = 1L;
-	public int mapWidth = 15;
-	public int mapHeight = 15;
 	private Thread thread;
 	private boolean running;
 	private BufferedImage image;
@@ -22,25 +22,30 @@ public class Game extends JFrame implements Runnable{
 	public ArrayList<Texture> textures;
 	public Camera camera;
 	public Screen screen;
-	public static int[][] map = 
+	private int[][] map;
+	public static int[][] testmap = 
 		{
-			{1,1,1,1,1,1,1,1,2,2,2,2,2,2,2},
-			{1,0,0,0,0,0,0,0,2,0,0,0,0,0,2},
-			{1,0,3,3,3,3,3,0,0,0,0,0,0,0,2},
-			{1,0,3,0,0,0,3,0,2,0,0,0,0,0,2},
-			{1,0,3,0,0,0,3,0,2,2,2,0,2,2,2},
-			{1,0,3,0,0,0,3,0,2,0,0,0,0,0,2},
-			{1,0,3,3,0,3,3,0,2,0,0,0,0,0,2},
-			{1,0,0,0,0,0,0,0,2,0,0,0,0,0,2},
-			{1,1,1,1,1,1,1,1,4,4,4,0,4,4,4},
-			{1,0,0,0,0,0,1,4,0,0,0,0,0,0,4},
-			{1,0,0,0,0,0,1,4,0,0,0,0,0,0,4},
-			{1,0,0,0,0,0,1,4,0,3,3,3,3,0,4},
-			{1,0,0,0,0,0,1,4,0,3,3,3,3,0,4},
-			{1,0,0,0,0,0,0,0,0,0,0,0,0,0,4},
-			{1,1,1,1,1,1,1,4,4,4,4,4,4,4,4}
+			{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+			{2,0,0,0,0,0,0,0,2,0,0,0,0,0,2},
+			{2,0,2,2,2,2,2,0,0,0,0,0,0,0,2},
+			{2,0,2,0,0,0,2,0,2,0,0,0,0,0,2},
+			{2,0,2,0,0,0,2,0,2,2,2,0,2,2,2},
+			{2,0,2,0,0,0,2,0,2,0,0,0,0,0,2},
+			{2,0,2,2,0,2,2,0,2,0,0,0,0,0,2},
+			{2,0,0,0,0,0,0,0,2,0,0,0,0,0,2},
+			{2,2,2,2,2,2,2,2,2,2,2,0,2,2,2},
+			{2,0,0,0,0,0,2,2,0,0,0,0,0,0,2},
+			{2,0,0,0,0,0,2,2,0,0,0,0,0,0,2},
+			{2,0,0,0,0,0,2,2,0,2,2,2,2,0,2},
+			{2,0,0,0,0,0,2,2,0,2,2,2,2,0,2},
+			{2,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+			{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2}
 		};
-	public Game() {
+	
+	
+	
+	public Game(int[][] map, int playerX, int playerY) {
+		this.map = map;
 		thread = new Thread(this);
 		image = new BufferedImage(640, 480, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -49,8 +54,8 @@ public class Game extends JFrame implements Runnable{
 		textures.add(Texture.brick);
 		textures.add(Texture.bluestone);
 		textures.add(Texture.stone);
-		camera = new Camera(4.5, 4.5, 1, 0, 0, -.66);
-		screen = new Screen(map, mapWidth, mapHeight, textures, 640, 480);
+		camera = new Camera(playerY , playerX , 1, 0, 0, -.66);
+		screen = new Screen(map, map[0].length,  map.length, textures, 640, 480);
 		addKeyListener(camera);
 		setSize(640, 480);
 		setResizable(false);
@@ -103,6 +108,6 @@ public class Game extends JFrame implements Runnable{
 		}
 	}
 	public static void main(String [] args) {
-		Game game = new Game();
+		Game game = new Game(testmap, 0 ,0 );
 	}
 }

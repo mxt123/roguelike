@@ -185,4 +185,19 @@ public class Map {
 		this.rooms = places;
 	}
 
+	public int[][] getIntMap() {
+		final int height = getHeight() ;
+		final int width = getWidth()  ;
+		final Tile[][] level = this.getLevel();
+		
+		int[][] intMap = new int[height][width];
+		for (int i =0;i < height; i++){
+    		for (int j =0; j < width; j ++) {
+    			intMap[i][j] = level[i][j] == Tile.WALL ? 2 : 0 ;
+    		} 
+    	}
+		return intMap;
+		
+	}
+
 }

@@ -43,6 +43,7 @@ import model.world.Player;
 import model.world.Projectile;
 import model.world.Thing;
 import model.world.Tile;
+import raycast.Game;
 import util.AStar;
 import util.Fov;
 import util.Randoms;
@@ -152,7 +153,8 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
     public DrawMap2(int height, int width) {
     	mapHeight = height;
     	mapWidth = width;
-    	this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+    	//this.yourMap = MapGenDungeon.newFullMap(Map.newFilledMap("Dungeon!",Tile.SPACE,mapHeight,mapWidth));
+    	this.yourMap = MapGenCaves.newWorld("world",GAME_X ,GAME_Y ,5);
     	mapY = 0 + getSpacing();
     	mapX = 0;
     	
@@ -300,6 +302,9 @@ public class DrawMap2 extends JPanel  implements KeyListener, MouseListener, Act
         map.setupImages();
         map.FOLLOW = true;
         map.init();
+        
+        Point playerLoc = map.yourMap.getPlayer().getLocation();
+    	Game game = new Game(map.yourMap.getIntMap(),playerLoc.getX(),playerLoc.getY());
    
     }
 
